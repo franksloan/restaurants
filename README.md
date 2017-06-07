@@ -4,6 +4,11 @@
 - npm install -g webpack
 - npm install -g webpack-dev-server
 - npm install (pulls in dependencies from package.json)
-- To run the app use either command:
--- node index.js (runs express.js server in live reload mode) at localhost:5050
--- or npm run dev (runs a webpack server) at localhost:3000
+- To run the app use either  (runs express.js server in live reload mode) at localhost:5050:
+```sh
+$ node index.js
+```
+- or (runs a webpack server) at localhost:3000:
+```sh
+$ npm run dev
+```
