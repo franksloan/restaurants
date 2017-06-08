@@ -18,9 +18,9 @@ class Home extends React.Component {
               <li><Link to="/map">Map</Link></li>
               <li><Link to="/graph">Graph</Link></li>
             </ul>
-            <Route exact path='/' />
-            <Route exact path='/map' component={UsMap} />
-            <Route exact path='/graph' component={Graph} />
+            <Route path='/' />
+            <Route path='/map' component={UsMap} />
+            <Route path='/graph' component={Graph} />
           </div>
         </Router>
       </div>
@@ -31,4 +31,4 @@ class Home extends React.Component {
 ReactDOM.render(
 	<Home />,
 	document.getElementById('app')
-);
+)

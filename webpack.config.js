@@ -18,7 +18,9 @@ module.exports = {
 	    port: 3000,
 	    historyApiFallback: {
 				rewrites: [
-					{ from: /^\/$/, to: '/dist/index.html'}
+					{ from: /^\/$/, to: '/dist/index.html'},
+					{ from: /^\/map/, to: '/dist/index.html'},
+					{ from: /^\/graph/, to: '/dist/index.html'}
 				]
 			}
 	},
