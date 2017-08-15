@@ -1,6 +1,6 @@
 import React from 'react'
-import {Polygon} from 'react-d3-map-core'
 import styles from './styles.css'
+import d3Util from './../utilities/d3-util'
 
 class UsState extends React.Component {
 	constructor(props){
@@ -12,13 +12,13 @@ class UsState extends React.Component {
     this.onMouseOut = this.onMouseOut.bind(this)
 	}
 
-  onMouseOver(a, feature, c){
+  onMouseOver(){
     this.setState({
       highlightClass: styles.highlight
     })
   }
 
-  onMouseOut(a, feature, c){
+  onMouseOut(){
     this.setState({
       highlightClass: ""
     })
@@ -26,14 +26,16 @@ class UsState extends React.Component {
 
 	render(){
 		return (
-        <Polygon
-          id={this.props.id}
-          data={this.props.data}
-          polygonClass={this.state.highlightClass}
-          geoPath={this.props.geoPath}
-          onMouseOver={this.onMouseOver}
-          onMouseOut={this.onMouseOut}
-        />
+        d3Util.createD3Element()
+          .append("path")
+          .datum(this.props.data)
+          .attr('id', this.props.id)
+          .attr('class', this.state.highlightClass)
+          .attr("d", this.props.geoPath)
+          .on("mouseover", (d, i) => this.onMouseOver())
+          .on("mouseout", (d, i) => this.onMouseOut())
+          .node()
+          .toReact()
     )
 	}
 }

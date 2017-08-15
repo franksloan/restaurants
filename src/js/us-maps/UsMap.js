@@ -1,13 +1,14 @@
 import React from 'react'
-import {Chart, Mesh, Graticule, Polygon, projection, geoPath} from 'react-d3-map-core'
+import {Chart, projection, geoPath} from 'react-d3-map-core'
 import * as topojson from 'topojson-client'
 import UsState from './UsState'
-import {tsv} from 'd3'
-
+import UsBorder from './UsBorder'
+import Container from './../utilities/Container'
+import d3Util from './../utilities/d3-util'
 
 var width = 960,
     height = 600,
-    margins = {top: 20, right: 50, bottom: 20, left: 50};
+    margins = {top: 0, right: 50, bottom: 20, left: 0};
 
 var title = "US Location"
 var topodata = require("../../../us_states.json");
@@ -18,14 +19,8 @@ for(var i = 0; i < stateNames.length; i++){
   usStateName[stateNames[i].id] = stateNames[i]
 }
 
-// data should be a MultiLineString
 var dataCountries = topojson.mesh(topodata, topodata.objects.states, function(a, b) { return a !== b; });
 var dataLand = topojson.feature(topodata, topodata.objects.states);
-
-// var scale = 3*(width) / 2 / Math.PI;
-// var translate = [width+300, height+100];
-// var precision = 1;
-// var projectionString = 'mercator';
 
 // ALBERS USA
 var scale = 6*(width) / 2 / Math.PI;
@@ -47,8 +42,7 @@ var states = dataLand.features.map(function(d, i) {
           id={usStateName[d.id].name}
           key={i}
           data={d}
-          geoPath={geo}
-        />
+          geoPath={geo} />
   )
 })
 
@@ -58,25 +52,17 @@ class UsMap extends React.Component {
 	}
 	render(){
 		return (
-      <Chart
+      <Container
         title= {title}
         width= {width}
         height= {height}
-        margins= {margins}
-      >
+        >
       {states}
-      <Mesh
+      <UsBorder
         meshClass="state-borders"
-        width= {width}
-        height= {height}
         data= {dataCountries}
-        projection = {projection}
-        scale= {scale}
-        translate= {translate}
-        precision= {precision}
-        geoPath= {geo}
-      />
-      </Chart>
+        geoPath= {geo} />
+      </Container>
     )
 	}
 }
