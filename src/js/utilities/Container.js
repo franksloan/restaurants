@@ -18,9 +18,16 @@ class Container extends React.Component {
       height: this.props.height
     }
 
+    const titleStyle = {
+      width: this.props.width,
+      textAlign: 'center',
+      fontSize: '2em'
+    }
+
 		return (
-        <div style={divStyles}> 
-          <svg style={svgStyles}>
+        <div style={divStyles}>
+          <div style={titleStyle}>{this.props.title}</div>
+          <svg className='chart' style={svgStyles}>
             {this.props.children}
           </svg>
         </div>

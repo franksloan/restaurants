@@ -9,13 +9,13 @@ class UsBorder extends React.Component {
 
 	render(){
 		return (
-        d3Util.createD3Element()
+        d3Util.createD3Path()
           .datum(this.props.data )
           .attr("class", "state-borders")
           .attr("d", this.props.geoPath )
           .style('fill', 'none')
           .style('stroke', '#CCC')
-          .style('stroke-width', '.5px')
+          .style('stroke-width', '0.5px')
           .node()
           .toReact()
     )

@@ -1,5 +1,4 @@
 import React from 'react'
-import {Chart, projection, geoPath} from 'react-d3-map-core'
 import * as topojson from 'topojson-client'
 import UsState from './UsState'
 import UsBorder from './UsBorder'
@@ -26,15 +25,14 @@ var dataLand = topojson.feature(topodata, topodata.objects.states);
 var scale = 6*(width) / 2 / Math.PI;
 var translate = [width/2, height/2];
 var precision = 0.1;
-var projectionString = 'albersUsa';
+var projectionType = 'albersUsa';
 
-var proj = projection({
-	projection: projectionString,
-	scale: scale,
-	translate: translate,
-	precision: precision
-});
-var geo = geoPath(proj);
+var projection = d3Util.geoAlbersUsa()
+      .scale(scale)
+      .translate(translate)
+      .precision(precision)
+
+var geo = d3Util.geoPath(projection)
 
 var states = dataLand.features.map(function(d, i) {
   return (
@@ -53,10 +51,10 @@ class UsMap extends React.Component {
 	render(){
 		return (
       <Container
-        title= {title}
-        width= {width}
-        height= {height}
-        >
+               width= {width}
+               height= {height}
+               title= {title}
+             >
       {states}
       <UsBorder
         meshClass="state-borders"
