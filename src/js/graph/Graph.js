@@ -17,7 +17,7 @@ var graph = d3Util.select(node)
 				.append("rect")
 				.style("height", d => { return d * 10 + "px"; })
 				.style("width", width / (data.length + 5) )
-				.attr("x", (d, i) => { return i * width/data.length } )
+				.attr("x", (d, i) => { return (i * width/data.length) + 5 } )
 				.attr("y", d => { return height - (d * 10) })
 				.text(d => { return d })
 
