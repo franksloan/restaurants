@@ -1,26 +1,46 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
-import UsMap from './us-maps/UsMap'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import {BrowserRouter as Router, Route, Link, withRouter} from 'react-router-dom'
+import { Menu } from 'semantic-ui-react'
+import NavigationBar from './nav/NavigationBar'
+import Map from './maps/Map'
 import Graph from './graph/Graph'
+import Login from './user/Login'
+import Signup from './user/Signup'
 
 class Home extends React.Component {
 	constructor(){
 		super()
 	}
+
 	render(){
+    console.log(this.props)
+    const { dispatch, quote, isAuthenticated, errorMessage} = this.props
 		return (
       <div>
-        <Router>
+        <Router >
           <div>
-            <ul>
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/map">Map</Link></li>
-              <li><Link to="/graph">Graph</Link></li>
-            </ul>
-            <Route path='/' />
-            <Route path='/map' component={UsMap} />
+            <NavigationBar 
+              dispatch={dispatch} 
+              isAuthenticated= {isAuthenticated}/>
+            <Route path='/' path="/(:filter)"/>
+            <Route path='/map' render={ (props) => (
+              <Map user='Naomi' />
+            ) }/>
             <Route path='/graph' component={Graph} />
+            <Route path='/signup' render={ (props) => (
+              <Signup
+                history={props.history}
+                dispatch={dispatch}
+                errorMessage={errorMessage} />
+            ) }/>
+            <Route path='/login' render={ (props) => (
+              <Login
+                history={props.history}
+                dispatch={dispatch}
+                errorMessage={errorMessage} />
+            ) }/>
           </div>
         </Router>
       </div>
@@ -28,7 +48,28 @@ class Home extends React.Component {
 	}
 }
 
-ReactDOM.render(
-	<Home />,
-	document.getElementById('app')
-)
+
+Home.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  quote: PropTypes.string,
+  isAuthenticated: PropTypes.bool.isRequired,
+  errorMessage: PropTypes.string
+}
+
+// These props come from the application's
+// state when it is started
+function mapStateToProps(state) {
+
+  const { quotes, auth } = state
+  const { quote, authenticated } = quotes
+  const { isAuthenticated, errorMessage } = auth
+
+  return {
+    quote,
+    isAuthenticated,
+    errorMessage
+  }
+}
+
+export default connect(mapStateToProps)(Home)
+// export default Home
