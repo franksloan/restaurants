@@ -26,21 +26,6 @@ var main = function(){
 		res.sendFile(path.join(__dirname, 'dist/index.html'))
 	})
 
-	// server.use(function(err, req, res, next) {
-	//   if (err.name === 'StatusError') {
-	//     res.send(err.status, err.message);
-	//   } else {
-	//     next(err);
-	//   }
-	// });
-
-	server.get('/film', function(req, res){
-		console.log('in here')
-		res.send({
-		  name: 'GAYnor'
-		});
-	});
-
 	server.use(require('./api/user'))
 
 	server.listen(server.get('port'), function(){
@@ -48,10 +33,6 @@ var main = function(){
 		console.log('started ' + server.get('port'))
 		funct(1)
 	});
-
-	// http.createServer(server).listen(port, function (err) {
-	//   console.log('listening in http://localhost:' + port);
-	// });
 
 }
 

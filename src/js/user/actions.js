@@ -16,7 +16,8 @@ function receiveLogin(user) {
     type: LOGIN_SUCCESS,
     isFetching: false,
     isAuthenticated: true,
-    id_token: user.id_token
+    id_token: user.id_token,
+    username: user.username
   }
 }
 
@@ -90,7 +91,8 @@ function receiveLogout() {
   return {
     type: LOGOUT_SUCCESS,
     isFetching: false,
-    isAuthenticated: false
+    isAuthenticated: false,
+    username: ''
   }
 }
 
@@ -123,7 +125,8 @@ function receiveSignup(user) {
     type: SIGNUP_SUCCESS,
     isFetching: false,
     isAuthenticated: true,
-    id_token: user.id_token
+    id_token: user.id_token,
+    username: user.username
   }
 }
 
@@ -164,7 +167,7 @@ export function signupUser(creds, history) {
           // If login was successful, set the token in local storage
           localStorage.setItem('id_token', user.id_token)
           localStorage.setItem('id_token', user.access_token)
-
+          console.log(user)
           // Dispatch the success action
           dispatch(receiveSignup(user))
         }

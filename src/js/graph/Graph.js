@@ -7,7 +7,7 @@ class Graph extends React.Component {
 
 	render(){
 		return (
-      		<div> Yeah </div>
+      		<div>Yeah</div>
     )
 	}
 }

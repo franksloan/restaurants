@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Button } from 'semantic-ui-react'
-import { loginUser } from '../utilities/actions'
+import { loginUser } from './actions'
 
 class Login extends React.Component {
 	constructor(){
@@ -9,12 +9,15 @@ class Login extends React.Component {
     this.handleClick = this.handleClick.bind(this)
 	}
 
+
   handleClick(e){
     const username = this.refs.username
     const password = this.refs.password
     const creds = { username: username.value.trim(), password: password.value.trim() }
+    
     return this.props.dispatch(loginUser(creds, this.props.history))
   }
+
 
 	render(){
     const { history, errorMessage } = this.props

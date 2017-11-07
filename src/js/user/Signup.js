@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Button } from 'semantic-ui-react'
-import { signupUser } from '../utilities/actions'
+import { signupUser } from './actions'
 
 class Signup extends React.Component {
 	constructor(){
@@ -16,7 +16,6 @@ class Signup extends React.Component {
     const newUserCreds = { username: username.value.trim(), 
                            password: password.value.trim(),
                            password2: password2.value.trim() }
-    console.log(newUserCreds)
     return this.props.dispatch(signupUser(newUserCreds, this.props.history))
   }
 

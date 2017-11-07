@@ -10,12 +10,11 @@ import Login from './user/Login'
 import Signup from './user/Signup'
 
 class Home extends React.Component {
-	constructor(){
-		super()
+	constructor(props){
+		super(props)
 	}
 
 	render(){
-    console.log(this.props)
     const { dispatch, quote, isAuthenticated, errorMessage} = this.props
 		return (
       <div>
@@ -26,7 +25,8 @@ class Home extends React.Component {
               isAuthenticated= {isAuthenticated}/>
             <Route path='/' path="/(:filter)"/>
             <Route path='/map' render={ (props) => (
-              <Map user='Naomi' />
+              <Map
+                   dispatch={dispatch} />
             ) }/>
             <Route path='/graph' component={Graph} />
             <Route path='/signup' render={ (props) => (
@@ -53,7 +53,8 @@ Home.propTypes = {
   dispatch: PropTypes.func.isRequired,
   quote: PropTypes.string,
   isAuthenticated: PropTypes.bool.isRequired,
-  errorMessage: PropTypes.string
+  errorMessage: PropTypes.string,
+  username: PropTypes.string
 }
 
 // These props come from the application's
@@ -62,14 +63,15 @@ function mapStateToProps(state) {
 
   const { quotes, auth } = state
   const { quote, authenticated } = quotes
-  const { isAuthenticated, errorMessage } = auth
+  const { isAuthenticated, errorMessage, username } = auth
 
   return {
     quote,
     isAuthenticated,
-    errorMessage
+    errorMessage,
+    username
   }
 }
 
+
 export default connect(mapStateToProps)(Home)
-// export default Home

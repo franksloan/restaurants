@@ -7,7 +7,6 @@ import thunkMiddleware from 'redux-thunk'
 import api from './js/middleware/api'
 import Home from './js/Home'
 import { browserHistory } from 'react-router'
-import { routerMiddleware } from 'react-router-redux'
 
 let createStoreWithMiddleware = applyMiddleware(
 	thunkMiddleware, 

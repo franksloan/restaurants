@@ -2,7 +2,8 @@ import { combineReducers } from 'redux'
 import {
   LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS,
   SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE
-} from './actions'
+} from '../user/actions'
+import maps from './mapsReducer'
 
 // The auth reducer. The starting state sets authentication
 // based on a token being in local storage. In a real app,
@@ -15,14 +16,14 @@ function auth(state = {
     case LOGIN_REQUEST:
       return Object.assign({}, state, {
         isFetching: true,
-        isAuthenticated: false,
-        user: action.creds
+        isAuthenticated: false
       })
     case LOGIN_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
         isAuthenticated: true,
-        errorMessage: ''
+        errorMessage: '',
+        username: action.username
       })
     case LOGIN_FAILURE:
       return Object.assign({}, state, {
@@ -33,19 +34,20 @@ function auth(state = {
     case LOGOUT_SUCCESS:
       return Object.assign({}, state, {
         isFetching: true,
-        isAuthenticated: false
+        isAuthenticated: false,
+        username: ''
       })
     case SIGNUP_REQUEST:
       return Object.assign({}, state, {
         isFetching: true,
-        isAuthenticated: false,
-        user: action.creds
+        isAuthenticated: false
       })
     case SIGNUP_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
         isAuthenticated: true,
-        errorMessage: ''
+        errorMessage: '',
+        username: action.username
       })
     case SIGNUP_FAILURE:
       return Object.assign({}, state, {
@@ -71,7 +73,8 @@ function quotes(state = {}, action) {
 // can be left split apart above
 const quotesApp = combineReducers({
   auth,
-  quotes
+  quotes,
+  maps
 })
 
 export default quotesApp

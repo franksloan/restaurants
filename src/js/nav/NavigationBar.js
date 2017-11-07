@@ -2,12 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import { Menu } from 'semantic-ui-react'
-import { logoutUser } from '../utilities/actions'
+import { logoutUser } from '../user/actions'
 
 class NavigationBar extends React.Component {
 	constructor(){
 		super()
     this.handleItemClick = this.handleItemClick.bind(this)
+    this.handleLogout = this.handleLogout.bind(this)
     this.state = {
       activeItem: 'home'
     }
@@ -16,6 +17,13 @@ class NavigationBar extends React.Component {
   handleItemClick(e, {name}){
     this.setState({ activeItem: name })
   }
+
+
+  handleLogout(e, {name}){
+    this.setState({ activeItem: 'home' })
+    this.props.dispatch(logoutUser())
+  }
+
 
 	render(){
     const { isAuthenticated, dispatch } = this.props
@@ -63,10 +71,10 @@ class NavigationBar extends React.Component {
                 onClick={this.handleItemClick} />
             }
             {!isAuthenticated &&
-              <Menu.Item 
+              <Menu.Item
                 as={Link}
                 to='/login'
-                name='login' 
+                name='login'
                 active={activeItem === 'login'} 
                 onClick={this.handleItemClick} />
             }
@@ -75,7 +83,9 @@ class NavigationBar extends React.Component {
                 name='logout'
                 to='/'
                 active={activeItem === 'logout'} 
-                onClick={() => dispatch(logoutUser())} />
+                onClick={this.handleLogout}>
+                Logout
+              </Menu.Item>
             }
           </Menu.Menu>
         </Menu>

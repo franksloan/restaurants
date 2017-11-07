@@ -1,3 +1,4 @@
 node_modules
 dist/index.js
 start.txt
+.DS_Store

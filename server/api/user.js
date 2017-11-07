@@ -91,7 +91,8 @@ app.post('/users', function(req, res) {
 
   res.status(201).send({
     id_token: createIdToken(profile),
-    access_token: createAccessToken()
+    access_token: createAccessToken(),
+    username: profile.username || profile.email
   });
 });
 
@@ -120,6 +121,7 @@ app.post('/sessions/create', function(req, res) {
 
   res.status(201).send({
   	id_token: createIdToken(user),
-  	access_token: createAccessToken()
+  	access_token: createAccessToken(),
+    username: user.username
   });
 });
