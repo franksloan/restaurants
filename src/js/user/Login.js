@@ -33,7 +33,7 @@ class Login extends React.Component {
             <input ref="password" placeholder='Password' />
           </Form.Field>
           {errorMessage &&
-            <p >{errorMessage}</p>
+            <p>{errorMessage}</p>
           }
           <Button type='submit' 
             onClick={(event) => this.handleClick(event)}>

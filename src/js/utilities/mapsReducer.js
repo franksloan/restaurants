@@ -21,7 +21,6 @@ export default function maps(state = {
         restaurantsList: action.restaurantsList
       })
     case SELECT_RESTAURANT:
-      console.log(action)
       return Object.assign({}, state, {
         activeMarker: action.activeMarker,
         showInfoWindow: action.showInfoWindow,

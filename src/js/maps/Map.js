@@ -25,16 +25,6 @@ class Map extends React.Component {
   		this.setState({ visible: !this.state.visible })
   	}
 
-  	// Executed when a marker is clicked on
-  	// marker props, component
-  	// onRestaurantClick(restaurantName, marker) {
-  	//   this.setState({
-  	//     selectedRestaurant: restaurantName,
-  	//     activeMarker: marker,
-  	//     showInfoWindow: true
-  	//   });
-  	// }
-
 	render(){
 		const { visible } = this.state
 		return (
@@ -74,7 +64,6 @@ class Map extends React.Component {
 // These props come from the application's
 // state when it is started
 function mapStateToProps(state) {
-  
   const { maps } = state
 
   return maps

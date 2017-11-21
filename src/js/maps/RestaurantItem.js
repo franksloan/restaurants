@@ -18,11 +18,11 @@ class RestaurantItem extends React.Component {
 		if (this.props.activeMarker !== prevProps.activeMarker) {
 			if (this.props.showInfoWindow && (this.props.selectedRestaurant === this.props.restaurant.name)) {
 				this.setState({
-					style: {border: "3px solid black"}
+					style: {backgroundColor: "grey"}
 				})
 			} else {
 				this.setState({
-					style: {border: null}
+					style: {backgroundColor: null}
 				})
 			}
 		}
@@ -39,9 +39,9 @@ class RestaurantItem extends React.Component {
 
 
 	getMarker(restaurantName) {
-	  let match_list = this.props.restaurantMarkers.filter(item =>
-	    item.props.name === restaurantName
-	  )
+	  let match_list = this.props.restaurantMarkers.filter(item => {
+	    return item.title === restaurantName
+	  })
 	  if (match_list) {
 	    return match_list[0]
 	  }

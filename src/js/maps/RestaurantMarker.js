@@ -1,5 +1,17 @@
 import React from 'react'
-import { Marker } from 'google-maps-react'
+
+var wrappedPromise = function wrappedPromise() {
+  var wrappedPromise = {},
+      promise = new Promise(function (resolve, reject) {
+    wrappedPromise.resolve = resolve;
+    wrappedPromise.reject = reject;
+  });
+  wrappedPromise.then = promise.then.bind(promise);
+  wrappedPromise.catch = promise.catch.bind(promise);
+  wrappedPromise.promise = promise;
+
+  return wrappedPromise;
+};
 
 class RestaurantMarker extends React.Component {
 	constructor(props){
@@ -7,18 +19,51 @@ class RestaurantMarker extends React.Component {
 		this.onMarkerClick = this.onMarkerClick.bind(this)
 	}
 
+	componentDidMount(){
+		this.markerPromise = wrappedPromise()
+		this.renderMarker()
+	}
 
-	// If the active marker that has been clicked on is different
-	// and it is this restaurant then highlight it
-	componentWillMount(prevProps, prevState){	
 
-		this.marker = (<Marker 
-	          position={this.props.restaurant.position}
-	          name={this.props.restaurant.name}
-	          icon={{url: "/images/icons8-marker.png"}}
-	          onClick={this.onMarkerClick} />)
+	componentDidUpdate(){
+	      if (this.marker || !this.props.map) {
+	        return;
+	      }
+	      this.renderMarker();
+	}
+
+
+	renderMarker(){
+		let google = this.props.google
+
+		if(!google){
+			return
+		}
+		let pos = this.props.position
+		let position = new google.maps.LatLng(pos.lat, pos.lng)
+
+		var pref = {
+			position: position,
+			map: this.props.map,
+			icon: this.props.icon,
+			title: this.props.name
+		}
+
+		this.marker = new google.maps.Marker(pref)
+
+		this.marker.addListener('click', this.handleEvent())
+	
+		this.markerPromise.resolve(this.marker)
 
 		this.props.addMarker(this.marker)
+	}
+
+	handleEvent(){
+		let _this = this
+		return function(e){
+			_this.onMarkerClick(_this.props, _this.marker)
+		}
+
 	}
 
 
@@ -28,9 +73,8 @@ class RestaurantMarker extends React.Component {
 
 
 	render(){
-		let marker = this.marker
 		return (
-			{marker}
+			null
     	)
 	}
 }

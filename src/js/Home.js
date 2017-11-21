@@ -5,7 +5,7 @@ import {BrowserRouter as Router, Route, Link, withRouter} from 'react-router-dom
 import { Menu } from 'semantic-ui-react'
 import NavigationBar from './nav/NavigationBar'
 import Map from './maps/Map'
-import Graph from './graph/Graph'
+import Graph from './add_restaurant/AddRestaurant'
 import Login from './user/Login'
 import Signup from './user/Signup'
 
