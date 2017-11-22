@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "testme": "set NODE_ENV=test&&npm run test",
-    "test": "mocha -w test_helpers/browser.js src/js/**/*.spec.js",
-    "dev": "webpack-dev-server --progress --colors --hot --inline"
+    "test": "mocha -w test_helpers/browser.js src/js/**/*.spec.js"
   },
   "author": "",
   "license": "ISC",
@@ -29,13 +28,11 @@
     "webpack-middleware": "^1.5.1"
   },
   "dependencies": {
-    "auth0-js": "^8.10.1",
-    "auth0-lock": "^10.20.0",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "google-maps-react": "^1.1.0",
     "http": "0.0.0",
-    "jsonwebtoken": "^8.0.0",
+    "jsonwebtoken": "^8.1.0",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
