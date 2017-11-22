@@ -145,14 +145,14 @@ export function signupUser(creds, history) {
   let config = {
     method: 'POST',
     headers: { 'Content-Type':'application/x-www-form-urlencoded' },
-    body: `username=${creds.username}&password=${creds.password}&password2=${creds.password2}`
+    body: `username=${creds.username}&email=${creds.email}&password=${creds.password}&passwordConf=${creds.passwordConf}`
   }
 
   return dispatch => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestSignup(creds))
 
-    return fetch('http://localhost:5050/users', config)
+    return fetch('http://localhost:5050/users_create', config)
       .then(response =>
         response.json()
           .then(user => ({ user, response }))
