@@ -32,7 +32,7 @@ function loginError(message) {
 
 
 export function loginUser(creds, history) {
-
+  console.log(creds)
   let config = {
     method: 'POST',
     headers: { 'Content-Type':'application/x-www-form-urlencoded' },
@@ -43,7 +43,7 @@ export function loginUser(creds, history) {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
 
-    return fetch('http://localhost:5050/sessions/create', config)
+    return fetch('http://localhost:5050/user_login', config)
       .then(response =>
         response.json()
           .then(user => ({ user, response }))
@@ -98,10 +98,13 @@ function receiveLogout() {
 
 // Logs the user out
 export function logoutUser() {
+
   return dispatch => {
+    // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogout())
     localStorage.removeItem('id_token')
     localStorage.removeItem('access_token')
+
     dispatch(receiveLogout())
   }
 }
@@ -152,7 +155,7 @@ export function signupUser(creds, history) {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestSignup(creds))
 
-    return fetch('http://localhost:5050/users_create', config)
+    return fetch('http://localhost:5050/user_create', config)
       .then(response =>
         response.json()
           .then(user => ({ user, response }))

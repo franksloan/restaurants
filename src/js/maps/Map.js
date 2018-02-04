@@ -5,15 +5,15 @@ import { Container } from 'semantic-ui-react'
 import GoogleApiWrapper from './GoogleApiWrapper'
 import RestaurantScroll from './RestaurantScroll'
 import { Sidebar, Button} from 'semantic-ui-react'
-import { addMarker, loadRestaurants, onRestaurantClick } from './actions'
+import { addMarker, loadRestaurants, onRestaurantClick, clearMarkers } from './actions'
 
 class Map extends React.Component {
 	constructor(){
 		super()
 		this.toggleVisibility = this.toggleVisibility.bind(this)
-		// this.onRestaurantClick = this.onRestaurantClick.bind(this)
 		this.state = {
-			visible: true
+			visible: true,
+			id2: Math.random() * 10
 		}
 	}
 
@@ -21,9 +21,9 @@ class Map extends React.Component {
 	    this.props.loadRestaurants();
 	}
 
-  	toggleVisibility(){
-  		this.setState({ visible: !this.state.visible })
-  	}
+	toggleVisibility(){
+		this.setState({ visible: !this.state.visible })
+	}
 
 	render(){
 		const { visible } = this.state
@@ -37,25 +37,27 @@ class Map extends React.Component {
 	            visible={visible}
 	            icon='labeled'
 	          >
-	          	<GoogleApiWrapper 
+	          	<GoogleApiWrapper
 	          		addMarker={this.props.addMarker}
 	          		restaurantsList={this.props.restaurantsList}
-	          		restaurantMarkers={this.props.restaurantMarkers}
+	          		googleRestaurantMarkers={this.props.googleRestaurantMarkers}
+								reactRestaurantMarkers={this.props.reactRestaurantMarkers}
 	          		onRestaurantClick={this.props.onRestaurantClick}
 	          		showInfoWindow={this.props.showInfoWindow}
 	          		activeMarker={this.props.activeMarker}
-	          		selectedRestaurant={this.props.selectedRestaurant} />
+	          		selectedRestaurant={this.props.selectedRestaurant}
+								clearMarkers={this.props.clearMarkers} />
 	          </Sidebar>
 	          <Sidebar.Pusher>
-	            <RestaurantScroll 
+	            <RestaurantScroll
 	            	restaurantsList={this.props.restaurantsList}
-	            	restaurantMarkers={this.props.restaurantMarkers}
+	            	googleRestaurantMarkers={this.props.googleRestaurantMarkers}
 	            	onRestaurantClick={this.props.onRestaurantClick}
 	            	showInfoWindow={this.props.showInfoWindow}
 	            	activeMarker={this.props.activeMarker}
 	            	selectedRestaurant={this.props.selectedRestaurant} />
 	          </Sidebar.Pusher>
-	        </Sidebar.Pushable>	
+	        </Sidebar.Pushable>
 	      </div>
     	)
 	}
@@ -71,7 +73,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        ...bindActionCreators({ addMarker, loadRestaurants, onRestaurantClick }, dispatch)
+        ...bindActionCreators({ addMarker, loadRestaurants, onRestaurantClick, clearMarkers }, dispatch)
     }
 }
 

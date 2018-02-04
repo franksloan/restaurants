@@ -1,6 +1,7 @@
 export const SELECT_RESTAURANT = 'SELECT_RESTAURANT'
 export const ADD_MARKER = 'ADD_MARKER'
 export const LOAD_RESTAURANTS = 'LOAD_RESTAURANTS'
+export const CLEAR_MARKERS = 'CLEAR_MARKERS'
 
 export function onRestaurantClick(restaurantName, marker) {
   return {
@@ -18,6 +19,12 @@ export function addMarker(marker){
   }
 }
 
+export function clearMarkers(){
+  return {
+    type: CLEAR_MARKERS
+  }
+}
+
 export function loadRestaurants(){
   return {
     type: LOAD_RESTAURANTS,
@@ -26,7 +33,7 @@ export function loadRestaurants(){
 }
 
 const restaurantsList = [
-  { 
+  {
     id: 1,
     name: "Barrafina",
     link: "http://www.barrafina.co.uk/",

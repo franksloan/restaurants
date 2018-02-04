@@ -1,4 +1,4 @@
-import {Map, InfoWindow, GoogleApiWrapper, Marker } from 'google-maps-react'
+import {Map, InfoWindow, GoogleApiWrapper } from 'google-maps-react'
 import React from 'react'
 import { Icon } from 'semantic-ui-react'
 import RestaurantMarker from './RestaurantMarker'
@@ -17,10 +17,11 @@ export class MapContainer extends React.Component {
   }
 
   componentWillReceiveProps(newProps){
-    if(newProps && this.state.restaurantMarkers.length ==0 && newProps.restaurantsList.length !== this.props.restaurantsList.length){
+    if(newProps &&
+      this.props.reactRestaurantMarkers.length == 0 ){
       let restaurantsList = newProps.restaurantsList
       let restaurantMarkers = restaurantsList.map( (restaurant) => {
-          let marker = <RestaurantMarker 
+          let marker = <RestaurantMarker
               key={restaurant.id}
               position={restaurant.position}
               google={newProps.google}
@@ -28,7 +29,7 @@ export class MapContainer extends React.Component {
               icon={{url: "/images/icons8-marker.png"}}
               onRestaurantClick={this.props.onRestaurantClick}
               addMarker={this.props.addMarker} />
-              return marker
+          return marker
         })
       this.setState({
         restaurantMarkers: restaurantMarkers
@@ -37,15 +38,20 @@ export class MapContainer extends React.Component {
   }
 
 
+  componentWillUnmount(){
+    this.props.clearMarkers()
+  }
+
+
   render() {
     let activeMarker = this.props.activeMarker
     return (
-      <Map 
-        google={this.props.google} 
+      <Map
+        google={this.props.google}
         zoom={13}
         style={style}
         initialCenter={{
-            lat: 51.507781, 
+            lat: 51.507781,
             lng: -0.109348
           }} >
         {this.state.restaurantMarkers}
@@ -60,7 +66,7 @@ export class MapContainer extends React.Component {
     )
   }
 }
- 
+
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyA-vIs4_qlNrbXIzBYFJZKF9B8lkw0-S4I'
 })(MapContainer)

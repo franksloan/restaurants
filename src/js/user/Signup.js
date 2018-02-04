@@ -47,7 +47,7 @@ class Signup extends React.Component {
           }
           <Button type='submit' 
             onClick={(event) => this.handleClick(event)}>
-            Login
+            Signup
           </Button>
         </Form>
       </div>

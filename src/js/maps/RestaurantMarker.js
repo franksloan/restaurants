@@ -26,10 +26,10 @@ class RestaurantMarker extends React.Component {
 
 
 	componentDidUpdate(){
-	      if (this.marker || !this.props.map) {
-	        return;
-	      }
-	      this.renderMarker();
+    if (this.marker || !this.props.map) {
+      return;
+    }
+    this.renderMarker();
 	}
 
 
@@ -52,7 +52,7 @@ class RestaurantMarker extends React.Component {
 		this.marker = new google.maps.Marker(pref)
 
 		this.marker.addListener('click', this.handleEvent())
-	
+
 		this.markerPromise.resolve(this.marker)
 
 		this.props.addMarker(this.marker)
@@ -63,7 +63,6 @@ class RestaurantMarker extends React.Component {
 		return function(e){
 			_this.onMarkerClick(_this.props, _this.marker)
 		}
-
 	}
 
 

@@ -1,21 +1,32 @@
 import {
-  ADD_MARKER, LOAD_RESTAURANTS, SELECT_RESTAURANT
+  ADD_MARKER, LOAD_RESTAURANTS, SELECT_RESTAURANT, CLEAR_MARKERS
 } from '../maps/actions'
+import React from 'react'
 
 // The maps reducer. The starting state sets authentication
 // based on a token being in local storage. In a real app,
 // we would also want a util to check if the token is expired.
 export default function maps(state = {
-    restaurantMarkers: [],
+    googleRestaurantMarkers: [],
+    reactRestaurantMarkers: [],
     restaurantsList: []
   }, action) {
   switch (action.type) {
     case ADD_MARKER:
-      let restaurantMarkers = state.restaurantMarkers
-      restaurantMarkers.push(action.marker)
+      let googleRestaurantMarkers = state.googleRestaurantMarkers
+      googleRestaurantMarkers.push(action.marker)
+
       return Object.assign({}, state, {
-        restaurantMarkers: restaurantMarkers
+        googleRestaurantMarkers: googleRestaurantMarkers
       })
+    case CLEAR_MARKERS:
+    return Object.assign({}, state, {
+      googleRestaurantMarkers: [],
+      reactRestaurantMarkers: [],
+      activeMarker: null,
+      showInfoWindow: false,
+      selectedRestaurant: ''
+    })
     case LOAD_RESTAURANTS:
       return Object.assign({}, state, {
         restaurantsList: action.restaurantsList

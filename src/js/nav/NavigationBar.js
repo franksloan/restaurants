@@ -10,7 +10,8 @@ class NavigationBar extends React.Component {
     this.handleItemClick = this.handleItemClick.bind(this)
     this.handleLogout = this.handleLogout.bind(this)
     this.state = {
-      activeItem: 'home'
+      activeItem: 'home',
+			id2: Math.random() * 10
     }
 	}
 
@@ -26,6 +27,7 @@ class NavigationBar extends React.Component {
 
 
 	render(){
+
     const { isAuthenticated, dispatch } = this.props
 
     const activeItem = this.state.activeItem
@@ -63,11 +65,11 @@ class NavigationBar extends React.Component {
           </Menu.Item>
           <Menu.Menu position='right'>
             {!isAuthenticated &&
-              <Menu.Item 
+              <Menu.Item
                 as={Link}
                 to='/signup'
-                name='signup' 
-                active={activeItem === 'signup'} 
+                name='signup'
+                active={activeItem === 'signup'}
                 onClick={this.handleItemClick} />
             }
             {!isAuthenticated &&
@@ -75,14 +77,14 @@ class NavigationBar extends React.Component {
                 as={Link}
                 to='/login'
                 name='login'
-                active={activeItem === 'login'} 
+                active={activeItem === 'login'}
                 onClick={this.handleItemClick} />
             }
             {isAuthenticated &&
-              <Menu.Item 
+              <Menu.Item
                 name='logout'
                 to='/'
-                active={activeItem === 'logout'} 
+                active={activeItem === 'logout'}
                 onClick={this.handleLogout}>
                 Logout
               </Menu.Item>

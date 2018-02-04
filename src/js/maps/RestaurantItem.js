@@ -14,7 +14,7 @@ class RestaurantItem extends React.Component {
 
 	// If the active marker that has been clicked on is different
 	// and it is this restaurant then highlight it
-	componentDidUpdate(prevProps, prevState){	
+	componentDidUpdate(prevProps, prevState){
 		if (this.props.activeMarker !== prevProps.activeMarker) {
 			if (this.props.showInfoWindow && (this.props.selectedRestaurant === this.props.restaurant.name)) {
 				this.setState({
@@ -30,6 +30,7 @@ class RestaurantItem extends React.Component {
 
 	onItemClick(){
 		let restaurantMarker = this.getMarker(this.props.restaurant.name)
+		
 		if(restaurantMarker){
 			this.props.onRestaurantClick(this.props.restaurant.name, restaurantMarker)
 		} else {
@@ -39,7 +40,7 @@ class RestaurantItem extends React.Component {
 
 
 	getMarker(restaurantName) {
-	  let match_list = this.props.restaurantMarkers.filter(item => {
+	  let match_list = this.props.googleRestaurantMarkers.filter(item => {
 	    return item.title === restaurantName
 	  })
 	  if (match_list) {

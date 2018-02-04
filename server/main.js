@@ -26,25 +26,22 @@ var main = function(){
 	server.use(bodyParser.json());
 	server.use(bodyParser.urlencoded({extended: true}));
 	server.use(webpackMiddleware(compiler));
+	mongoose.Promise = global.Promise;
 
-	mongoose.connect('mongodb://localhost/testForAuth');
-	var db = mongoose.connection;
+	var promise = mongoose.connect('mongodb://localhost/testForAuth',
+									{ useMongoClient: true });
 
-	//handle mongo error
-	db.on('error', console.error.bind(console, 'connection error:'));
-	db.once('open', function () {
-	  // we're connected!
-	});
-
-	// use sessions to track logins
-	server.use(session({
-		secret: 'work',
-		resave: true,
-   		saveUninitialized: false,
-   		store: new MongoStore({
-   		  mongooseConnection: db
-   		})
-	}))
+	promise.then((db) => {
+		db.on('error', console.error.bind(console, 'connection error:'));
+		server.use(session({
+			secret: 'work',
+			resave: true,
+	   		saveUninitialized: false,
+	   		store: new MongoStore({
+	   		  mongooseConnection: db
+	   		})
+		}))
+	})
 
 	server.get('/', function response(req, res){
 		res.sendFile(path.join(__dirname, 'dist/index.html'))

@@ -10,14 +10,14 @@ class RestaurantScroll extends React.Component {
 	render(){
 		let restaurantsList = this.props.restaurantsList
 		let restaurants = restaurantsList.map( (restaurant) =>
-				<RestaurantItem 
+				<RestaurantItem
 					key={restaurant.id}
 					restaurant={restaurant}
 					onRestaurantClick={this.props.onRestaurantClick}
 					activeMarker={this.props.activeMarker}
 					showInfoWindow={this.props.showInfoWindow}
 					selectedRestaurant={this.props.selectedRestaurant}
-					restaurantMarkers={this.props.restaurantMarkers} />
+					googleRestaurantMarkers={this.props.googleRestaurantMarkers} />
 			)
 		return (
 	      	<Item.Group>
