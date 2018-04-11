@@ -25,28 +25,35 @@ export function clearMarkers(){
   }
 }
 
-export function loadRestaurants(){
+function addRestaurants(restaurantsList){
   return {
     type: LOAD_RESTAURANTS,
     restaurantsList
   }
 }
 
-const restaurantsList = [
-  {
-    id: 1,
-    name: "Barrafina",
-    link: "http://www.barrafina.co.uk/",
-    address: "10 Adelaide St, London WC2N 4HZ",
-    position: {lat: 51.5093954, lng: -0.1257111},
-    averageRating: 8.6
-  },
-  {
-    id: 2,
-    name: "Hoppers Soho",
-    link: "https://www.hopperslondon.com/",
-    address: "49 Frith Street, London",
-    position: {lat: 51.51360649999999, lng: -0.1316802},
-    averageRating: 8.2
+export function loadRestaurants() {
+
+  let config = {
+    method: 'GET',
+    headers: { 'Content-Type':'application/x-www-form-urlencoded' }
   }
-]
+
+  return dispatch => {
+
+    return fetch('http://localhost:5050/get_restaurants', config)
+      .then(response =>
+        response.json()
+          .then(body => ({ body, response }))
+      )
+      .then(({ body, response }) =>  {
+        if(!response.ok){
+          console.error('Could not retrieve restaurants');
+        } else {
+          dispatch(addRestaurants(body.restaurants))
+        }
+      }
+    )
+      .catch( err => console.log("Error: ", err.message))
+  }
+}

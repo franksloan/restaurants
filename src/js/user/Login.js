@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Button } from 'semantic-ui-react'
+import { Button, Form, FormGroup, FormControl, ControlLabel, Col } from 'react-bootstrap'
 import { loginUser } from './actions'
 
 class Login extends React.Component {
@@ -11,10 +11,9 @@ class Login extends React.Component {
 
 
   handleClick(e){
-    const username = this.refs.username
-    const password = this.refs.password
-    const creds = { username: username.value.trim(), password: password.value.trim() }
-    
+		// e.preventDefault()
+    const creds = { username: this.usernameEmail.value.trim(), password: this.password.value.trim() }
+
     return this.props.dispatch(loginUser(creds, this.props.history))
   }
 
@@ -23,23 +22,42 @@ class Login extends React.Component {
     const { history, errorMessage } = this.props
 		return (
       <div>
-        <Form>
-          <Form.Field>
-            <label>Username</label>
-            <input ref="username" placeholder='Email address or username' />
-          </Form.Field>
-          <Form.Field>
-            <label>Password</label>
-            <input ref="password" placeholder='Password' />
-          </Form.Field>
-          {errorMessage &&
-            <p>{errorMessage}</p>
+			<Form horizontal>
+				  <FormGroup controlId="usernameEmail">
+						<Col componentClass={ControlLabel} sm={2}>
+							Username or email
+						</Col>
+						<Col sm={10}>
+							<FormControl
+								inputRef={ref => { this.usernameEmail = ref } }
+								type="usernameEmail"
+								placeholder="Username or email" />
+						</Col>
+					</FormGroup>
+
+					<FormGroup controlId="password">
+						<Col componentClass={ControlLabel} sm={2}>
+							Password
+						</Col>
+						<Col sm={10}>
+							<FormControl
+								inputRef={ref => { this.password = ref } }
+								type="password"
+								placeholder="Password" />
+						</Col>
+					</FormGroup>
+					{errorMessage &&
+            <p >{errorMessage}</p>
           }
-          <Button type='submit' 
-            onClick={(event) => this.handleClick(event)}>
-            Login
-          </Button>
-        </Form>
+					<FormGroup>
+						<Col smOffset={2} sm={10}>
+							<Button type='submit'
+		            onClick={(event) => this.handleClick(event)}>
+		            Login
+		          </Button>
+						</Col>
+					</FormGroup>
+					</Form>
       </div>
     )
 	}

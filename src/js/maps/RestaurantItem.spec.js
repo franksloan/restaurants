@@ -3,7 +3,7 @@ import { mount, shallow } from 'enzyme';
 import {expect} from 'chai';
 import sinon from 'sinon';
 import RestaurantItem from './RestaurantItem'
-import { Item } from 'semantic-ui-react'
+import { ListGroupItem } from 'react-bootstrap'
 
 
 describe('RestaurantItem component', () => {
@@ -17,7 +17,7 @@ describe('RestaurantItem component', () => {
 
   	const wrapper = shallow(<RestaurantItem restaurant={restaurant} />)
 
-    expect(wrapper.find(Item.Header).find('a').text()).to.equal('Barrafina');
+    expect(wrapper.find(ListGroupItem).find('a').text()).to.equal('Barrafina');
   })
 
   it('sets a new active restaurant when clicked', () => {
@@ -34,12 +34,12 @@ describe('RestaurantItem component', () => {
 
     const restaurantClickSpy = sinon.spy()
 
-    const wrapper = shallow(<RestaurantItem 
-      restaurant={restaurant} 
-      restaurantMarkers={restaurantMarkers}
+    const wrapper = shallow(<RestaurantItem
+      restaurant={restaurant}
+      googleRestaurantMarkers={restaurantMarkers}
       onRestaurantClick={restaurantClickSpy} />)
 
-    wrapper.find(Item).simulate('click')
+    wrapper.find(ListGroupItem).simulate('click')
 
     expect(restaurantClickSpy.callCount).to.equal(1)
     expect(restaurantClickSpy.calledWith(marker3.title, marker3)).to.be.true;
@@ -58,12 +58,12 @@ describe('RestaurantItem component', () => {
 
     const restaurantClickSpy = sinon.spy()
 
-    const wrapper = shallow(<RestaurantItem 
-      restaurant={restaurant} 
-      restaurantMarkers={restaurantMarkers}
+    const wrapper = shallow(<RestaurantItem
+      restaurant={restaurant}
+      googleRestaurantMarkers={restaurantMarkers}
       onRestaurantClick={restaurantClickSpy} />)
 
-    wrapper.find(Item).simulate('click')
+    wrapper.find(ListGroupItem).simulate('click')
 
     expect(restaurantClickSpy.callCount).to.equal(0)
   })

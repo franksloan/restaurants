@@ -1,96 +1,79 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Link} from 'react-router-dom'
-import { Menu } from 'semantic-ui-react'
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import { logoutUser } from '../user/actions'
 
 class NavigationBar extends React.Component {
 	constructor(){
 		super()
-    this.handleItemClick = this.handleItemClick.bind(this)
     this.handleLogout = this.handleLogout.bind(this)
-    this.state = {
-      activeItem: 'home',
-			id2: Math.random() * 10
-    }
 	}
 
-  handleItemClick(e, {name}){
-    this.setState({ activeItem: name })
-  }
 
-
-  handleLogout(e, {name}){
-    this.setState({ activeItem: 'home' })
+  handleLogout(e){
     this.props.dispatch(logoutUser())
   }
 
 
 	render(){
-
     const { isAuthenticated, dispatch } = this.props
-
-    const activeItem = this.state.activeItem
 		return (
       <div>
-        <Menu>
-          <Menu.Item
-            as={Link}
-            to='/'
-            name='home'
-            active={activeItem === 'home'}
-            onClick={this.handleItemClick}
-          >
-            Home
-          </Menu.Item>
-
-          <Menu.Item
-            as={Link}
-            to='/map'
-            name='map'
-            active={activeItem === 'map'}
-            onClick={this.handleItemClick}
-          >
-            Map
-          </Menu.Item>
-
-          <Menu.Item
-            as={Link}
-            to='/graph'
-            name='graph'
-            active={activeItem === 'graph'}
-            onClick={this.handleItemClick}
-          >
-            Graph
-          </Menu.Item>
-          <Menu.Menu position='right'>
-            {!isAuthenticated &&
-              <Menu.Item
-                as={Link}
-                to='/signup'
-                name='signup'
-                active={activeItem === 'signup'}
-                onClick={this.handleItemClick} />
-            }
-            {!isAuthenticated &&
-              <Menu.Item
-                as={Link}
-                to='/login'
-                name='login'
-                active={activeItem === 'login'}
-                onClick={this.handleItemClick} />
-            }
-            {isAuthenticated &&
-              <Menu.Item
-                name='logout'
-                to='/'
-                active={activeItem === 'logout'}
-                onClick={this.handleLogout}>
-                Logout
-              </Menu.Item>
-            }
-          </Menu.Menu>
-        </Menu>
+				<Navbar inverse collapseOnSelect>
+					<LinkContainer to='/'>
+					  <Navbar.Header>
+					    <Navbar.Brand
+		            title='home' >
+					      Home
+					    </Navbar.Brand>
+					    <Navbar.Toggle />
+					  </Navbar.Header>
+					</LinkContainer>
+				  <Navbar.Collapse>
+			    <Nav>
+					  <LinkContainer to='/map'>
+				      <NavItem
+								title='map'>
+				        Map
+				      </NavItem>
+						</LinkContainer>
+						<LinkContainer to='/add_restaurant'>
+				      <NavItem
+								title='add_restaurant'>
+				        Add restaurant
+				      </NavItem>
+						</LinkContainer>
+			    </Nav>
+			    <Nav pullRight>
+						{!isAuthenticated &&
+						  <LinkContainer to='/signup'>
+					      <NavItem
+									title='signup'>
+					        Signup
+					      </NavItem>
+						  </LinkContainer>
+						}
+						{!isAuthenticated &&
+							<LinkContainer to='/login'>
+					      <NavItem
+									title='login'>
+					        Login
+					      </NavItem>
+						  </LinkContainer>
+						}
+						{isAuthenticated &&
+							<LinkContainer to='/logout'>
+					      <NavItem
+									title='logout'
+									onClick={this.handleLogout}>
+					        Logout
+					      </NavItem>
+						  </LinkContainer>
+						}
+			    </Nav>
+			  	</Navbar.Collapse>
+				</Navbar>
       </div>
     )
 	}

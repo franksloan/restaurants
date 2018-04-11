@@ -40,11 +40,17 @@ app.post('/user_login', function(req, res, next) {
 
     User.authenticate(req.body.username, req.body.password, function (error, user) {
 
-      if (error || !user) {
-        var err = new Error('Wrong email or password.');
+      if (error){
+        console.log(error)
+        var err = new Error('Something went wrong.');
         err.status = 401;
         return next(err);
+      } else if (!user) {
+        res.status(201).send({
+        	error: new Error('Username or password was not valid')
+        });
       } else {
+        console.log("Login success for " + user.username)
         res.status(201).send({
         	id_token: user._id,
         	access_token: 2,

@@ -3,14 +3,14 @@ import { mount, shallow } from 'enzyme';
 import {expect} from 'chai';
 import sinon from 'sinon';
 import Login from './Login'
-import { Form, Button } from 'semantic-ui-react'
+import { Button, Form, FormGroup, FormControl, ControlLabel, Col } from 'react-bootstrap'
 
 
 describe('Login Component', () => {
   it('has two fields and a button', () => {
   	const wrapper = shallow(<Login />)
 
-    expect(wrapper.find(Form.Field)).to.have.length(2);
+    expect(wrapper.find(FormControl)).to.have.length(2);
     expect(wrapper.find(Button)).to.have.length(1);
   })
 
@@ -26,11 +26,11 @@ describe('Login Component', () => {
   	const wrapper = mount(<Login dispatch={dispatchSpy} />)
 
   	let usernameChange = {target: { value: 'Johnny'} }
-    let usernameInput = wrapper.find(Form.Field).first()
+    let usernameInput = wrapper.find(FormControl).first()
     usernameInput.find('input').simulate('change', usernameChange)
 
     let passwordChange = {target: { value: 'Bravo'} }
-    let passwordInput = wrapper.find(Form.Field).last()
+    let passwordInput = wrapper.find(FormControl).last()
     passwordInput.find('input').simulate('change', passwordChange)
 
     wrapper.find(Button).simulate('click')

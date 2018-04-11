@@ -32,7 +32,7 @@ function loginError(message) {
 
 
 export function loginUser(creds, history) {
-  console.log(creds)
+
   let config = {
     method: 'POST',
     headers: { 'Content-Type':'application/x-www-form-urlencoded' },
@@ -44,11 +44,11 @@ export function loginUser(creds, history) {
     dispatch(requestLogin(creds))
 
     return fetch('http://localhost:5050/user_login', config)
-      .then(response =>
-        response.json()
-          .then(user => ({ user, response }))
-      )
+      .then(response => response.json()
+        .then(user => ({ user, response }))
+        )
       .then(({ user, response }) =>  {
+        console.log(response)
         if (!response.ok) {
           // If there was a problem, we want to
           // dispatch the error condition
@@ -115,6 +115,7 @@ export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS'
 export const SIGNUP_FAILURE = 'SIGNUP_FAILURE'
 
 function requestSignup(creds) {
+  console.log(creds)
   return {
     type: SIGNUP_REQUEST,
     isFetching: true,
@@ -156,11 +157,11 @@ export function signupUser(creds, history) {
     dispatch(requestSignup(creds))
 
     return fetch('http://localhost:5050/user_create', config)
-      .then(response =>
-        response.json()
+      .then(response => response.json()
           .then(user => ({ user, response }))
-      )
-      .then(({ user, response }) =>  {
+          )
+      .then(({user, response}) =>  {
+        console.log(user)
         if (!response.ok) {
           // If there was a problem, we want to
           // dispatch the error condition

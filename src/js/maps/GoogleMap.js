@@ -1,6 +1,5 @@
 import {Map, InfoWindow, GoogleApiWrapper } from 'google-maps-react'
 import React from 'react'
-import { Icon } from 'semantic-ui-react'
 import RestaurantMarker from './RestaurantMarker'
 
 const style = {
@@ -8,7 +7,7 @@ const style = {
   height: '100%'
 }
 
-export class MapContainer extends React.Component {
+export class GoogleMap extends React.Component {
   constructor(){
     super()
     this.state = {
@@ -17,8 +16,7 @@ export class MapContainer extends React.Component {
   }
 
   componentWillReceiveProps(newProps){
-    if(newProps &&
-      this.props.reactRestaurantMarkers.length == 0 ){
+    if(newProps){
       let restaurantsList = newProps.restaurantsList
       let restaurantMarkers = restaurantsList.map( (restaurant) => {
           let marker = <RestaurantMarker
@@ -69,4 +67,4 @@ export class MapContainer extends React.Component {
 
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyA-vIs4_qlNrbXIzBYFJZKF9B8lkw0-S4I'
-})(MapContainer)
+})(GoogleMap)

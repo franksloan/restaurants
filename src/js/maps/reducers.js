@@ -1,6 +1,6 @@
 import {
   ADD_MARKER, LOAD_RESTAURANTS, SELECT_RESTAURANT, CLEAR_MARKERS
-} from '../maps/actions'
+} from './actions'
 import React from 'react'
 
 // The maps reducer. The starting state sets authentication
@@ -8,7 +8,6 @@ import React from 'react'
 // we would also want a util to check if the token is expired.
 export default function maps(state = {
     googleRestaurantMarkers: [],
-    reactRestaurantMarkers: [],
     restaurantsList: []
   }, action) {
   switch (action.type) {
@@ -20,13 +19,13 @@ export default function maps(state = {
         googleRestaurantMarkers: googleRestaurantMarkers
       })
     case CLEAR_MARKERS:
-    return Object.assign({}, state, {
-      googleRestaurantMarkers: [],
-      reactRestaurantMarkers: [],
-      activeMarker: null,
-      showInfoWindow: false,
-      selectedRestaurant: ''
-    })
+      state.googleRestaurantMarkers[0].setMap(null)
+      return Object.assign({}, state, {
+        googleRestaurantMarkers: [],
+        activeMarker: null,
+        showInfoWindow: false,
+        selectedRestaurant: ''
+      })
     case LOAD_RESTAURANTS:
       return Object.assign({}, state, {
         restaurantsList: action.restaurantsList

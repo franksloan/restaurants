@@ -3,7 +3,7 @@ import { mount, shallow } from 'enzyme';
 import {expect} from 'chai';
 import sinon from 'sinon';
 import RestaurantScroll from './RestaurantScroll'
-import { Item } from 'semantic-ui-react'
+import { ListGroup } from 'react-bootstrap'
 
 
 describe('RestaurantScroll component', () => {
@@ -17,6 +17,6 @@ describe('RestaurantScroll component', () => {
   			name: 'Barrafina'
   		}]
   	const wrapper = shallow(<RestaurantScroll restaurantsList={restaurants}/>)
-    expect(wrapper.find(Item.Group).children()).to.have.length(restaurants.length)
+    expect(wrapper.find(ListGroup).children()).to.have.length(restaurants.length)
   })
 })

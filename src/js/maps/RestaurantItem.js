@@ -1,5 +1,5 @@
 import React from 'react'
-import { Item , Icon, Label } from 'semantic-ui-react'
+import { Button, ListGroupItem, Panel } from 'react-bootstrap'
 
 class RestaurantItem extends React.Component {
 	constructor(){
@@ -30,7 +30,7 @@ class RestaurantItem extends React.Component {
 
 	onItemClick(){
 		let restaurantMarker = this.getMarker(this.props.restaurant.name)
-		
+
 		if(restaurantMarker){
 			this.props.onRestaurantClick(this.props.restaurant.name, restaurantMarker)
 		} else {
@@ -55,17 +55,21 @@ class RestaurantItem extends React.Component {
 	render(){
 		let restaurant = this.props.restaurant
 		return (
-	      <Item style={this.state.style} onClick={this.onItemClick}>
-	      	<Item.Content style={{padding: "10px"}}>
-	      		<Item.Header><a href={restaurant.link}>{restaurant.name}</a></Item.Header>
-		      	<Item.Meta>Rating: {restaurant.averageRating}</Item.Meta>
-		      	<Item.Meta><Icon name='heart' color='red'/>
-		      		<Label>Naomi</Label>
-		      		<Label>Frank</Label>
-		      	</Item.Meta>
-		      	<Item.Content>{restaurant.address}</Item.Content>
-	      	</Item.Content>
-	      </Item>
+	      <ListGroupItem style={this.state.style} onClick={this.onItemClick}>
+					<Panel bsStyle="primary">
+				    <Panel.Heading>
+				      <Panel.Title componentClass="h3">
+								<a href={restaurant.link} >
+									{restaurant.name}
+								</a>
+							</Panel.Title>
+				    </Panel.Heading>
+				    <Panel.Body>
+							<p><b>Rating: </b>{restaurant.averageRating}</p>
+							<p>{restaurant.address}</p>
+						</Panel.Body>
+				  </Panel>
+	      </ListGroupItem>
     )
 	}
 }

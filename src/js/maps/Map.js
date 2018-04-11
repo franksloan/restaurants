@@ -1,10 +1,9 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Container } from 'semantic-ui-react'
-import GoogleApiWrapper from './GoogleApiWrapper'
+import GoogleMap from './GoogleMap'
 import RestaurantScroll from './RestaurantScroll'
-import { Sidebar, Button} from 'semantic-ui-react'
+import { Button } from 'react-bootstrap'
 import { addMarker, loadRestaurants, onRestaurantClick, clearMarkers } from './actions'
 
 class Map extends React.Component {
@@ -26,38 +25,28 @@ class Map extends React.Component {
 	}
 
 	render(){
-		const { visible } = this.state
 		return (
-	      <div>
-		  	<Sidebar.Pushable>
-	          <Sidebar
-	            animation='overlay'
-	            width='very wide'
-	            direction='right'
-	            visible={visible}
-	            icon='labeled'
-	          >
-	          	<GoogleApiWrapper
+				<div style={{width: '100%', overflow:'auto'}}>
+					<div style={{float:'left', width: '50%'}}>
+						<RestaurantScroll
+							restaurantsList={this.props.restaurantsList}
+							googleRestaurantMarkers={this.props.googleRestaurantMarkers}
+							onRestaurantClick={this.props.onRestaurantClick}
+							showInfoWindow={this.props.showInfoWindow}
+							activeMarker={this.props.activeMarker}
+							selectedRestaurant={this.props.selectedRestaurant} />
+					</div>
+					<div style={{float: 'right', width: '50%'}}>
+	          	<GoogleMap
 	          		addMarker={this.props.addMarker}
 	          		restaurantsList={this.props.restaurantsList}
 	          		googleRestaurantMarkers={this.props.googleRestaurantMarkers}
-								reactRestaurantMarkers={this.props.reactRestaurantMarkers}
 	          		onRestaurantClick={this.props.onRestaurantClick}
 	          		showInfoWindow={this.props.showInfoWindow}
 	          		activeMarker={this.props.activeMarker}
 	          		selectedRestaurant={this.props.selectedRestaurant}
 								clearMarkers={this.props.clearMarkers} />
-	          </Sidebar>
-	          <Sidebar.Pusher>
-	            <RestaurantScroll
-	            	restaurantsList={this.props.restaurantsList}
-	            	googleRestaurantMarkers={this.props.googleRestaurantMarkers}
-	            	onRestaurantClick={this.props.onRestaurantClick}
-	            	showInfoWindow={this.props.showInfoWindow}
-	            	activeMarker={this.props.activeMarker}
-	            	selectedRestaurant={this.props.selectedRestaurant} />
-	          </Sidebar.Pusher>
-	        </Sidebar.Pushable>
+	        </div>
 	      </div>
     	)
 	}

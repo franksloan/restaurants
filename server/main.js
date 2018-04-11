@@ -47,7 +47,8 @@ var main = function(){
 		res.sendFile(path.join(__dirname, 'dist/index.html'))
 	})
 
-	server.use(require('./user/route'))
+	server.use(require('./users/route'))
+	server.use(require('./restaurants/route'))
 
 	server.listen(server.get('port'), function(){
 

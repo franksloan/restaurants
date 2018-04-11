@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Button } from 'semantic-ui-react'
+import { Button, Form, FormGroup, FormControl, ControlLabel, Col } from 'react-bootstrap'
 import { signupUser } from './actions'
 
 class Signup extends React.Component {
@@ -10,14 +10,13 @@ class Signup extends React.Component {
 	}
 
   handleClick(e, history){
-    const username = this.refs.username
-    const email = this.refs.email
-    const password = this.refs.password
-    const passwordConf = this.refs.passwordConf
-    const newUserCreds = { username: username.value.trim(),
-                           email: email.value.trim(), 
-                           password: password.value.trim(),
-                           passwordConf: passwordConf.value.trim() }
+		e.preventDefault()
+		console.log(history)
+		console.log(this.props.history)
+    const newUserCreds = { username: this.username.value.trim(),
+                           email: this.email.value.trim(),
+                           password: this.password.value.trim(),
+                           passwordConf: this.passwordConf.value.trim() }
     return this.props.dispatch(signupUser(newUserCreds, this.props.history))
   }
 
@@ -25,31 +24,66 @@ class Signup extends React.Component {
     const { history, errorMessage } = this.props
 		return (
       <div>
-        <Form>
-          <Form.Field>
-            <label>Username</label>
-            <input ref="username" placeholder='Username' />
-          </Form.Field>
-          <Form.Field>
-            <label>Email</label>
-            <input ref="email" placeholder='Email address' />
-          </Form.Field>
-          <Form.Field>
-            <label>Password</label>
-            <input ref="password" placeholder='Password' />
-          </Form.Field>
-          <Form.Field>
-            <label>Confirm password</label>
-            <input ref="passwordConf" placeholder='Confirm password' />
-          </Form.Field>
-          {errorMessage &&
+				<Form horizontal>
+				  <FormGroup controlId="username">
+						<Col componentClass={ControlLabel} sm={2}>
+							Username
+						</Col>
+						<Col sm={10}>
+							<FormControl
+								inputRef={ref => { this.username = ref } }
+								type="username"
+								placeholder="Username" />
+						</Col>
+					</FormGroup>
+
+					<FormGroup controlId="email">
+						<Col componentClass={ControlLabel} sm={2}>
+							Email
+						</Col>
+						<Col sm={10}>
+							<FormControl
+							  inputRef={ref => { this.email = ref } }
+								type="email"
+								placeholder="Email" />
+						</Col>
+					</FormGroup>
+
+					<FormGroup controlId="password">
+						<Col componentClass={ControlLabel} sm={2}>
+							Password
+						</Col>
+						<Col sm={10}>
+							<FormControl
+								inputRef={ref => { this.password = ref } }
+								type="password"
+								placeholder="Password" />
+						</Col>
+					</FormGroup>
+
+					<FormGroup controlId="passwordConf">
+						<Col componentClass={ControlLabel} sm={2}>
+							Confirm password
+						</Col>
+						<Col sm={10}>
+							<FormControl
+								inputRef={ref => { this.passwordConf = ref } }
+								type="passwordConf"
+								placeholder="Confirm password" />
+						</Col>
+					</FormGroup>
+					{errorMessage &&
             <p >{errorMessage}</p>
           }
-          <Button type='submit' 
-            onClick={(event) => this.handleClick(event)}>
-            Signup
-          </Button>
-        </Form>
+					<FormGroup>
+						<Col smOffset={2} sm={10}>
+							<Button type='submit'
+		            onClick={(event) => this.handleClick(event)}>
+		            Signup
+		          </Button>
+						</Col>
+					</FormGroup>
+					</Form>
       </div>
     )
 	}
