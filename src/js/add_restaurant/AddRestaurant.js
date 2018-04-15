@@ -2,8 +2,10 @@ import React from 'react'
 import { Button, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import StickyBox from 'react-sticky-box'
 import GoogleMap from '../maps/GoogleMap'
 import RestaurantScroll from '../maps/RestaurantScroll'
+import SearchResult from './SearchResult'
 import { searchForRestaurant, addSearchMarker, onSearchResultClick, clearResults } from './actions'
 
 class AddRestaurant extends React.Component {
@@ -22,10 +24,10 @@ class AddRestaurant extends React.Component {
 
 
 	render(){
-
+		let GoogleRestaurantScroll = RestaurantScroll.create(SearchResult)
 		return (
 				<div style={{width: '100%', overflow:'auto'}}>
-					<div style={{float:'left', width: '50%'}}>
+					<div style={{float:'left', width: '50%', paddingTop: '10%', paddingLeft:'1.5%', paddingRight:'1.5%'}}>
 						<Form inline onSubmit={this.searchForRestaurant} >
 						  <FormGroup controlId="formInlineName">
 						    <ControlLabel>Search</ControlLabel>{' '}
@@ -38,7 +40,7 @@ class AddRestaurant extends React.Component {
 								Search
 							</Button>
 						</Form>
-						<RestaurantScroll
+						<GoogleRestaurantScroll
 							restaurantsList={this.props.searchResults}
 							googleRestaurantMarkers={this.props.googleSearchMarkers}
 							onRestaurantClick={this.props.onSearchResultClick}
@@ -46,17 +48,17 @@ class AddRestaurant extends React.Component {
 							activeMarker={this.props.activeSearchMarker}
 							selectedRestaurant={this.props.selectedSearchResult} />
 					</div>
-					<div style={{float: 'right', width: '50%'}}>
-	          	<GoogleMap
-	          		addMarker={this.props.addSearchMarker}
-	          		restaurantsList={this.props.searchResults}
-	          		googleRestaurantMarkers={this.props.googleSearchMarkers}
-	          		onRestaurantClick={this.props.onSearchResultClick}
-	          		showInfoWindow={this.props.showSearchResultWindow}
-	          		activeMarker={this.props.activeSearchMarker}
-	          		selectedRestaurant={this.props.selectedSearchResult}
-								clearMarkers={this.props.clearResults} />
-	        </div>
+						<div style={{float: 'right', width: '50%'}}>
+								<GoogleMap
+		          		addMarker={this.props.addSearchMarker}
+		          		restaurantsList={this.props.searchResults}
+		          		googleRestaurantMarkers={this.props.googleSearchMarkers}
+		          		onRestaurantClick={this.props.onSearchResultClick}
+		          		showInfoWindow={this.props.showSearchResultWindow}
+		          		activeMarker={this.props.activeSearchMarker}
+		          		selectedRestaurant={this.props.selectedSearchResult}
+									clearMarkers={this.props.clearResults} />
+	        	</div>
 	      </div>
 		)
 	}

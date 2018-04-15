@@ -20,7 +20,7 @@ class NavigationBar extends React.Component {
     const { isAuthenticated, dispatch } = this.props
 		return (
       <div>
-				<Navbar inverse collapseOnSelect>
+				<Navbar inverse collapseOnSelect fixedTop>
 					<LinkContainer to='/'>
 					  <Navbar.Header>
 					    <Navbar.Brand

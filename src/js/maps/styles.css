@@ -10,3 +10,7 @@ svg {
   stroke-width: 0.5px;
   stroke-linejoin: round;
 }
+
+.londonMap {
+  position: fixed;
+}

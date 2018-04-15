@@ -2,11 +2,6 @@ import {Map, InfoWindow, GoogleApiWrapper } from 'google-maps-react'
 import React from 'react'
 import RestaurantMarker from './RestaurantMarker'
 
-const style = {
-  width: '100%',
-  height: '100%'
-}
-
 export class GoogleMap extends React.Component {
   constructor(){
     super()
@@ -47,7 +42,7 @@ export class GoogleMap extends React.Component {
       <Map
         google={this.props.google}
         zoom={13}
-        style={style}
+        containerStyle={{position: 'fixed'}}
         initialCenter={{
             lat: 51.507781,
             lng: -0.109348

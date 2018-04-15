@@ -47,6 +47,8 @@
     "react-router-bootstrap": "^0.24.4",
     "react-router-dom": "^4.1.1",
     "react-router-redux": "^4.0.8",
+    "react-sticky-box": "^0.6.2",
+    "react-stickynode": "^1.4.1",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0"
   }

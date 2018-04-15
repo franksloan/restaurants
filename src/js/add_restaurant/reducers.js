@@ -31,6 +31,7 @@ export default function add_restaurant(state = {
         selectedSearchResult: ''
       })
     case SELECT_RESULT:
+      console.log(action.selectedSearchResult)
       return Object.assign({}, state, {
         activeSearchMarker: action.activeSearchMarker,
         showSearchResultWindow: action.showSearchResultWindow,

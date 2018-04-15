@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import GoogleMap from './GoogleMap'
 import RestaurantScroll from './RestaurantScroll'
+import RestaurantItem from './RestaurantItem'
 import { Button } from 'react-bootstrap'
 import { addMarker, loadRestaurants, onRestaurantClick, clearMarkers } from './actions'
 
@@ -25,10 +26,11 @@ class Map extends React.Component {
 	}
 
 	render(){
+		let AppRestaurantScroll = RestaurantScroll.create(RestaurantItem)
 		return (
 				<div style={{width: '100%', overflow:'auto'}}>
 					<div style={{float:'left', width: '50%'}}>
-						<RestaurantScroll
+						<AppRestaurantScroll
 							restaurantsList={this.props.restaurantsList}
 							googleRestaurantMarkers={this.props.googleRestaurantMarkers}
 							onRestaurantClick={this.props.onRestaurantClick}

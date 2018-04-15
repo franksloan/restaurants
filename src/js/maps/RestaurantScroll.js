@@ -1,14 +1,14 @@
 import React from 'react'
-import RestaurantItem from './RestaurantItem'
-// import { Container, Item } from 'semantic-ui-react'
 import { Button, ListGroup } from 'react-bootstrap'
 
 // Creates scrolling list of restaurants
-class RestaurantScroll extends React.Component {
+let create = RestaurantItem => class extends React.Component {
 	constructor(){
 		super()
 	}
+
 	render(){
+		console.log(this.props.selectedRestaurant)
 		let restaurantsList = this.props.restaurantsList
 		let restaurants = restaurantsList.map( (restaurant) =>
 				<RestaurantItem
@@ -26,6 +26,10 @@ class RestaurantScroll extends React.Component {
 	      	</ListGroup>
     )
 	}
+}
+
+let RestaurantScroll = {
+	create: create
 }
 
 export default RestaurantScroll
