@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var RestaurantSchema = new mongoose.Schema({
   id: {
-    type: Number,
+    type: String,
     unique: true,
     required: true,
     trim: true
@@ -15,24 +15,35 @@ var RestaurantSchema = new mongoose.Schema({
   },
   link: {
     type: String,
-    unique: true,
-    required: true,
+    unique: false,
     trim: true
   },
   address: {
     type: String
   },
   position: {
-    type: Mixed,
-    required: true
+    lat: {
+      type: Number,
+      required: true
+    },
+    lng: {
+      type: Number,
+      required: true
+    }
+  },
+  googleRating: {
+    type: Number
+  },
+  category: {
+    type: String
   }
 });
 
 
-RestaurantSchema.statics.getRestaurants = function (username, password, callback) {
-  User.find({ })
-    .exec(function (err, user) {
-      return callback()
+RestaurantSchema.statics.getRestaurants = function (callback) {
+  Restaurant.find({ })
+    .exec(function (err, results) {
+      return callback(results)
     });
 }
 

@@ -25,7 +25,7 @@ describe('Login Component', () => {
   	let dispatchSpy = sinon.spy()
   	const wrapper = mount(<Login dispatch={dispatchSpy} />)
 
-  	let usernameChange = {target: { value: 'Johnny'} }
+  	let usernameChange = {target: { name: 'usernameEmail', value: 'Johnny'} }
     let usernameInput = wrapper.find(FormControl).first()
     usernameInput.find('input').simulate('change', usernameChange)
 

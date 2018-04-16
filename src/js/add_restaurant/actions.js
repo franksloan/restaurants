@@ -58,3 +58,32 @@ export function searchForRestaurant(searchTerm) {
       .catch( err => console.log("Error: ", err.message))
   }
 }
+
+
+export function saveNewRestaurant(item, callback) {
+
+  let config = {
+    method: 'POST',
+    headers: { 'Content-Type':'application/json'},
+    body: JSON.stringify(item)
+  }
+
+  return dispatch => {
+
+    return fetch('http://localhost:5050/add_restaurant', config)
+      .then(response =>
+        response.json()
+          .then(body => ({ body, response }))
+      )
+      .then(({ body, response }) =>  {
+        console.log(body, response)
+        if(!response.ok){
+          console.error('Could not save new restaurant');
+        } else {
+          callback()
+        }
+      }
+    )
+      .catch( err => console.log("Error: ", err.message))
+  }
+}

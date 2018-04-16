@@ -12,8 +12,9 @@ class Login extends React.Component {
 
   handleClick(e){
 		// e.preventDefault()
-    const creds = { username: this.usernameEmail.value.trim(), password: this.password.value.trim() }
 
+    const creds = { username: this.usernameEmail.value.trim(), password: this.password.value.trim() }
+		
     return this.props.dispatch(loginUser(creds, this.props.history))
   }
 

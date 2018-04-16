@@ -8,7 +8,7 @@ import { Navbar, Nav, NavItem } from 'react-bootstrap';
 describe('Navigation component', () => {
 
   it('should have 5 items when not authenticated', function () {
-    const wrapper = shallow(<NavigationBar isAuthenitcated={false} dispatch={e => e}/>);
+    const wrapper = shallow(<NavigationBar isAuthenticated={false} dispatch={e => e}/>);
 
     expect(wrapper.find(Navbar.Header)).to.have.length(1)
     expect(wrapper.find(NavItem)).to.have.length(4);

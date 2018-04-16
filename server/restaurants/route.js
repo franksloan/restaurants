@@ -1,16 +1,17 @@
 var express = require('express');
 var convertGoogleResult = require('./convertGoogleResult.js')
+var Restaurant = require('./restaurant')
 
 
 var app = module.exports = express.Router();
 
 // Route to handle a
 app.get('/get_restaurants', function(req, res, next) {
-
-  res.status(201).send({
-    restaurants: restaurantsList
-  });
-
+  Restaurant.getRestaurants((results) => {
+    res.status(201).send({
+      restaurants: results
+    });
+  })
 });
 
 app.get('/find_restaurant', function(req, res, next) {
@@ -30,9 +31,32 @@ app.get('/find_restaurant', function(req, res, next) {
         restaurants: convertGoogleResult(response.json.results)
       });
     })
+});
+
+app.post('/add_restaurant', function(req, res, next) {
 
 
-
+  var restaurant = {
+    id: req.body.id,
+    name: req.body.name,
+    link: req.body.link,
+    address: req.body.address,
+    position: req.body.position,
+    category: req.body.category,
+    googleRating: req.body.googleRating
+  }
+  console.log(restaurant)
+  //use schema.create to insert data into the db
+  Restaurant.create(restaurant, function (err, user) {
+    if (err) {
+      console.log(require('util').inspect(err));
+      return next(err)
+    } else {
+      res.status(201).send({
+        message: 'success'
+      });
+    }
+  });
 });
 
 const restaurantsList = [

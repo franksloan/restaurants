@@ -16,7 +16,11 @@ describe('RestaurantScroll component', () => {
   		{	id: 2,
   			name: 'Barrafina'
   		}]
-  	const wrapper = shallow(<RestaurantScroll restaurantsList={restaurants}/>)
+    let TestRestaurantScroll = RestaurantScroll.create(DummyComponent)
+  	const wrapper = shallow(<TestRestaurantScroll restaurantsList={restaurants}/>)
     expect(wrapper.find(ListGroup).children()).to.have.length(restaurants.length)
   })
 })
+
+class DummyComponent extends React.Component {
+}

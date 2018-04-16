@@ -29,7 +29,7 @@ class Map extends React.Component {
 		let AppRestaurantScroll = RestaurantScroll.create(RestaurantItem)
 		return (
 				<div style={{width: '100%', overflow:'auto'}}>
-					<div style={{float:'left', width: '50%'}}>
+					<div style={{float:'left', width: '50%', paddingTop: '10%', paddingLeft:'1.5%', paddingRight:'1.5%'}}>
 						<AppRestaurantScroll
 							restaurantsList={this.props.restaurantsList}
 							googleRestaurantMarkers={this.props.googleRestaurantMarkers}

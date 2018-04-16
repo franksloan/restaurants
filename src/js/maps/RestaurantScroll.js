@@ -18,7 +18,9 @@ let create = RestaurantItem => class extends React.Component {
 					activeMarker={this.props.activeMarker}
 					showInfoWindow={this.props.showInfoWindow}
 					selectedRestaurant={this.props.selectedRestaurant}
-					googleRestaurantMarkers={this.props.googleRestaurantMarkers} />
+					googleRestaurantMarkers={this.props.googleRestaurantMarkers}
+					clearResults={this.props.clearResults}
+					saveRestaurant={this.props.saveRestaurant} />
 			)
 		return (
 	      	<ListGroup>
