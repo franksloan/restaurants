@@ -6,13 +6,18 @@ import StickyBox from 'react-sticky-box'
 import GoogleMap from '../maps/GoogleMap'
 import RestaurantScroll from '../maps/RestaurantScroll'
 import SearchResult from './SearchResult'
-import { searchForRestaurant, addSearchMarker,
+import { searchForRestaurant, addSearchMarker, getCategories,
 				 onSearchResultClick, clearResults, saveNewRestaurant } from './actions'
 
 class AddRestaurant extends React.Component {
 	constructor(){
 		super()
 		this.searchForRestaurant = this.searchForRestaurant.bind(this)
+	}
+
+
+	componentDidMount(){
+		this.props.getCategories()
 	}
 
 
@@ -49,7 +54,8 @@ class AddRestaurant extends React.Component {
 							activeMarker={this.props.activeSearchMarker}
 							selectedRestaurant={this.props.selectedSearchResult}
 							clearResults={this.props.clearResults}
-							saveRestaurant={this.props.saveNewRestaurant} />
+							saveRestaurant={this.props.saveNewRestaurant}
+							categories={this.props.categories} />
 					</div>
 						<div style={{float: 'right', width: '50%'}}>
 								<GoogleMap
@@ -76,7 +82,8 @@ function mapStateToProps(state) {
 const mapDispatchToProps = (dispatch) => {
     return {
         ...bindActionCreators({ searchForRestaurant, addSearchMarker,
-					onSearchResultClick, clearResults, saveNewRestaurant}, dispatch)
+					onSearchResultClick, clearResults, saveNewRestaurant, getCategories
+				}, dispatch)
     }
 }
 

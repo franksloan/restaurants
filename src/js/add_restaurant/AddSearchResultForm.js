@@ -51,7 +51,7 @@ class AddSearchResultForm extends React.Component {
 				address: this.props.infoFromGoogle.address,
 				category: this.category ? this.category.value.trim() : undefined,
 				position: this.props.infoFromGoogle.position,
-				review: this.review.value.trim(),
+				detail: this.review.value.trim(),
 				googleRating: this.props.infoFromGoogle.googleRating,
 				userRating: this.rating.value.trim() }
 		this.props.saveRestaurant(item, this.alertUserAndClear)
@@ -69,6 +69,13 @@ class AddSearchResultForm extends React.Component {
 
 
 	render(){
+		let categoryOptions = this.props.categories.map(category => {
+			return <option
+							key={category.id}
+							value={category.name}>
+							{category.name}
+						 </option>
+		})
 		return (
           <Panel bsStyle={this.state.added ? 'success' : 'info' }>
             <Panel.Heading>
@@ -95,6 +102,7 @@ class AddSearchResultForm extends React.Component {
 													{this.state.new_category.length > 0 &&
 														<option value={this.state.new_category}>{this.state.new_category}</option>
 													}
+													{categoryOptions}
 		                      <option value="add_new">Add new category</option>
 		                    </FormControl>
 											}

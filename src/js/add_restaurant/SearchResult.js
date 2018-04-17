@@ -55,7 +55,8 @@ class RestaurantItem extends React.Component {
               <AddSearchResultForm
                 infoFromGoogle={restaurant}
                 clearResults={this.props.clearResults}
-                saveRestaurant={this.props.saveRestaurant} />
+                saveRestaurant={this.props.saveRestaurant}
+                categories={this.props.categories} />
         }
         </div>
     )

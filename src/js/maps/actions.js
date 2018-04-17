@@ -36,7 +36,7 @@ export function loadRestaurants() {
 
   let config = {
     method: 'GET',
-    headers: { 'Content-Type':'application/x-www-form-urlencoded' }
+    headers: { 'Content-Type':'application/json' }
   }
 
   return dispatch => {
@@ -44,9 +44,14 @@ export function loadRestaurants() {
     return fetch('http://localhost:5050/get_restaurants', config)
       .then(response =>
         response.json()
-          .then(body => ({ body, response }))
+          .then(body => {
+            console.log(body)
+            return ({ body, response })
+          }
+        )
       )
       .then(({ body, response }) =>  {
+        console.log(body, response)
         if(!response.ok){
           console.error('Could not retrieve restaurants');
         } else {

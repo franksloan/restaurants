@@ -36,6 +36,14 @@ var RestaurantSchema = new mongoose.Schema({
   },
   category: {
     type: String
+  },
+  reviews: {
+    type: Array
+  },
+  dateAdded: {
+    type: Date,
+    required: true,
+    default: new Date()
   }
 });
 
@@ -43,7 +51,7 @@ var RestaurantSchema = new mongoose.Schema({
 RestaurantSchema.statics.getRestaurants = function (callback) {
   Restaurant.find({ })
     .exec(function (err, results) {
-      return callback(results)
+      return callback(err, results)
     });
 }
 

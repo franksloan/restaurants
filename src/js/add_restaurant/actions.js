@@ -2,6 +2,7 @@ export const SEARCH_RESULTS = 'SEARCH_RESULTS'
 export const ADD_SEARCH_MARKER = 'ADD_SEARCH_MARKER'
 export const SELECT_RESULT = 'SELECT_RESULT'
 export const CLEAR_RESULTS = 'CLEAR_RESULTS'
+export const SET_CATEGORIES = 'SET_CATEGORIES'
 
 export function onSearchResultClick(resultName, marker) {
   return {
@@ -25,12 +26,48 @@ export function clearResults(){
   }
 }
 
+function setCategories(categories){
+  return {
+    type: SET_CATEGORIES,
+    categories
+  }
+}
+
+
+export function getCategories() {
+  let config = {
+    method: 'GET',
+    headers: { 'Content-Type':'application/json'}
+  }
+
+  return dispatch => {
+
+    return fetch('http://localhost:5050/get_categories', config)
+      .then(response =>
+        response.json()
+          .then(body => ({ body, response }))
+      )
+      .then(({ body, response }) =>  {
+
+        if(!response.ok){
+          console.error('Could not retrieve categories');
+        } else {
+          dispatch(setCategories(body.categories))
+        }
+      }
+    )
+      .catch( err => console.log("Error: ", err.message))
+  }
+}
+
+
 function addRestaurants(searchResults){
   return {
     type: SEARCH_RESULTS,
     searchResults
   }
 }
+
 
 export function searchForRestaurant(searchTerm) {
 
@@ -81,6 +118,7 @@ export function saveNewRestaurant(item, callback) {
           console.error('Could not save new restaurant');
         } else {
           callback()
+          dispatch(getCategories())
         }
       }
     )

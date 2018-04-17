@@ -1,5 +1,5 @@
 import {
-  SEARCH_RESULTS, ADD_SEARCH_MARKER, SELECT_RESULT, CLEAR_RESULTS
+  SEARCH_RESULTS, ADD_SEARCH_MARKER, SELECT_RESULT, CLEAR_RESULTS, SET_CATEGORIES
 } from './actions'
 import React from 'react'
 
@@ -22,7 +22,9 @@ export default function add_restaurant(state = {
         searchResults: action.searchResults
       })
     case CLEAR_RESULTS:
-      state.googleSearchMarkers.forEach(marker => marker.setMap(null))
+      if(state.googleSearchMarkers){
+        state.googleSearchMarkers.forEach(marker => marker.setMap(null))
+      }
       return Object.assign({}, state, {
         searchResults: [],
         googleSearchMarkers: [],
@@ -35,6 +37,10 @@ export default function add_restaurant(state = {
         activeSearchMarker: action.activeSearchMarker,
         showSearchResultWindow: action.showSearchResultWindow,
         selectedSearchResult: action.selectedSearchResult
+      })
+    case SET_CATEGORIES:
+      return Object.assign({}, state, {
+        categories: action.categories
       })
     default:
       return state

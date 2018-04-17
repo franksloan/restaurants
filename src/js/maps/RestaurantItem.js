@@ -54,6 +54,13 @@ class RestaurantItem extends React.Component {
 
 	render(){
 		let restaurant = this.props.restaurant
+		console.log(restaurant)
+		let groupAverage = restaurant.reviews
+							.map(review => {
+								console.log(review)
+								return review.rating
+							})
+							.reduce((a,b) => a + b)/restaurant.reviews.length
 		return (
 	      <ListGroupItem style={this.state.style} onClick={this.onItemClick}>
 					<Panel bsStyle="primary">
@@ -65,8 +72,10 @@ class RestaurantItem extends React.Component {
 							</Panel.Title>
 				    </Panel.Heading>
 				    <Panel.Body>
-							<p><b>Rating: </b>{restaurant.averageRating}</p>
-							<p>{restaurant.address}</p>
+							<p><b>Category: </b>{restaurant.category}</p>
+							<p><b>Google: </b>{restaurant.googleRating}</p>
+							<p><b>Group rating: </b>{groupAverage}</p>
+							<p><b>Address: </b>{restaurant.address}</p>
 						</Panel.Body>
 				  </Panel>
 	      </ListGroupItem>
