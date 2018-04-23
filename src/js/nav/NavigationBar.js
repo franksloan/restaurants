@@ -19,7 +19,7 @@ class NavigationBar extends React.Component {
 	render(){
     const { isAuthenticated, dispatch } = this.props
 		return (
-      <div>
+      <div style={{paddingBottom: '2.5%'}}>
 				<Navbar inverse collapseOnSelect fixedTop>
 					<LinkContainer to='/'>
 					  <Navbar.Header>

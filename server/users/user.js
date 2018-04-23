@@ -17,6 +17,11 @@ var UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+  },
+  authenticated: {
+    type: Boolean,
+    required: true,
+    default: false
   }
 });
 
@@ -49,6 +54,13 @@ UserSchema.statics.authenticate = function (username, password, callback) {
           return callback();
         }
       })
+    });
+}
+
+UserSchema.statics.findUserByEmail = function (email, callback) {
+  User.find({ email: email })
+    .exec(function (err, results) {
+      return callback(err, results)
     });
 }
 

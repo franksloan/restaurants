@@ -54,7 +54,7 @@ class RestaurantItem extends React.Component {
 
 	render(){
 		let restaurant = this.props.restaurant
-		console.log(restaurant)
+
 		let groupAverage = restaurant.reviews
 							.map(review => {
 								console.log(review)

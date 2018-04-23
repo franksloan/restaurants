@@ -7,6 +7,7 @@ import Map from './maps/Map'
 import AddRestaurant from './add_restaurant/AddRestaurant'
 import Login from './user/Login'
 import Signup from './user/Signup'
+import Thanks from './user/Thanks'
 
 class Home extends React.Component {
 	constructor(props){
@@ -43,6 +44,7 @@ class Home extends React.Component {
                 dispatch={dispatch}
                 errorMessage={errorMessage} />
             ) }/>
+						<Route path='/thanks' render={ () => <Thanks /> }/>
           </div>
         </Router>
       </div>

@@ -43,14 +43,14 @@ var main = function(){
 		}))
 	})
 
+	// API routes need to be configured first
+	server.use(require('./users/route'))
+	server.use(require('./restaurants/route'))
 
-
+	// Application routes can be configured in general afterwards
 	server.get('*', function response(req, res){
 		res.sendFile(path.resolve(__dirname, '../dist', 'index.html'))
 	})
-
-	server.use(require('./users/route'))
-	server.use(require('./restaurants/route'))
 
 	server.listen(server.get('port'), function(){
 

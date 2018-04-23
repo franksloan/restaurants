@@ -8,7 +8,6 @@ let create = RestaurantItem => class extends React.Component {
 	}
 
 	render(){
-		console.log(this.props.selectedRestaurant)
 		let restaurantsList = this.props.restaurantsList
 		let restaurants = restaurantsList.map( (restaurant) =>
 				<RestaurantItem

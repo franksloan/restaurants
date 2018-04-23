@@ -5,9 +5,8 @@ function initialise(){
   sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 }
 
-function sendAuthenticationMessage(emailAddress){
+function sendAuthenticationMessage(emailAddress, token){
 
-  var token = jwt.sign({email : emailAddress}, 'secret')
   var email = {
       to: emailAddress,
       from: 'test@example.com',

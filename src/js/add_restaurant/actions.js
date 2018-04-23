@@ -43,8 +43,7 @@ export function getCategories() {
   return dispatch => {
 
     return fetch('http://localhost:5050/get_categories', config)
-      .then(response =>
-        response.json()
+      .then(response => response.json()
           .then(body => ({ body, response }))
       )
       .then(({ body, response }) =>  {
@@ -70,7 +69,6 @@ function addRestaurants(searchResults){
 
 
 export function searchForRestaurant(searchTerm) {
-
   let config = {
     method: 'GET',
     headers: { 'Content-Type':'application/x-www-form-urlencoded'}
@@ -81,7 +79,8 @@ export function searchForRestaurant(searchTerm) {
     return fetch('http://localhost:5050/find_restaurant?searchTerm='+searchTerm, config)
       .then(response =>
         response.json()
-          .then(body => ({ body, response }))
+          .then(body => ({ body, response })
+        )
       )
       .then(({ body, response }) =>  {
 
