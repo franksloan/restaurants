@@ -1,8 +1,10 @@
 var express = require('express');
 var User = require('./user');
-
+var emailService = require('./emailService');
 
 var app = module.exports = express.Router();
+
+emailService.initialise();
 
 // Route to handle a request to create a new user
 app.post('/user_create', function(req, res, next) {
@@ -16,8 +18,10 @@ app.post('/user_create', function(req, res, next) {
       username: req.body.username,
       password: req.body.password
     }
+    console.log(emailService)
+    emailService.sendAuthenticationMessage(userData.email)
 
-    //use schema.create to insert data into the db
+    // use schema.create to insert data into the db
     User.create(userData, function (err, user) {
       if (err) {
         return next(err)
@@ -29,7 +33,12 @@ app.post('/user_create', function(req, res, next) {
         });
       }
     });
-  }
+    }
+});
+
+app.get('/signin/verify/email', function(req, res, next) {
+  console.log(req.query.token)
+  res.status(201).send({token: req.query.token})
 });
 
 // Route to handle a login request

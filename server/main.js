@@ -21,7 +21,7 @@ var main = function(){
 
 	server.set('port', port );
 
-	server.use(express.static(path.join(__dirname, '../dist')));
+	server.use(express.static(path.resolve(__dirname, '../dist')));
 
 	server.use(bodyParser.json());
 	server.use(bodyParser.urlencoded({extended: true}));
@@ -43,8 +43,10 @@ var main = function(){
 		}))
 	})
 
-	server.get('/', function response(req, res){
-		res.sendFile(path.join(__dirname, 'dist/index.html'))
+
+
+	server.get('*', function response(req, res){
+		res.sendFile(path.resolve(__dirname, '../dist', 'index.html'))
 	})
 
 	server.use(require('./users/route'))

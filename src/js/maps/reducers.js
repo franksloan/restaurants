@@ -19,7 +19,9 @@ export default function maps(state = {
         googleRestaurantMarkers: googleRestaurantMarkers
       })
     case CLEAR_MARKERS:
-      state.googleRestaurantMarkers[0].setMap(null)
+      if(state.googleRestaurantMarkers){
+        state.googleRestaurantMarkers.forEach(marker => marker.setMap(null))
+      }
       return Object.assign({}, state, {
         googleRestaurantMarkers: [],
         activeMarker: null,

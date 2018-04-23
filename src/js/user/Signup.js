@@ -24,7 +24,7 @@ class Signup extends React.Component {
     const { history, errorMessage } = this.props
 		return (
       <div>
-				<Form horizontal>
+				<Form horizontal style={{padding: '10%'}}>
 				  <FormGroup controlId="username">
 						<Col componentClass={ControlLabel} sm={2}>
 							Username
