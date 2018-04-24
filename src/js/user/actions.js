@@ -36,7 +36,7 @@ export function loginUser(creds, history) {
   let config = {
     method: 'POST',
     headers: { 'Content-Type':'application/x-www-form-urlencoded' },
-    body: `username=${creds.username}&password=${creds.password}`
+    body: `usernameOrEmail=${creds.username}&password=${creds.password}`
   }
 
   return dispatch => {
@@ -46,9 +46,9 @@ export function loginUser(creds, history) {
     return fetch('http://localhost:5050/user_login', config)
       .then(response => response.json()
         .then(user => ({ user, response }))
-        )
+      )
       .then(({ user, response }) =>  {
-        console.log(response)
+        console.log(user, response)
         if (!response.ok) {
           // If there was a problem, we want to
           // dispatch the error condition
@@ -57,7 +57,6 @@ export function loginUser(creds, history) {
         } else {
           // If login was successful, set the token in local storage
           localStorage.setItem('id_token', user.id_token)
-          localStorage.setItem('id_token', user.access_token)
 
           // Dispatch the success action
           dispatch(receiveLogin(user))
@@ -115,7 +114,6 @@ export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS'
 export const SIGNUP_FAILURE = 'SIGNUP_FAILURE'
 
 function requestSignup(creds) {
-  console.log(creds)
   return {
     type: SIGNUP_REQUEST,
     isFetching: true,
@@ -128,9 +126,7 @@ function receiveSignup(user) {
   return {
     type: SIGNUP_SUCCESS,
     isFetching: false,
-    isAuthenticated: true,
-    id_token: user.id_token,
-    username: user.username
+    isAuthenticated: false
   }
 }
 
@@ -161,23 +157,18 @@ export function signupUser(creds, history) {
           .then(user => ({ user, response }))
           )
       .then(({user, response}) =>  {
-        console.log(user)
         if (!response.ok) {
           // If there was a problem, we want to
           // dispatch the error condition
           dispatch(signupError(user.message))
           return Promise.reject(user)
         } else {
-          // If login was successful, set the token in local storage
-          localStorage.setItem('id_token', user.id_token)
-          localStorage.setItem('id_token', user.access_token)
-          console.log(user)
           // Dispatch the success action
           dispatch(receiveSignup(user))
         }
       })
       .then( () => {
-        history.push('/')
+        history.push('/email')
       })
       .catch( err => console.log("Error: ", err.message))
   }

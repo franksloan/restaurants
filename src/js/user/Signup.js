@@ -11,8 +11,6 @@ class Signup extends React.Component {
 
   handleClick(e, history){
 		e.preventDefault()
-		console.log(history)
-		console.log(this.props.history)
     const newUserCreds = { username: this.username.value.trim(),
                            email: this.email.value.trim(),
                            password: this.password.value.trim(),
@@ -21,7 +19,7 @@ class Signup extends React.Component {
   }
 
 	render(){
-    const { history, errorMessage } = this.props
+    const { history, signupErrorMessage } = this.props
 		return (
       <div>
 				<Form horizontal style={{padding: '10%'}}>
@@ -72,8 +70,8 @@ class Signup extends React.Component {
 								placeholder="Confirm password" />
 						</Col>
 					</FormGroup>
-					{errorMessage &&
-            <p >{errorMessage}</p>
+					{signupErrorMessage &&
+            <p >{signupErrorMessage}</p>
           }
 					<FormGroup>
 						<Col smOffset={2} sm={10}>

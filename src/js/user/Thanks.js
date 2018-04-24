@@ -9,7 +9,7 @@ class Thanks extends React.Component {
 
 	render(){
 		return (
-      <h3>Thanks for signing up!</h3>
+      <h3>Thanks for signing up! Please login.</h3>
     )
 	}
 }

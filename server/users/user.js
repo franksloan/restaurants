@@ -18,12 +18,38 @@ var UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  authenticated: {
+  verified: {
     type: Boolean,
     required: true,
     default: false
   }
 });
+
+UserSchema.pre('validate', function (next) {
+  var user = this;
+  User.findUserByEmail(user.email)
+    .then(result => {
+      if(result.length > 0){
+        return next(new Error("This email exists"))
+      }
+      User.findUserByUsername(user.username)
+        .then(result => {
+          if(result.length > 0){
+            return next(new Error("This username exists"))
+          }}
+        )
+    }).catch(next)
+})
+
+UserSchema.statics.findUserByEmail = function (email) {
+  return User.find({ email: email }).exec()
+}
+
+UserSchema.statics.findUserByUsername = function (username) {
+  return User.find({ username: username }).exec()
+}
+
+
 
 //hashing a password before saving it to the database
 UserSchema.pre('save', function (next) {
@@ -37,15 +63,15 @@ UserSchema.pre('save', function (next) {
   })
 });
 
-UserSchema.statics.authenticate = function (username, password, callback) {
-  User.findOne({ username: username })
+UserSchema.statics.authenticate = function (usernameOrEmail, password, callback) {
+  console.log("Username or email is: " + usernameOrEmail)
+  User.findOne({ $or: [{username: usernameOrEmail}, {email: usernameOrEmail} ]})
     .exec(function (err, user) {
       if (err) {
         return callback(err)
       } else if (!user) {
-        var err = new Error('User not found.');
-        console.warn('User not found.')
-        return callback(err);
+        // Handle no user being found in the caller
+        return callback(null, null);
       }
       bcrypt.compare(password, user.password, function (err, result) {
         if (result === true) {
@@ -54,13 +80,6 @@ UserSchema.statics.authenticate = function (username, password, callback) {
           return callback();
         }
       })
-    });
-}
-
-UserSchema.statics.findUserByEmail = function (email, callback) {
-  User.find({ email: email })
-    .exec(function (err, results) {
-      return callback(err, results)
     });
 }
 

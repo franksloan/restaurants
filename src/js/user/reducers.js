@@ -21,14 +21,14 @@ export default function user(state = {
       return Object.assign({}, state, {
         isFetching: false,
         isAuthenticated: true,
-        errorMessage: '',
+        loginErrorMessage: '',
         username: action.username
       })
     case LOGIN_FAILURE:
       return Object.assign({}, state, {
         isFetching: false,
         isAuthenticated: false,
-        errorMessage: action.message
+        loginErrorMessage: action.message
       })
     case LOGOUT_SUCCESS:
       return Object.assign({}, state, {
@@ -45,14 +45,14 @@ export default function user(state = {
       return Object.assign({}, state, {
         isFetching: false,
         isAuthenticated: true,
-        errorMessage: '',
+        signupErrorMessage: '',
         username: action.username
       })
     case SIGNUP_FAILURE:
       return Object.assign({}, state, {
         isFetching: false,
         isAuthenticated: false,
-        errorMessage: action.message
+        signupErrorMessage: action.message
       })
     default:
       return state

@@ -11,16 +11,17 @@ class Login extends React.Component {
 
 
   handleClick(e){
-		// e.preventDefault()
+		e.preventDefault()
 
     const creds = { username: this.usernameEmail.value.trim(), password: this.password.value.trim() }
-		
+
     return this.props.dispatch(loginUser(creds, this.props.history))
   }
 
 
 	render(){
-    const { history, errorMessage } = this.props
+    const { history, loginErrorMessage } = this.props
+		console.log(this.props)
 		return (
       <div>
 			<Form horizontal>
@@ -47,8 +48,8 @@ class Login extends React.Component {
 								placeholder="Password" />
 						</Col>
 					</FormGroup>
-					{errorMessage &&
-            <p >{errorMessage}</p>
+					{loginErrorMessage &&
+            <p>{loginErrorMessage}</p>
           }
 					<FormGroup>
 						<Col smOffset={2} sm={10}>
@@ -65,7 +66,7 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  errorMessage: PropTypes.string,
+  loginErrorMessage: PropTypes.string,
   dispatch: PropTypes.func.isRequired
 }
 

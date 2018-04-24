@@ -8,6 +8,8 @@ import AddRestaurant from './add_restaurant/AddRestaurant'
 import Login from './user/Login'
 import Signup from './user/Signup'
 import Thanks from './user/Thanks'
+import AlreadyAuthenticated from './user/AlreadyAuthenticated'
+import EmailNotice from './user/EmailNotice'
 
 class Home extends React.Component {
 	constructor(props){
@@ -15,7 +17,7 @@ class Home extends React.Component {
 	}
 
 	render(){
-    const { dispatch, quote, isAuthenticated, errorMessage} = this.props
+    const { dispatch, quote, isAuthenticated, loginErrorMessage, signupErrorMessage} = this.props
 		return (
       <div>
         <Router >
@@ -36,15 +38,17 @@ class Home extends React.Component {
               <Signup
                 history={props.history}
                 dispatch={dispatch}
-                errorMessage={errorMessage} />
+                signupErrorMessage={signupErrorMessage} />
             ) }/>
             <Route path='/login' render={ (props) => (
               <Login
                 history={props.history}
                 dispatch={dispatch}
-                errorMessage={errorMessage} />
+                loginErrorMessage={loginErrorMessage} />
             ) }/>
+						<Route path='/email' render={ () => <EmailNotice /> }/>
 						<Route path='/thanks' render={ () => <Thanks /> }/>
+						<Route path='/already_authenticated' render={ () => <AlreadyAuthenticated /> }/>
           </div>
         </Router>
       </div>
@@ -55,9 +59,9 @@ class Home extends React.Component {
 
 Home.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  quote: PropTypes.string,
   isAuthenticated: PropTypes.bool.isRequired,
-  errorMessage: PropTypes.string,
+  loginErrorMessage: PropTypes.string,
+	signupErrorMessage: PropTypes.string,
   username: PropTypes.string
 }
 
@@ -65,12 +69,13 @@ Home.propTypes = {
 // state when it is started
 function mapStateToProps(state) {
 
-  const { quotes, user } = state
-  const { isAuthenticated, errorMessage, username } = user
+  const { user } = state
+  const { isAuthenticated, loginErrorMessage, signupErrorMessage, username } = user
 
   return {
     isAuthenticated,
-    errorMessage,
+    loginErrorMessage,
+		signupErrorMessage,
     username
   }
 }
