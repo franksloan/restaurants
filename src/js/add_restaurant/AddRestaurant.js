@@ -8,6 +8,7 @@ import RestaurantScroll from '../maps/RestaurantScroll'
 import SearchResult from './SearchResult'
 import { searchForRestaurant, addSearchMarker, getCategories,
 				 onSearchResultClick, clearResults, saveNewRestaurant } from './actions'
+import Container from '../utilities/Container'
 
 class AddRestaurant extends React.Component {
 	constructor(){
@@ -33,29 +34,31 @@ class AddRestaurant extends React.Component {
 		let GoogleRestaurantScroll = RestaurantScroll.create(SearchResult)
 		return (
 				<div style={{width: '100%', overflow:'auto'}}>
-					<div style={{float:'left', width: '50%', paddingTop: '10%', paddingLeft:'1.5%', paddingRight:'1.5%'}}>
-						<Form inline onSubmit={this.searchForRestaurant} >
-						  <FormGroup controlId="formInlineName">
-						    <ControlLabel>Search</ControlLabel>{' '}
-						    <FormControl
-									type="text"
-									inputRef={ref => { this.searchTerm = ref } }
-									placeholder="Padella" />
-						  </FormGroup>{' '}
-						  <Button type="submit">
-								Search
-							</Button>
-						</Form>
-						<GoogleRestaurantScroll
-							restaurantsList={this.props.searchResults}
-							googleRestaurantMarkers={this.props.googleSearchMarkers}
-							onRestaurantClick={this.props.onSearchResultClick}
-							showInfoWindow={this.props.showSearchResultWindow}
-							activeMarker={this.props.activeSearchMarker}
-							selectedRestaurant={this.props.selectedSearchResult}
-							clearResults={this.props.clearResults}
-							saveRestaurant={this.props.saveNewRestaurant}
-							categories={this.props.categories} />
+					<div style={{float:'left', width: '50%'}}>
+						<Container>
+							<Form inline onSubmit={this.searchForRestaurant} >
+							  <FormGroup controlId="formInlineName">
+							    <ControlLabel>Search</ControlLabel>{' '}
+							    <FormControl
+										type="text"
+										inputRef={ref => { this.searchTerm = ref } }
+										placeholder="Padella" />
+							  </FormGroup>{' '}
+							  <Button type="submit">
+									Search
+								</Button>
+							</Form>
+							<GoogleRestaurantScroll
+								restaurantsList={this.props.searchResults}
+								googleRestaurantMarkers={this.props.googleSearchMarkers}
+								onRestaurantClick={this.props.onSearchResultClick}
+								showInfoWindow={this.props.showSearchResultWindow}
+								activeMarker={this.props.activeSearchMarker}
+								selectedRestaurant={this.props.selectedSearchResult}
+								clearResults={this.props.clearResults}
+								saveRestaurant={this.props.saveNewRestaurant}
+								categories={this.props.categories} />
+							</Container>
 					</div>
 						<div style={{float: 'right', width: '50%'}}>
 								<GoogleMap

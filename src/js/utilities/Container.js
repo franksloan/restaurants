@@ -1,5 +1,9 @@
 import React from 'react'
-import d3Util from './d3-util'
+import { Jumbotron } from 'react-bootstrap'
+
+var styles = {
+	paddingTop: '60px', paddingLeft:'1.5%', paddingRight:'1.5%'
+}
 
 class Container extends React.Component {
 	constructor(props){
@@ -7,29 +11,10 @@ class Container extends React.Component {
 	}
 
 	render(){
-    const divStyles = {
-        width: this.props.width,
-        height: this.props.height,
-        position: 'relative'
-      }
-
-    const svgStyles = {
-      width: this.props.width,
-      height: this.props.height
-    }
-
-    const titleStyle = {
-      width: this.props.width,
-      textAlign: 'center',
-      fontSize: '2em'
-    }
 
 		return (
-        <div style={divStyles}>
-          <div style={titleStyle}>{this.props.title}</div>
-          <svg className='chart' style={svgStyles}>
+        <div style={styles}>
             {this.props.children}
-          </svg>
         </div>
     )
 	}

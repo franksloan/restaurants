@@ -30,12 +30,12 @@ UserSchema.pre('validate', function (next) {
   User.findUserByEmail(user.email)
     .then(result => {
       if(result.length > 0){
-        return next(new Error("This email exists"))
+        return next(new Error("This email already exists"))
       }
       User.findUserByUsername(user.username)
         .then(result => {
           if(result.length > 0){
-            return next(new Error("This username exists"))
+            return next(new Error("This username already exists"))
           }}
         )
     }).catch(next)
