@@ -1,5 +1,7 @@
 import React from 'react'
+import Container from '../utilities/Container'
 
+// Static page to redirect to on user action
 class EmailNotice extends React.Component {
 	constructor(){
 		super()
@@ -8,7 +10,9 @@ class EmailNotice extends React.Component {
 
 	render(){
 		return (
-      <h3>Email sent.</h3>
+			<Container>
+      	<h3>Email sent.</h3>
+			</Container>
     )
 	}
 }

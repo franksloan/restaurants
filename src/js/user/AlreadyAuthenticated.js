@@ -1,6 +1,7 @@
 import React from 'react'
-import { PageHeader } from 'react-bootstrap'
+import Container from '../utilities/Container'
 
+// Static page to redirect to on user action
 class AlreadyAuthenticated extends React.Component {
 	constructor(){
 		super()
@@ -9,7 +10,9 @@ class AlreadyAuthenticated extends React.Component {
 
 	render(){
 		return (
-      <h3>This user is already authenticated!</h3>
+			<Container>
+      	<h3>This user is already authenticated!</h3>
+			</Container>
     )
 	}
 }

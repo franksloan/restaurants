@@ -1,6 +1,7 @@
 import React from 'react'
-import { PageHeader } from 'react-bootstrap'
+import Container from '../utilities/Container'
 
+// Static page to redirect to on user action
 class Thanks extends React.Component {
 	constructor(){
 		super()
@@ -9,7 +10,9 @@ class Thanks extends React.Component {
 
 	render(){
 		return (
-      <h3>Thanks for signing up! Please login.</h3>
+			<Container>
+      	<h3>Thanks for signing up! Please login.</h3>
+			</Container>
     )
 	}
 }
