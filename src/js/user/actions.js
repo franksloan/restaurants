@@ -43,7 +43,7 @@ export function loginUser(creds, history) {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
 
-    return fetch('http://localhost:5050/user_login', config)
+    return fetch('http://localhost:5050/api/user/login', config)
       .then(response => response.json()
         .then(user => ({ user, response }))
       )
@@ -152,7 +152,7 @@ export function signupUser(creds, history) {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestSignup(creds))
 
-    return fetch('http://localhost:5050/user_create', config)
+    return fetch('http://localhost:5050/api/user/create', config)
       .then(response => response.json()
           .then(user => ({ user, response }))
           )
@@ -169,6 +169,100 @@ export function signupUser(creds, history) {
       })
       .then( () => {
         history.push('/email')
+      })
+      .catch( err => console.log("Error: ", err.message))
+  }
+}
+
+
+export const RESET_PASSWORD_REQUEST = 'RESET_PASSWORD_REQUEST'
+export const RESET_PASSWORD_SUCCESS = 'RESET_PASSWORD_SUCCESS'
+export const RESET_PASSWORD_FAILURE = 'RESET_PASSWORD_FAILURE'
+
+function requestResetPassword(creds) {
+  return {
+    type: RESET_PASSWORD_REQUEST
+  }
+}
+
+function resetPasswordSuccess( ) {
+  return {
+    type: RESET_PASSWORD_SUCCESS
+  }
+}
+
+function resetPasswordError(message) {
+  return {
+    type: RESET_PASSWORD_FAILURE,
+    message
+  }
+}
+
+
+export function resetPassword(creds, history) {
+
+  let config = {
+    method: 'POST',
+    headers: { 'Content-Type':'application/x-www-form-urlencoded' },
+    body: `email=${creds.email}`
+  }
+
+  return dispatch => {
+    // We dispatch requestLogin to kickoff the call to the API
+    dispatch(requestResetPassword(creds))
+
+    return fetch('http://localhost:5050/api/user/reset_password', config)
+      .then(response => response.json()
+          .then(user => ({ user, response }))
+          )
+      .then(({user, response}) =>  {
+        if (!response.ok) {
+          // If there was a problem, we want to
+          // dispatch the error condition
+          dispatch(resetPasswordError(user.message))
+          return Promise.reject(user)
+        } else {
+          // Dispatch the success action
+          dispatch(resetPasswordSuccess())
+        }
+      })
+      .then( () => {
+        history.push('/email')
+      })
+      .catch( err => console.log("Error: ", err.message))
+  }
+}
+
+
+export function submitNewPassword(creds, history) {
+  console.log('New password', creds)
+  let config = {
+    method: 'POST',
+    headers: { 'Content-Type':'application/x-www-form-urlencoded' },
+    body: `email=${creds.email}&password=${creds.password}`
+  }
+
+  return dispatch => {
+    // We dispatch requestLogin to kickoff the call to the API
+    dispatch(requestResetPassword(creds))
+
+    return fetch('http://localhost:5050/api/user/new_password', config)
+      .then(response => response.json()
+          .then(user => ({ user, response }))
+          )
+      .then(({user, response}) =>  {
+        if (!response.ok) {
+          // If there was a problem, we want to
+          // dispatch the error condition
+          dispatch(resetPasswordError(user.message))
+          return Promise.reject(user)
+        } else {
+          // Dispatch the success action
+          dispatch(resetPasswordSuccess(user))
+        }
+      })
+      .then( () => {
+        history.push('/thanks')
       })
       .catch( err => console.log("Error: ", err.message))
   }

@@ -8,7 +8,7 @@ var app = module.exports = express.Router();
 emailService.initialise();
 
 // Route to handle a request to create a new user
-app.post('/user_create', function(req, res, next) {
+app.post('/api/user/create', function(req, res, next) {
 
   if (req.body.email &&
       req.body.username &&
@@ -23,19 +23,14 @@ app.post('/user_create', function(req, res, next) {
     // use schema.create to insert data into the db
     User.create(userData)
       .then(function(user){
-        console.log(user)
-        if (err) {
-          return next(err)
-        } else {
-          // Get authentication token and send an email to user
-          emailService.sendAuthenticationMessage(userData.email,
-            authenticationService.createToken(userData.email))
+        // Get authentication token and send an email to user
+        emailService.sendAuthenticationMessage(userData.email,
+          authenticationService.createToken(userData.email))
 
-          res.status(201).send({
-            id_token: user._id,
-            username: userData.username
-          });
-        }
+        res.status(201).send({
+          id_token: user._id,
+          username: userData.username
+        });
       }).catch((err)=> {
         res.status(401).send({
         	message: err.message
@@ -45,7 +40,7 @@ app.post('/user_create', function(req, res, next) {
 )
 
 // Route for when a user clicks on the email link to verify
-app.get('/signin/verify/email', function(req, res, next) {
+app.get('/api/user/verify_email', function(req, res, next) {
   authenticationService.verifyToken(req.query.token, function(response) {
     User.findUserByEmail(response.email)
       .then(function(result){
@@ -58,15 +53,15 @@ app.get('/signin/verify/email', function(req, res, next) {
         if(result[0].authenticated){
           res.status(201).redirect('/already_authenticated')
         } else {
-          setUserEmailVerification(response.email, next, () => res.status(201).redirect('/thanks'))
+          updateUserByEmail(response.email, { verified: true }, next, () => res.status(201).redirect('/thanks'))
         }
     }).catch(next)
   })
 });
 
 // Get the user and update its authentication status
-function setUserEmailVerification(email, next, callback){
-  User.findOneAndUpdate({email: email}, {verified: true}, function(err){
+function updateUserByEmail(email, update, next, callback){
+  User.findOneAndUpdate({email: email}, update, function(err){
     if(err){
       next(err)
     }
@@ -76,7 +71,7 @@ function setUserEmailVerification(email, next, callback){
 }
 
 // Route to handle a login request
-app.post('/user_login', function(req, res, next) {
+app.post('/api/user/login', function(req, res, next) {
   console.log('login for: ' + req.body.usernameOrEmail)
   if (req.body.usernameOrEmail && req.body.password) {
 
@@ -98,4 +93,49 @@ app.post('/user_login', function(req, res, next) {
       }
     });
   }
+});
+
+
+// Route to handle a user requesting to reset password
+app.post('/api/user/reset_password', function(req, res, next) {
+  console.log('reset password for: ' + req.body.email)
+
+  User.findUserByEmail(req.body.email)
+    .then(function(result){
+      if(result.length > 1){
+        throw new Error('Too many results with this email address - ' + response.email)
+      } else if(result.length < 1){
+        throw new Error('No results for this email address - ' + response.email)
+      }
+
+      updateUserByEmail(req.body.email, { passwordResetPending: true }, next, function(){
+        // Get authentication token and send an email to user
+        emailService.sendPasswordResetMessage(req.body.email,
+          authenticationService.createToken(req.body.email))
+
+        res.status(201).send({});
+      })
+  }).catch(next)
+
+});
+
+
+// Route for when a user clicks on the email link to reset the password
+app.get('/api/user/new_password', function(req, res, next) {
+  authenticationService.verifyToken(req.query.token, function(response) {
+    User.findUserByEmail(response.email)
+      .then(function(result){
+        if(result.length > 1){
+          throw new Error('Too many results with this email address - ' + response.email)
+        } else if(result.length < 1){
+          throw new Error('No results for this email address - ' + response.email)
+        }
+
+        if(result[0].passwordResetPending){
+          res.status(201).redirect('/thanks')
+        } else {
+          res.status(201).redirect('/already_authenticated')
+        }
+    }).catch(next)
+  })
 });

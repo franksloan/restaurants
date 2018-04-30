@@ -10,6 +10,7 @@ import Signup from './user/Signup'
 import Thanks from './user/Thanks'
 import AlreadyAuthenticated from './user/AlreadyAuthenticated'
 import EmailNotice from './user/EmailNotice'
+import ResetPassword from './user/ResetPassword'
 
 class Home extends React.Component {
 	constructor(props){
@@ -17,7 +18,7 @@ class Home extends React.Component {
 	}
 
 	render(){
-    const { dispatch, quote, isAuthenticated, loginErrorMessage, signupErrorMessage} = this.props
+    const { dispatch, quote, isAuthenticated, loginErrorMessage, signupErrorMessage, resetPasswordErrorMessage} = this.props
 		return (
       <div>
         <Router >
@@ -49,6 +50,12 @@ class Home extends React.Component {
 						<Route path='/email' render={ () => <EmailNotice /> }/>
 						<Route path='/thanks' render={ () => <Thanks /> }/>
 						<Route path='/already_authenticated' render={ () => <AlreadyAuthenticated /> }/>
+						<Route path='/reset_password' render={ (props) => (
+							<ResetPassword
+								history={props.history}
+								dispatch={dispatch}
+                resetPasswordErrorMessage={resetPasswordErrorMessage} />
+						)}/>
           </div>
         </Router>
       </div>
@@ -62,6 +69,7 @@ Home.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   loginErrorMessage: PropTypes.string,
 	signupErrorMessage: PropTypes.string,
+	resetPasswordErrorMessage: PropTypes.string,
   username: PropTypes.string
 }
 
