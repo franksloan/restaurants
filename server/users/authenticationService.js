@@ -8,7 +8,8 @@ function createToken(emailAddress){
 function verifyToken(token, callback){
   jwt.verify(token, 'secret', function(err, response){
     if(err){
-      console.err("Token verification failed: " + err)
+      console.error("Token verification failed for: " + token)
+      throw err;
     }
     callback(response)
   })

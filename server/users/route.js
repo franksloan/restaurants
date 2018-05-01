@@ -9,7 +9,7 @@ emailService.initialise();
 
 // Route to handle a request to create a new user
 app.post('/api/user/create', function(req, res, next) {
-
+  console.log('Request to create new user, ' + req.body.username + ' at /api/user/create')
   if (req.body.email &&
       req.body.username &&
       req.body.password) {
@@ -23,6 +23,7 @@ app.post('/api/user/create', function(req, res, next) {
     // use schema.create to insert data into the db
     User.create(userData)
       .then(function(user){
+        console.log('user: ' + user)
         // Get authentication token and send an email to user
         emailService.sendAuthenticationMessage(userData.email,
           authenticationService.createToken(userData.email))
@@ -36,7 +37,12 @@ app.post('/api/user/create', function(req, res, next) {
         	message: err.message
         });
       })
-    }}
+    } else {
+      res.status(401).send({
+        message: "Please supply username, email and password"
+      });
+    }
+  }
 )
 
 // Route for when a user clicks on the email link to verify
@@ -87,7 +93,6 @@ app.post('/api/user/login', function(req, res, next) {
         console.log("Login success for " + user.username)
         res.status(201).send({
         	id_token: user._id,
-        	access_token: 2,
           username: user.username
         });
       }
@@ -121,10 +126,19 @@ app.post('/api/user/reset_password', function(req, res, next) {
 
 
 // Route for when a user clicks on the email link to reset the password
-app.get('/api/user/new_password', function(req, res, next) {
-  authenticationService.verifyToken(req.query.token, function(response) {
+app.post('/api/user/new_password', function(req, res, next) {
+  console.log(req.body)
+  authenticationService.verifyToken(req.body.token, function(response) {
+    if(response.email !== req.body.email){
+      console.log('Not same emails')
+      res.status(401).send(
+        { message: "Email address is not the same as the one that requested to reset password" }
+      )
+      return
+    }
     User.findUserByEmail(response.email)
       .then(function(result){
+        console.log('Result ', result)
         if(result.length > 1){
           throw new Error('Too many results with this email address - ' + response.email)
         } else if(result.length < 1){
@@ -132,9 +146,22 @@ app.get('/api/user/new_password', function(req, res, next) {
         }
 
         if(result[0].passwordResetPending){
-          res.status(201).redirect('/thanks')
+
+          User.hashPassword(req.body.password, function(err, passwordHash){
+            if(err){
+              next(err)
+              return;
+            }
+            let updateUser = {
+              passwordResetPending: false,
+              password: passwordHash
+            }
+            updateUserByEmail(req.body.email, updateUser, next, function(){
+              res.status(201).send({})
+            })
+          })
         } else {
-          res.status(201).redirect('/already_authenticated')
+          res.status(401).send({message: "User did not request to reset password"})
         }
     }).catch(next)
   })

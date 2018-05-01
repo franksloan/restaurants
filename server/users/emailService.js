@@ -40,7 +40,7 @@ function sendPasswordResetMessage(emailAddress, token){
       }
   }
   sendgrid.send(email);
-  console.log('email sent to: ' + emailAddress, email)
+  // console.log('email sent to: ' + emailAddress, email)
   return token;
 }
 

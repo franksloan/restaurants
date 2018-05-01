@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import {
   LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS,
   SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE, RESET_PASSWORD_REQUEST,
-  RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAILURE
+  RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAILURE, SUBMIT_NEW_PASSWORD_FAILURE
 } from './actions'
 
 // The auth reducer. The starting state sets authentication
@@ -66,7 +66,12 @@ export default function user(state = {
     case RESET_PASSWORD_FAILURE:
       return Object.assign({}, state, {
         isFetching: false,
-        signupErrorMessage: action.message
+        resetPasswordErrorMessage: action.message
+      })
+    case SUBMIT_NEW_PASSWORD_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false,
+        submitNewPasswordErrorMessage: action.message
       })
     default:
       return state

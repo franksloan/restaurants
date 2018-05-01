@@ -22,9 +22,16 @@ var UserSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
     default: false
+  },
+  passwordResetPending: {
+    type: Boolean,
+    required: true,
+    default: false
   }
 });
 
+// Before creating user validate that there is no user
+// with the same username or email
 UserSchema.pre('validate', function (next) {
   var user = this;
   User.findUserByEmail(user.email)
@@ -36,8 +43,9 @@ UserSchema.pre('validate', function (next) {
         .then(result => {
           if(result.length > 0){
             return next(new Error("This username already exists"))
-          }}
-        )
+          }
+          next()
+        })
     }).catch(next)
 })
 
@@ -50,9 +58,9 @@ UserSchema.statics.findUserByUsername = function (username) {
 }
 
 
-
 //hashing a password before saving it to the database
 UserSchema.pre('save', function (next) {
+  console.log('Save: ' + this)
   var user = this;
   bcrypt.hash(user.password, 10, function (err, hash){
     if (err) {
@@ -62,6 +70,19 @@ UserSchema.pre('save', function (next) {
     next();
   })
 });
+
+//hashing a password before saving it to the database
+UserSchema.statics.hashPassword = function(password, callback) {
+  console.log('Hashing: ' + this)
+  var user = this;
+  bcrypt.hash(password, 10, function (err, hash){
+    if (err) {
+      return next(err);
+    }
+    return callback(null, hash)
+  })
+}
+
 
 UserSchema.statics.authenticate = function (usernameOrEmail, password, callback) {
   console.log("Username or email is: " + usernameOrEmail)

@@ -141,7 +141,7 @@ function signupError(message) {
 
 
 export function signupUser(creds, history) {
-
+  console.log(creds)
   let config = {
     method: 'POST',
     headers: { 'Content-Type':'application/x-www-form-urlencoded' },
@@ -178,6 +178,7 @@ export function signupUser(creds, history) {
 export const RESET_PASSWORD_REQUEST = 'RESET_PASSWORD_REQUEST'
 export const RESET_PASSWORD_SUCCESS = 'RESET_PASSWORD_SUCCESS'
 export const RESET_PASSWORD_FAILURE = 'RESET_PASSWORD_FAILURE'
+export const SUBMIT_NEW_PASSWORD_FAILURE = 'SUBMIT_NEW_PASSWORD_FAILURE'
 
 function requestResetPassword(creds) {
   return {
@@ -194,6 +195,13 @@ function resetPasswordSuccess( ) {
 function resetPasswordError(message) {
   return {
     type: RESET_PASSWORD_FAILURE,
+    message
+  }
+}
+
+function submitNewPasswordError(message) {
+  return {
+    type: SUBMIT_NEW_PASSWORD_FAILURE,
     message
   }
 }
@@ -235,11 +243,13 @@ export function resetPassword(creds, history) {
 
 
 export function submitNewPassword(creds, history) {
-  console.log('New password', creds)
+
+  let token = stripRoute('/reset_password/', history.location.pathname)
+
   let config = {
     method: 'POST',
     headers: { 'Content-Type':'application/x-www-form-urlencoded' },
-    body: `email=${creds.email}&password=${creds.password}`
+    body: `email=${creds.email}&password=${creds.password}&token=${token}`
   }
 
   return dispatch => {
@@ -248,17 +258,20 @@ export function submitNewPassword(creds, history) {
 
     return fetch('http://localhost:5050/api/user/new_password', config)
       .then(response => response.json()
-          .then(user => ({ user, response }))
-          )
+          .then(user => {
+            console.log('USER: ', user);
+            return { user, response }
+          })
+      )
       .then(({user, response}) =>  {
         if (!response.ok) {
           // If there was a problem, we want to
           // dispatch the error condition
-          dispatch(resetPasswordError(user.message))
+          dispatch(submitNewPasswordError(user.message))
           return Promise.reject(user)
         } else {
           // Dispatch the success action
-          dispatch(resetPasswordSuccess(user))
+          dispatch(resetPasswordSuccess())
         }
       })
       .then( () => {
@@ -266,4 +279,12 @@ export function submitNewPassword(creds, history) {
       })
       .catch( err => console.log("Error: ", err.message))
   }
+}
+
+
+function stripRoute(removeString, token){
+  if(token.indexOf(removeString) != 0){
+    throw new Error('Weird route ' + token.indexOf(removeString))
+  }
+  return token.substring(removeString.length)
 }

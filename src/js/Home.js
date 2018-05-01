@@ -18,7 +18,8 @@ class Home extends React.Component {
 	}
 
 	render(){
-    const { dispatch, quote, isAuthenticated, loginErrorMessage, signupErrorMessage, resetPasswordErrorMessage} = this.props
+    const { dispatch, quote, isAuthenticated, loginErrorMessage,
+			signupErrorMessage, resetPasswordErrorMessage, submitNewPasswordErrorMessage } = this.props
 		return (
       <div>
         <Router >
@@ -45,7 +46,8 @@ class Home extends React.Component {
               <Login
                 history={props.history}
                 dispatch={dispatch}
-                loginErrorMessage={loginErrorMessage} />
+                loginErrorMessage={loginErrorMessage}
+								resetPasswordErrorMessage={resetPasswordErrorMessage} />
             ) }/>
 						<Route path='/email' render={ () => <EmailNotice /> }/>
 						<Route path='/thanks' render={ () => <Thanks /> }/>
@@ -54,7 +56,7 @@ class Home extends React.Component {
 							<ResetPassword
 								history={props.history}
 								dispatch={dispatch}
-                resetPasswordErrorMessage={resetPasswordErrorMessage} />
+                submitNewPasswordErrorMessage={submitNewPasswordErrorMessage} />
 						)}/>
           </div>
         </Router>
@@ -70,7 +72,8 @@ Home.propTypes = {
   loginErrorMessage: PropTypes.string,
 	signupErrorMessage: PropTypes.string,
 	resetPasswordErrorMessage: PropTypes.string,
-  username: PropTypes.string
+	submitNewPasswordErrorMessage: PropTypes.string,
+  username: PropTypes.string,
 }
 
 // These props come from the application's
@@ -78,13 +81,14 @@ Home.propTypes = {
 function mapStateToProps(state) {
 
   const { user } = state
-  const { isAuthenticated, loginErrorMessage, signupErrorMessage, username } = user
+  const { isAuthenticated, loginErrorMessage, signupErrorMessage, submitNewPasswordErrorMessage, username } = user
 
   return {
     isAuthenticated,
     loginErrorMessage,
 		signupErrorMessage,
-    username
+		submitNewPasswordErrorMessage,
+    username,
   }
 }
 

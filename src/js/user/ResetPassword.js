@@ -6,7 +6,6 @@ import Container from '../utilities/Container'
 
 class ResetPassword extends React.Component {
 	constructor(){
-		console.log('adassafafasfas')
 		super()
     this.handleClick = this.handleClick.bind(this)
 	}
@@ -19,7 +18,7 @@ class ResetPassword extends React.Component {
 			return
 		}
     const creds = {
-			username: this.usernameEmail.value.trim(),
+			email: this.email.value.trim(),
 			password: this.password.value.trim()
 		}
     return this.props.dispatch(submitNewPassword(creds, this.props.history))
@@ -27,8 +26,8 @@ class ResetPassword extends React.Component {
 
 
 	render(){
-		console.log('555555')
-    const { history, resetPasswordErrorMessage } = this.props
+    const { history, submitNewPasswordErrorMessage } = this.props
+		console.log(history.location.pathname)
 		return (
       <Container>
 				<Panel>
@@ -71,9 +70,9 @@ class ResetPassword extends React.Component {
 									</Col>
 								</FormGroup>
 
-								{resetPasswordErrorMessage &&
+								{submitNewPasswordErrorMessage &&
 									<Col smOffset={2} sm={8}>
-			            	<Alert bsStyle="danger">{resetPasswordErrorMessage}</Alert>
+			            	<Alert bsStyle="danger">{submitNewPasswordErrorMessage}</Alert>
 									</Col>
 			          }
 								<FormGroup>
@@ -93,7 +92,7 @@ class ResetPassword extends React.Component {
 }
 
 ResetPassword.propTypes = {
-  resetPasswordErrorMessage: PropTypes.string,
+  submitNewPasswordErrorMessage: PropTypes.string,
   dispatch: PropTypes.func.isRequired
 }
 
