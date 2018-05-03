@@ -13,6 +13,7 @@ class ResetPassword extends React.Component {
 
   handleClick(e){
 		e.preventDefault()
+
 		if(this.password.value.trim() !== this.passwordConf.value.trim()){
 			console.log('Passwords are not equal')
 			return
@@ -21,13 +22,13 @@ class ResetPassword extends React.Component {
 			email: this.email.value.trim(),
 			password: this.password.value.trim()
 		}
+
     return this.props.dispatch(submitNewPassword(creds, this.props.history))
   }
 
 
 	render(){
     const { history, submitNewPasswordErrorMessage } = this.props
-		console.log(history.location.pathname)
 		return (
       <Container>
 				<Panel>

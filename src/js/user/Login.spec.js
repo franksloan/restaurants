@@ -3,7 +3,7 @@ import { mount, shallow } from 'enzyme';
 import {expect} from 'chai';
 import sinon from 'sinon';
 import Login from './Login'
-import { Button, Form, FormGroup, FormControl, ControlLabel, Col } from 'react-bootstrap'
+import { Button, Form, FormGroup, FormControl, ControlLabel, Col, Alert } from 'react-bootstrap'
 
 
 describe('Login Component', () => {
@@ -15,10 +15,10 @@ describe('Login Component', () => {
   })
 
   it('displays error message if populated', () => {
-  	const wrapper = shallow(<Login errorMessage='No login' />)
+  	const wrapper = shallow(<Login loginErrorMessage='No login' />)
 
-    expect(wrapper.find('p')).to.have.length(1);
-    expect(wrapper.find('p').text()).to.equal('No login');
+    expect(wrapper.find(Alert)).to.have.length(1);
+    expect(wrapper.find(Alert).children().text()).to.equal('No login');
   })
 
   it('logs in when form is submitted', () => {

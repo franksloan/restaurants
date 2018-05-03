@@ -12,7 +12,8 @@ describe('RestaurantItem component', () => {
       link: "wwww.restaurant.com",
       name: "Barrafina",
       averageRating: 8,
-      address: 'W'
+      address: 'W',
+      reviews: []
     }
 
   	const wrapper = shallow(<RestaurantItem restaurant={restaurant} />)
@@ -28,7 +29,8 @@ describe('RestaurantItem component', () => {
       link: "wwww.restaurant.com",
       name: "Barrafina",
       averageRating: 8,
-      address: 'W'
+      address: 'W',
+      reviews: []
     }
     const restaurantMarkers = [ marker1, marker2, marker3 ]
 
@@ -52,7 +54,8 @@ describe('RestaurantItem component', () => {
       link: "wwww.restaurant.com",
       name: "Barrafina",
       averageRating: 8,
-      address: 'W'
+      address: 'W',
+      reviews: [{rating:7}, {rating:8}]
     }
     const restaurantMarkers = [ marker1, marker2 ]
 

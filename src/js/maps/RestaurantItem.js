@@ -57,10 +57,9 @@ class RestaurantItem extends React.Component {
 
 		let groupAverage = restaurant.reviews
 							.map(review => {
-								console.log(review)
 								return review.rating
 							})
-							.reduce((a,b) => a + b)/restaurant.reviews.length
+							.reduce((a,b) => a + b, 0)/restaurant.reviews.length
 		return (
 	      <ListGroupItem style={this.state.style} onClick={this.onItemClick}>
 					<Panel bsStyle="primary">

@@ -85,7 +85,6 @@ UserSchema.statics.hashPassword = function(password, callback) {
 
 
 UserSchema.statics.authenticate = function (usernameOrEmail, password, callback) {
-  console.log("Username or email is: " + usernameOrEmail)
   User.findOne({ $or: [{username: usernameOrEmail}, {email: usernameOrEmail} ]})
     .exec(function (err, user) {
       if (err) {

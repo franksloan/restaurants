@@ -1,13 +1,17 @@
+import { fetchFromEndpoint } from './../utilities/restService'
+
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
 
-function requestLogin(creds) {
+function requestLogin(user) {
+  // If login was successful, set the token in local storage
+  localStorage.setItem('id_token', user.id_token)
   return {
     type: LOGIN_REQUEST,
     isFetching: true,
     isAuthenticated: false,
-    creds
+    user
   }
 }
 
@@ -43,29 +47,8 @@ export function loginUser(creds, history) {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
 
-    return fetch('http://localhost:5050/api/user/login', config)
-      .then(response => response.json()
-        .then(user => ({ user, response }))
-      )
-      .then(({ user, response }) =>  {
-        console.log(user, response)
-        if (!response.ok) {
-          // If there was a problem, we want to
-          // dispatch the error condition
-          dispatch(loginError(user.message))
-          return Promise.reject(user)
-        } else {
-          // If login was successful, set the token in local storage
-          localStorage.setItem('id_token', user.id_token)
-
-          // Dispatch the success action
-          dispatch(receiveLogin(user))
-        }
-      })
-      .then( () => {
-        history.push('/')
-      })
-      .catch( err => console.log("Error: ", err.message))
+    return fetchFromEndpoint('http://localhost:5050/api/user/login',
+                  config, loginError, receiveLogin, history, '/', dispatch)
   }
 }
 
@@ -152,25 +135,8 @@ export function signupUser(creds, history) {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestSignup(creds))
 
-    return fetch('http://localhost:5050/api/user/create', config)
-      .then(response => response.json()
-          .then(user => ({ user, response }))
-          )
-      .then(({user, response}) =>  {
-        if (!response.ok) {
-          // If there was a problem, we want to
-          // dispatch the error condition
-          dispatch(signupError(user.message))
-          return Promise.reject(user)
-        } else {
-          // Dispatch the success action
-          dispatch(receiveSignup(user))
-        }
-      })
-      .then( () => {
-        history.push('/email')
-      })
-      .catch( err => console.log("Error: ", err.message))
+    return fetchFromEndpoint('http://localhost:5050/api/user/create',
+                  config, signupError, receiveSignup, history, '/email', dispatch)
   }
 }
 
@@ -219,25 +185,8 @@ export function resetPassword(creds, history) {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestResetPassword(creds))
 
-    return fetch('http://localhost:5050/api/user/reset_password', config)
-      .then(response => response.json()
-          .then(user => ({ user, response }))
-          )
-      .then(({user, response}) =>  {
-        if (!response.ok) {
-          // If there was a problem, we want to
-          // dispatch the error condition
-          dispatch(resetPasswordError(user.message))
-          return Promise.reject(user)
-        } else {
-          // Dispatch the success action
-          dispatch(resetPasswordSuccess())
-        }
-      })
-      .then( () => {
-        history.push('/email')
-      })
-      .catch( err => console.log("Error: ", err.message))
+    return fetchFromEndpoint('http://localhost:5050/api/user/reset_password',
+                  config, resetPasswordError, resetPasswordSuccess, history, '/email', dispatch)
   }
 }
 
@@ -256,28 +205,8 @@ export function submitNewPassword(creds, history) {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestResetPassword(creds))
 
-    return fetch('http://localhost:5050/api/user/new_password', config)
-      .then(response => response.json()
-          .then(user => {
-            console.log('USER: ', user);
-            return { user, response }
-          })
-      )
-      .then(({user, response}) =>  {
-        if (!response.ok) {
-          // If there was a problem, we want to
-          // dispatch the error condition
-          dispatch(submitNewPasswordError(user.message))
-          return Promise.reject(user)
-        } else {
-          // Dispatch the success action
-          dispatch(resetPasswordSuccess())
-        }
-      })
-      .then( () => {
-        history.push('/thanks')
-      })
-      .catch( err => console.log("Error: ", err.message))
+    return fetchFromEndpoint('http://localhost:5050/api/user/new_password',
+                  config, submitNewPasswordError, resetPasswordSuccess, history, '/thanks', dispatch)
   }
 }
 

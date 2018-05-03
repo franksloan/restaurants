@@ -8,19 +8,19 @@ import { Button, ListGroupItem, Panel, Form, FormGroup, FormControl, ControlLabe
 
 describe('AddSearchResultForm component', () => {
   it('renders title', () => {
-  	const wrapper = shallow(<AddSearchResultForm />)
+  	const wrapper = shallow(<AddSearchResultForm categories={[]}/>)
 
     expect(wrapper.find(Panel.Title)).to.have.length(1)
   })
 
-  it('renders button, rating, review and category sections', () => {
-  	const wrapper = shallow(<AddSearchResultForm />)
+  it('renders button, rating, review, link and category sections', () => {
+  	const wrapper = shallow(<AddSearchResultForm categories={[]}/>)
 
-    expect(wrapper.find(FormGroup)).to.have.length(4)
+    expect(wrapper.find(FormGroup)).to.have.length(5)
   })
 
   it('allows typing in a new category', () => {
-  	const wrapper = mount(<AddSearchResultForm />)
+  	const wrapper = mount(<AddSearchResultForm categories={[]}/>)
 
     // Can't add category to begin with
     expect(wrapper.find(InputGroup.Addon)).to.have.length(0)
