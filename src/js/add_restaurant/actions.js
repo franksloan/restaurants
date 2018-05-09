@@ -1,8 +1,11 @@
+import { fetchFromEndpoint } from './../utilities/restService'
+
 export const SEARCH_RESULTS = 'SEARCH_RESULTS'
 export const ADD_SEARCH_MARKER = 'ADD_SEARCH_MARKER'
 export const SELECT_RESULT = 'SELECT_RESULT'
 export const CLEAR_RESULTS = 'CLEAR_RESULTS'
 export const SET_CATEGORIES = 'SET_CATEGORIES'
+export const SAVE_RESTAURANT_ERROR = 'SAVE_RESTAURANT_ERROR'
 
 export function onSearchResultClick(resultName, marker) {
   return {
@@ -95,6 +98,13 @@ export function searchForRestaurant(searchTerm) {
   }
 }
 
+function saveRestaurantError(message){
+  return {
+    type: SAVE_RESTAURANT_ERROR,
+    message
+  }
+}
+
 
 export function saveNewRestaurant(item, callback) {
 
@@ -106,21 +116,28 @@ export function saveNewRestaurant(item, callback) {
 
   return dispatch => {
 
-    return fetch('http://localhost:5050/add_restaurant', config)
-      .then(response =>
-        response.json()
-          .then(body => ({ body, response }))
-      )
-      .then(({ body, response }) =>  {
-        console.log(body, response)
-        if(!response.ok){
-          console.error('Could not save new restaurant');
-        } else {
-          callback()
-          dispatch(getCategories())
-        }
-      }
-    )
-      .catch( err => console.log("Error: ", err.message))
+    return fetchFromEndpoint('http://localhost:5050/add_restaurant',
+                  config, saveRestaurantError , getCategories, history, null, dispatch)
+
+    // return fetch('http://localhost:5050/add_restaurant', config)
+    //   .then(response =>
+    //     response.json()
+    //       .then(body => ({ body, response }))
+    //   )
+    //   .then(({ body, response }) =>  {
+    //     console.log(body, response)
+    //     if(!response.ok){
+    //       console.error('Could not save new restaurant');
+    //     } else {
+    //       callback()
+    //       dispatch(getCategories())
+    //     }
+    //   }
+    // )
+    //   .catch( err => console.log("Error: ", err.message))
   }
+}
+
+function onSave(){
+
 }

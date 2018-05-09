@@ -18,6 +18,7 @@ class NavigationBar extends React.Component {
 
 	render(){
     const { isAuthenticated, dispatch } = this.props
+		const username = window.localStorage.getItem('username')
 		return (
       <div>
 				<Navbar inverse collapseOnSelect fixedTop>
@@ -61,6 +62,12 @@ class NavigationBar extends React.Component {
 					        Login
 					      </NavItem>
 						  </LinkContainer>
+						}
+						{isAuthenticated &&
+							<NavItem
+								title='username'>
+								{username}
+							</NavItem>
 						}
 						{isAuthenticated &&
 							<LinkContainer to='/logout'>

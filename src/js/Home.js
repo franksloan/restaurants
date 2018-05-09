@@ -18,8 +18,8 @@ class Home extends React.Component {
 	}
 
 	render(){
-    const { dispatch, quote, isAuthenticated, loginErrorMessage,
-			signupErrorMessage, resetPasswordErrorMessage, submitNewPasswordErrorMessage } = this.props
+    const { dispatch, isAuthenticated, loginErrorMessage, signupErrorMessage,
+			resetPasswordErrorMessage, submitNewPasswordErrorMessage, username } = this.props
 		return (
       <div>
         <Router >
@@ -30,11 +30,13 @@ class Home extends React.Component {
             <Route path='/' path="/(:filter)"/>
             <Route path='/map' render={ (props) => (
               <Map
-                   dispatch={dispatch} />
+                   dispatch={dispatch}
+									 username= {username} />
             ) }/>
             <Route path='/add_restaurant' render={ (props) => (
               <AddRestaurant
-                dispatch={dispatch} />
+                dispatch={dispatch}
+								username= {username} />
             ) }/>
             <Route path='/signup' render={ (props) => (
               <Signup

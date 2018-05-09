@@ -15,7 +15,9 @@ export function fetchFromEndpoint(url, config, errorMethod, successMethod, histo
             }
           })
           .then( () => {
-            history.push(redirect)
+            if(history && redirect){
+              history.push(redirect)
+            }
           })
-          .catch( err => console.log("Error: ", err.message))
+          .catch( err => console.log("Error: ", err))
 }

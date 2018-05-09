@@ -57,7 +57,8 @@ class AddRestaurant extends React.Component {
 								selectedRestaurant={this.props.selectedSearchResult}
 								clearResults={this.props.clearResults}
 								saveRestaurant={this.props.saveNewRestaurant}
-								categories={this.props.categories} />
+								categories={this.props.categories}
+								errorMessage={this.props.saveRestaurantErrorMessage} />
 							</Container>
 					</div>
 						<div style={{float: 'right', width: '50%'}}>

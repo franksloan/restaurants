@@ -5,8 +5,6 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
 
 function requestLogin(user) {
-  // If login was successful, set the token in local storage
-  localStorage.setItem('id_token', user.id_token)
   return {
     type: LOGIN_REQUEST,
     isFetching: true,
@@ -16,6 +14,9 @@ function requestLogin(user) {
 }
 
 function receiveLogin(user) {
+  // If login was successful, set the token in local storage
+  localStorage.setItem('id_token', user.id_token)
+  localStorage.setItem('username', user.username)
   return {
     type: LOGIN_SUCCESS,
     isFetching: false,
@@ -85,7 +86,6 @@ export function logoutUser() {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogout())
     localStorage.removeItem('id_token')
-    localStorage.removeItem('access_token')
 
     dispatch(receiveLogout())
   }

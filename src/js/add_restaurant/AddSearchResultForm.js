@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, ListGroupItem, Panel, Form,
 	FormGroup, FormControl, ControlLabel, Col,
-	InputGroup, OverlayTrigger, Popover } from 'react-bootstrap'
+	InputGroup, Alert } from 'react-bootstrap'
 
 class AddSearchResultForm extends React.Component {
 	constructor(){
@@ -31,7 +31,7 @@ class AddSearchResultForm extends React.Component {
 	// if not then add it as a new one
 	addCategory(e){
 
-    console.log('New categoory: ' + this.new_category.value)
+    console.log('New category: ' + this.new_category.value)
 
 		this.setState({
 			new_category: this.new_category.value,
@@ -44,6 +44,7 @@ class AddSearchResultForm extends React.Component {
 		e.preventDefault()
 		this.setState({isSaving: true})
 
+		const username = window.localStorage.getItem('username')
 		const item = {
 				id: this.props.infoFromGoogle.id,
 				link: this.link.value.trim(),
@@ -53,7 +54,8 @@ class AddSearchResultForm extends React.Component {
 				position: this.props.infoFromGoogle.position,
 				detail: this.review.value.trim(),
 				googleRating: this.props.infoFromGoogle.googleRating,
-				userRating: this.rating.value.trim() }
+				userRating: this.rating.value.trim(),
+			  addedBy: username }
 		this.props.saveRestaurant(item, this.alertUserAndClear)
 		console.log('Added: ', item)
   }
@@ -153,6 +155,11 @@ class AddSearchResultForm extends React.Component {
 		    									placeholder="http://...." />
 										</Col>
   						    </FormGroup>
+									{this.props.errorMessage &&
+										<Col smOffset={3} sm={9}>
+				            	<Alert bsStyle="danger">{this.props.errorMessage}</Alert>
+										</Col>
+				          }
 									<FormGroup>
 								    <Col smOffset={3} sm={9}>
 									     <Button

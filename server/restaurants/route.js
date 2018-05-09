@@ -9,8 +9,8 @@ var app = module.exports = express.Router();
 
 // Route to handle a
 app.get('/get_restaurants', function(req, res, next) {
+  console.log('Request to get restaurants')
   Restaurant.getRestaurants((err, results) => {
-    console.log(err, results)
     if (err) {
       return next(err)
     }
@@ -21,6 +21,7 @@ app.get('/get_restaurants', function(req, res, next) {
 });
 
 app.get('/get_categories', function(req, res, next) {
+  console.log('Request to get categories')
   Category.getCategories((results) => {
     res.status(201).send({
       categories: results
@@ -29,7 +30,7 @@ app.get('/get_categories', function(req, res, next) {
 });
 
 app.get('/find_restaurant', function(req, res, next) {
-  console.log(req.query)
+  console.log('Request to find restaurant on google places API')
   var googleMapsClient = require('@google/maps').createClient({
     key: 'AIzaSyA-vIs4_qlNrbXIzBYFJZKF9B8lkw0-S4I'
   });
@@ -48,11 +49,12 @@ app.get('/find_restaurant', function(req, res, next) {
 });
 
 app.post('/add_restaurant', function(req, res, next) {
+  console.log('Request to add new restaurant')
   var review = {
-    user: 'frank',
     detail: req.body.detail,
     rating: req.body.userRating,
-    dateAdded: new Date()
+    dateAdded: new Date(),
+    addedBy: 'frank'
   }
   var restaurant = {
     id: req.body.id,
@@ -63,22 +65,23 @@ app.post('/add_restaurant', function(req, res, next) {
     category: req.body.category,
     googleRating: req.body.googleRating,
     reviews: [ review ],
-    dateAdded: new Date()
+    dateAdded: new Date(),
+    addedBy: 'frank'
   }
 
-  addCategory(restaurant.category)
   //use schema.create to insert data into the db
-  Restaurant.create(restaurant, function (err, user) {
-    if (err) {
-      console.log(require('util').inspect(err));
-      return next(err)
-    } else {
-      res.status(201).send({
-        message: 'success'
-      });
-    }
-  });
-});
+  Restaurant.create(restaurant).then(function (user) {
+    addCategory(restaurant.category)
+    res.status(201).send({
+      message: 'success'
+    })
+  }).catch(err => {
+    res.status(401).send({
+      message: err.message
+    })
+    next(err)
+  })
+})
 
 
 // Adds the category if it doesn't already exist

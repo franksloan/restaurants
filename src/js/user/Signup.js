@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, Form, FormGroup, FormControl, ControlLabel, Col, Panel } from 'react-bootstrap'
+import { Button, Form, FormGroup, FormControl, ControlLabel, Col, Panel, Alert } from 'react-bootstrap'
 import { signupUser } from './actions'
 import Container from '../utilities/Container'
 

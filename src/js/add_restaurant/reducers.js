@@ -1,5 +1,6 @@
 import {
-  SEARCH_RESULTS, ADD_SEARCH_MARKER, SELECT_RESULT, CLEAR_RESULTS, SET_CATEGORIES
+  SEARCH_RESULTS, ADD_SEARCH_MARKER, SELECT_RESULT,
+  CLEAR_RESULTS, SET_CATEGORIES, SAVE_RESTAURANT_ERROR
 } from './actions'
 import React from 'react'
 
@@ -41,6 +42,10 @@ export default function add_restaurant(state = {
     case SET_CATEGORIES:
       return Object.assign({}, state, {
         categories: action.categories
+      })
+    case SAVE_RESTAURANT_ERROR:
+      return Object.assign({}, state, {
+        saveRestaurantErrorMessage: action.message
       })
     default:
       return state

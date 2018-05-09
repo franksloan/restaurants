@@ -30,7 +30,7 @@ export default function maps(state = {
       })
     case LOAD_RESTAURANTS:
       return Object.assign({}, state, {
-        restaurantsList: action.restaurantsList
+        restaurantsList: action.restaurants
       })
     case SELECT_RESTAURANT:
       return Object.assign({}, state, {

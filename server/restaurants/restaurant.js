@@ -48,6 +48,23 @@ var RestaurantSchema = new mongoose.Schema({
 });
 
 
+// Before adding restaurant check if it already exists
+RestaurantSchema.pre('validate', function (next) {
+  var restaurant = this;
+  Restaurant.findRestaurantById(restaurant.id)
+    .then(result => {
+      if(result.length > 0){
+        return next(new Error("This restaurant has already been added - " + restaurant.name))
+      }
+      next()
+    }).catch(next)
+})
+
+RestaurantSchema.statics.findRestaurantById = function (id) {
+  return Restaurant.find({ id: id }).exec()
+}
+
+
 RestaurantSchema.statics.getRestaurants = function (callback) {
   Restaurant.find({ })
     .exec(function (err, results) {

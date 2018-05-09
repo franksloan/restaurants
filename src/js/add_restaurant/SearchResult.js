@@ -56,7 +56,8 @@ class RestaurantItem extends React.Component {
                 infoFromGoogle={restaurant}
                 clearResults={this.props.clearResults}
                 saveRestaurant={this.props.saveRestaurant}
-                categories={this.props.categories} />
+                categories={this.props.categories}
+								errorMessage={this.props.errorMessage} />
         }
         </div>
     )

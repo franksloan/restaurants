@@ -39,4 +39,24 @@ describe('AddSearchResultForm component', () => {
     expect(wrapper.state().addCategoryMode).to.be.false
     expect(wrapper.find(InputGroup.Addon)).to.have.length(0)
   })
+
+  it('submits new restaurant when submitted', () => {
+    const infoFromGoogle = {
+      id: 123,
+      name: 'Padella'
+    }
+
+    const e = { preventDefault: () => {}}
+    const saveRestaurantSpy = sinon.spy()
+
+  	const wrapper = mount(<AddSearchResultForm
+      categories={[]}
+      infoFromGoogle={infoFromGoogle}
+      saveRestaurant={saveRestaurantSpy}
+      />)
+
+    wrapper.find(Button).simulate('click')
+
+    expect(saveRestaurantSpy.callCount).to.equal(1)
+  })
 })
