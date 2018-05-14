@@ -118,23 +118,6 @@ export function saveNewRestaurant(item, callback) {
 
     return fetchFromEndpoint('http://localhost:5050/add_restaurant',
                   config, saveRestaurantError , getCategories, history, null, dispatch)
-
-    // return fetch('http://localhost:5050/add_restaurant', config)
-    //   .then(response =>
-    //     response.json()
-    //       .then(body => ({ body, response }))
-    //   )
-    //   .then(({ body, response }) =>  {
-    //     console.log(body, response)
-    //     if(!response.ok){
-    //       console.error('Could not save new restaurant');
-    //     } else {
-    //       callback()
-    //       dispatch(getCategories())
-    //     }
-    //   }
-    // )
-    //   .catch( err => console.log("Error: ", err.message))
   }
 }
 

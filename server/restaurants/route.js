@@ -30,7 +30,7 @@ app.get('/get_categories', function(req, res, next) {
 });
 
 app.get('/find_restaurant', function(req, res, next) {
-  console.log('Request to find restaurant on google places API')
+  console.log('Request to find restaurant on google places API - ' + req.query.searchTerm)
   var googleMapsClient = require('@google/maps').createClient({
     key: 'AIzaSyA-vIs4_qlNrbXIzBYFJZKF9B8lkw0-S4I'
   });
@@ -54,7 +54,7 @@ app.post('/add_restaurant', function(req, res, next) {
     detail: req.body.detail,
     rating: req.body.userRating,
     dateAdded: new Date(),
-    addedBy: 'frank'
+    addedBy: req.body.addedBy
   }
   var restaurant = {
     id: req.body.id,
@@ -66,7 +66,7 @@ app.post('/add_restaurant', function(req, res, next) {
     googleRating: req.body.googleRating,
     reviews: [ review ],
     dateAdded: new Date(),
-    addedBy: 'frank'
+    addedBy: req.body.addedBy
   }
 
   //use schema.create to insert data into the db
@@ -82,6 +82,47 @@ app.post('/add_restaurant', function(req, res, next) {
     next(err)
   })
 })
+
+
+app.post('/add_review', function(req, res, next) {
+  console.log('Request to add new review for ' + req.body.name)
+  var review = {
+    detail: req.body.detail,
+    rating: req.body.userRating,
+    dateAdded: new Date(),
+    addedBy: req.body.addedBy
+  }
+
+  Restaurant.findRestaurantById(req.body.id)
+    .then(result => {
+      if(result.length == 0){
+        return next(new Error("This restaurant could not be found - " + restaurant.name))
+      }
+      const reviews = {reviews: result.reviews.push(review)}
+      updateRestaurantById(req.body.id, reviews, next, () => {
+        res.status(201).send({
+          message: 'success'
+        });
+      })
+
+    }).catch(err => {
+      res.status(401).send({
+        message: err.message
+      })
+      next(err)
+    })
+})
+
+// Get the user and update its authentication status
+function updateRestaurantById(id, update, next, callback){
+  User.findOneAndUpdate({id: id}, update, function(err){
+    if(err){
+      next(err)
+    }
+    console.log('Sucess')
+    callback()
+  })
+}
 
 
 // Adds the category if it doesn't already exist

@@ -1,13 +1,14 @@
 import React from 'react'
-import { Button, ListGroupItem, Panel } from 'react-bootstrap'
+import { Button, ListGroupItem, Panel, Glyphicon } from 'react-bootstrap'
 
 class RestaurantItem extends React.Component {
 	constructor(){
 		super()
 		this.onItemClick = this.onItemClick.bind(this)
 		this.getMarker = this.getMarker.bind(this)
+		this.toggleReview = this.toggleReview.bind(this)
 		this.state = {
-			style: {border: null}
+			showReview: false
 		}
 	}
 
@@ -36,6 +37,13 @@ class RestaurantItem extends React.Component {
 		} else {
 			console.error("The marker for " + this.props.restaurant.name + " is not correctly displayed on map")
 		}
+	}
+
+
+	toggleReview(){
+		this.setState({
+			showReview: !this.state.showReview
+		})
 	}
 
 
@@ -69,6 +77,14 @@ class RestaurantItem extends React.Component {
 									{restaurant.name}
 								</a>
 							</Panel.Title>
+							<Button className="pull-right" onClick={this.toggleReview}>
+								{!this.state.showReview &&
+									<Glyphicon glyph="pencil" />
+								}
+								{this.state.showReview &&
+									<Glyphicon glyph="remove" />
+								}
+							</Button>
 				    </Panel.Heading>
 				    <Panel.Body>
 							<p><b>Category: </b>{restaurant.category}</p>
