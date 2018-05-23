@@ -56,7 +56,7 @@ class AddRestaurant extends React.Component {
 								activeMarker={this.props.activeSearchMarker}
 								selectedRestaurant={this.props.selectedSearchResult}
 								clearResults={this.props.clearResults}
-								saveRestaurant={this.props.saveNewRestaurant}
+								save={this.props.saveNewRestaurant}
 								categories={this.props.categories}
 								errorMessage={this.props.saveRestaurantErrorMessage} />
 							</Container>

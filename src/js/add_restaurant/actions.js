@@ -106,7 +106,7 @@ function saveRestaurantError(message){
 }
 
 
-export function saveNewRestaurant(item, callback) {
+export function saveNewRestaurant(item) {
 
   let config = {
     method: 'POST',

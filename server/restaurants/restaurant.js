@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var reviewSchema = require('./review')
 
 var RestaurantSchema = new mongoose.Schema({
   id: {
@@ -37,13 +38,15 @@ var RestaurantSchema = new mongoose.Schema({
   category: {
     type: String
   },
-  reviews: {
-    type: Array
-  },
+  reviews: [reviewSchema],
   dateAdded: {
     type: Date,
     required: true,
     default: new Date()
+  },
+  addedBy: {
+    type: String,
+    required: true
   }
 });
 
@@ -53,6 +56,9 @@ RestaurantSchema.pre('validate', function (next) {
   var restaurant = this;
   Restaurant.findRestaurantById(restaurant.id)
     .then(result => {
+      if(result == null){
+        next()
+      }
       if(result.length > 0){
         return next(new Error("This restaurant has already been added - " + restaurant.name))
       }
@@ -61,7 +67,7 @@ RestaurantSchema.pre('validate', function (next) {
 })
 
 RestaurantSchema.statics.findRestaurantById = function (id) {
-  return Restaurant.find({ id: id }).exec()
+  return Restaurant.findOne({ id: id }).exec()
 }
 
 

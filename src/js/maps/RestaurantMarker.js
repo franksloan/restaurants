@@ -35,18 +35,18 @@ class RestaurantMarker extends React.Component {
 
 	renderMarker(){
 		let google = this.props.google
-
+    console.log(this.props.restaurant)
 		if(!google){
 			return
 		}
-		let pos = this.props.position
+		let pos = this.props.restaurant.position
 		let position = new google.maps.LatLng(pos.lat, pos.lng)
 
 		var pref = {
 			position: position,
 			map: this.props.map,
 			icon: this.props.icon,
-			title: this.props.name
+			title: this.props.restaurant.name
 		}
 
 		this.marker = new google.maps.Marker(pref)
@@ -67,7 +67,7 @@ class RestaurantMarker extends React.Component {
 
 
 	onMarkerClick(markerProps, marker){
-	  this.props.onRestaurantClick(markerProps.name, marker)
+	  this.props.onRestaurantClick(markerProps.restaurant, marker)
 	}
 
 

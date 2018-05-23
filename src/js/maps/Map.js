@@ -5,7 +5,7 @@ import GoogleMap from './GoogleMap'
 import RestaurantScroll from './RestaurantScroll'
 import RestaurantItem from './RestaurantItem'
 import { Button } from 'react-bootstrap'
-import { addMarker, loadRestaurants, onRestaurantClick, clearMarkers } from './actions'
+import { addMarker, loadRestaurants, onRestaurantClick, clearMarkers, saveReview } from './actions'
 
 class Map extends React.Component {
 	constructor(){
@@ -36,9 +36,11 @@ class Map extends React.Component {
 							onRestaurantClick={this.props.onRestaurantClick}
 							showInfoWindow={this.props.showInfoWindow}
 							activeMarker={this.props.activeMarker}
-							selectedRestaurant={this.props.selectedRestaurant} />
+							selectedRestaurant={this.props.selectedRestaurant}
+							save={this.props.saveReview}
+							errorMessage={this.props.saveReviewErrorMessage} />
 					</div>
-					<div style={{float: 'right', width: '50%'}}>
+					<div style={{float: 'right', width: '50%', paddingTop: '50px'}}>
 	          	<GoogleMap
 	          		addMarker={this.props.addMarker}
 	          		restaurantsList={this.props.restaurantsList}
@@ -64,7 +66,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        ...bindActionCreators({ addMarker, loadRestaurants, onRestaurantClick, clearMarkers }, dispatch)
+        ...bindActionCreators({ addMarker, loadRestaurants,
+					onRestaurantClick, clearMarkers, saveReview }, dispatch)
     }
 }
 

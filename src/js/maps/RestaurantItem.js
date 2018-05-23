@@ -1,75 +1,36 @@
 import React from 'react'
 import { Button, ListGroupItem, Panel, Glyphicon } from 'react-bootstrap'
+import AddReviewForm from './AddReviewForm'
+import ScrollItem from './../scroll/ScrollItem'
 
 class RestaurantItem extends React.Component {
 	constructor(){
 		super()
-		this.onItemClick = this.onItemClick.bind(this)
-		this.getMarker = this.getMarker.bind(this)
 		this.toggleReview = this.toggleReview.bind(this)
 		this.state = {
 			showReview: false
 		}
 	}
 
-
-	// If the active marker that has been clicked on is different
-	// and it is this restaurant then highlight it
-	componentDidUpdate(prevProps, prevState){
-		if (this.props.activeMarker !== prevProps.activeMarker) {
-			if (this.props.showInfoWindow && (this.props.selectedRestaurant === this.props.restaurant.name)) {
-				this.setState({
-					style: {backgroundColor: "grey"}
-				})
-			} else {
-				this.setState({
-					style: {backgroundColor: null}
-				})
-			}
-		}
-	}
-
-	onItemClick(){
-		let restaurantMarker = this.getMarker(this.props.restaurant.name)
-
-		if(restaurantMarker){
-			this.props.onRestaurantClick(this.props.restaurant.name, restaurantMarker)
-		} else {
-			console.error("The marker for " + this.props.restaurant.name + " is not correctly displayed on map")
-		}
-	}
-
-
-	toggleReview(){
+	toggleReview(e){
 		this.setState({
 			showReview: !this.state.showReview
 		})
 	}
 
 
-	getMarker(restaurantName) {
-	  let match_list = this.props.googleRestaurantMarkers.filter(item => {
-	    return item.title === restaurantName
-	  })
-	  if (match_list) {
-	    return match_list[0]
-	  }
-	  else {
-	    return null;
-	  }
-	}
-
-
 	render(){
-		let restaurant = this.props.restaurant
 
+		const showReview = this.state.showReview
+		let restaurant = this.props.restaurant
 		let groupAverage = restaurant.reviews
 							.map(review => {
 								return review.rating
 							})
 							.reduce((a,b) => a + b, 0)/restaurant.reviews.length
 		return (
-	      <ListGroupItem style={this.state.style} onClick={this.onItemClick}>
+			<div onClick={this.props.onItemClick}>
+	      <ListGroupItem >
 					<Panel bsStyle="primary">
 				    <Panel.Heading>
 				      <Panel.Title componentClass="h3">
@@ -78,10 +39,10 @@ class RestaurantItem extends React.Component {
 								</a>
 							</Panel.Title>
 							<Button className="pull-right" onClick={this.toggleReview}>
-								{!this.state.showReview &&
+								{!showReview &&
 									<Glyphicon glyph="pencil" />
 								}
-								{this.state.showReview &&
+								{showReview &&
 									<Glyphicon glyph="remove" />
 								}
 							</Button>
@@ -91,9 +52,18 @@ class RestaurantItem extends React.Component {
 							<p><b>Google: </b>{restaurant.googleRating}</p>
 							<p><b>Group rating: </b>{groupAverage}</p>
 							<p><b>Address: </b>{restaurant.address}</p>
+							{showReview &&
+								<AddReviewForm
+									restaurantId={restaurant.id}
+									restaurantName={restaurant.name}
+	                clearResults={this.props.clearResults}
+	                saveReview={this.props.save}
+									errorMessage={this.props.errorMessage} />
+							}
 						</Panel.Body>
 				  </Panel>
 	      </ListGroupItem>
+			</div>
     )
 	}
 }

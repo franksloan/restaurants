@@ -1,5 +1,5 @@
 import {
-  ADD_MARKER, LOAD_RESTAURANTS, SELECT_RESTAURANT, CLEAR_MARKERS
+  ADD_MARKER, LOAD_RESTAURANTS, SELECT_RESTAURANT, CLEAR_MARKERS, SAVE_REVIEW_ERROR
 } from './actions'
 import React from 'react'
 
@@ -26,7 +26,7 @@ export default function maps(state = {
         googleRestaurantMarkers: [],
         activeMarker: null,
         showInfoWindow: false,
-        selectedRestaurant: ''
+        selectedRestaurant: null
       })
     case LOAD_RESTAURANTS:
       return Object.assign({}, state, {
@@ -37,6 +37,10 @@ export default function maps(state = {
         activeMarker: action.activeMarker,
         showInfoWindow: action.showInfoWindow,
         selectedRestaurant: action.selectedRestaurant
+      })
+    case SAVE_REVIEW_ERROR:
+      return Object.assign({}, state, {
+        saveReviewErrorMessage: action.message
       })
     default:
       return state

@@ -98,12 +98,22 @@ app.post('/add_review', function(req, res, next) {
       if(result.length == 0){
         return next(new Error("This restaurant could not be found - " + restaurant.name))
       }
-      const reviews = {reviews: result.reviews.push(review)}
-      updateRestaurantById(req.body.id, reviews, next, () => {
-        res.status(201).send({
-          message: 'success'
-        });
-      })
+      console.log(result.reviews.find( r => r.addedBy == review.addedBy))
+      // Only allow a user to add one review per restaurant
+      if(result.reviews.find( r => r.addedBy == review.addedBy) != null){
+        res.status(401).send({
+          message: review.addedBy + " has already added a review for " + req.body.name
+        })
+        return next()
+      }
+      result.reviews.push(review)
+      result.save(function (err) {
+        if (err) return next(err)
+          res.status(201).send({
+            message: 'success'
+          });
+
+      });
 
     }).catch(err => {
       res.status(401).send({
@@ -115,7 +125,7 @@ app.post('/add_review', function(req, res, next) {
 
 // Get the user and update its authentication status
 function updateRestaurantById(id, update, next, callback){
-  User.findOneAndUpdate({id: id}, update, function(err){
+  Restaurant.findOneAndUpdate({id: id}, update, function(err){
     if(err){
       next(err)
     }

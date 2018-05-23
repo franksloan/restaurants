@@ -48,17 +48,17 @@ class RestaurantItem extends React.Component {
 				    <Panel.Body>
 							<p><b>Rating on google: </b>{restaurant.googleRating}</p>
               <p><b>Address: </b>{restaurant.address}</p>
+							{this.props.selectedRestaurant == restaurant.name &&
+	              <AddSearchResultForm
+	                infoFromGoogle={restaurant}
+	                clearResults={this.props.clearResults}
+	                saveRestaurant={this.props.save}
+	                categories={this.props.categories}
+									errorMessage={this.props.errorMessage} />
+        			}
 						</Panel.Body>
 				  </Panel>
 	      </ListGroupItem>
-        {this.props.selectedRestaurant == restaurant.name &&
-              <AddSearchResultForm
-                infoFromGoogle={restaurant}
-                clearResults={this.props.clearResults}
-                saveRestaurant={this.props.saveRestaurant}
-                categories={this.props.categories}
-								errorMessage={this.props.errorMessage} />
-        }
         </div>
     )
 	}
