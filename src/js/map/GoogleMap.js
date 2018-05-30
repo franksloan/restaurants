@@ -11,22 +11,24 @@ export class GoogleMap extends React.Component {
   }
 
 
-  componentDidMount(){
+  componentWillReceiveProps(nextProps){
     console.log('MOUNT', this.props)
-    let restaurantsList = this.props.restaurantsList
-    let restaurantMarkers = restaurantsList.map( (restaurant) => {
-        let marker = <RestaurantMarker
-            key={restaurant.id}
-            google={this.props.google}
-            restaurant={restaurant}
-            icon={{url: "/images/icons8-marker.png"}}
-            onRestaurantClick={this.props.onRestaurantClick}
-            addMarker={this.props.addMarker} />
-        return marker
+    let restaurantsList = nextProps.restaurantsList
+    if(restaurantsList.length > 0){
+      let restaurantMarkers = restaurantsList.map( (restaurant) => {
+          let marker = <RestaurantMarker
+              key={restaurant.id}
+              google={this.props.google}
+              restaurant={restaurant}
+              icon={{url: "/images/icons8-marker.png"}}
+              onRestaurantClick={this.props.onRestaurantClick}
+              addMarker={this.props.addMarker} />
+          return marker
+        })
+      this.setState({
+        restaurantMarkers: restaurantMarkers
       })
-    this.setState({
-      restaurantMarkers: restaurantMarkers
-    })
+    }
   }
 
 
@@ -43,7 +45,6 @@ export class GoogleMap extends React.Component {
     }
     let height = window.innerHeight - 50
     height = height + 'px'
-    console.log(height)
     return (
       <Map
         google={this.props.google}

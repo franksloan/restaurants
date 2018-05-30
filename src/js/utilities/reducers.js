@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import user from '../user/reducers'
-import maps from '../maps/reducers'
+import maps from '../restaurants/reducers'
 import add_restaurant from '../add_restaurant/reducers'
 
 // We combine the reducers here so that they

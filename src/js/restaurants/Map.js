@@ -1,11 +1,12 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import GoogleMap from './GoogleMap'
-import RestaurantScroll from './RestaurantScroll'
+import GoogleMap from './../map/GoogleMap'
+import ScrollingList from './../scroll/ScrollingList'
 import RestaurantItem from './RestaurantItem'
 import { Button } from 'react-bootstrap'
 import { addMarker, loadRestaurants, onRestaurantClick, clearMarkers, saveReview } from './actions'
+import Container from '../utilities/Container'
 
 class Map extends React.Component {
 	constructor(){
@@ -26,10 +27,10 @@ class Map extends React.Component {
 	}
 
 	render(){
-		let AppRestaurantScroll = RestaurantScroll.create(RestaurantItem)
+		let AppRestaurantScroll = ScrollingList.create(RestaurantItem)
 		return (
 				<div style={{width: '100%', overflow:'auto'}}>
-					<div style={{float:'left', width: '50%', paddingTop: '10%', paddingLeft:'1.5%', paddingRight:'1.5%'}}>
+					<Container paddingSide='1.5%' paddingTop='60px'>
 						<AppRestaurantScroll
 							restaurantsList={this.props.restaurantsList}
 							googleRestaurantMarkers={this.props.googleRestaurantMarkers}
@@ -39,8 +40,8 @@ class Map extends React.Component {
 							selectedRestaurant={this.props.selectedRestaurant}
 							save={this.props.saveReview}
 							errorMessage={this.props.saveReviewErrorMessage} />
-					</div>
-					<div style={{float: 'right', width: '50%', paddingTop: '50px'}}>
+					</Container>
+					<Container float='right'>
 	          	<GoogleMap
 	          		addMarker={this.props.addMarker}
 	          		restaurantsList={this.props.restaurantsList}
@@ -50,7 +51,7 @@ class Map extends React.Component {
 	          		activeMarker={this.props.activeMarker}
 	          		selectedRestaurant={this.props.selectedRestaurant}
 								clearMarkers={this.props.clearMarkers} />
-	        </div>
+	        </Container>
 	      </div>
     	)
 	}

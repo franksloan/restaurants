@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, ListGroup } from 'react-bootstrap'
-import ScrollItem from './../scroll/ScrollItem'
+import ScrollItem from './ScrollItem'
 
 // Creates scrolling list of restaurants
 let create = RestaurantItem => class extends React.Component {

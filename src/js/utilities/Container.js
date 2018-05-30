@@ -1,9 +1,4 @@
 import React from 'react'
-import { Jumbotron } from 'react-bootstrap'
-
-var styles = {
-	paddingTop: '60px', paddingLeft:'1.5%', paddingRight:'1.5%'
-}
 
 class Container extends React.Component {
 	constructor(props){
@@ -11,7 +6,14 @@ class Container extends React.Component {
 	}
 
 	render(){
-
+		console.log(this.props)
+		var styles = {
+			float: this.props.float || 'left',
+			paddingTop: this.props.paddingTop || '50px',
+			paddingLeft: this.props.paddingSide || '0px',
+			paddingRight: this.props.paddingSide || '0px',
+			width: this.props.width || '50%'
+		}
 		return (
         <div style={styles}>
             {this.props.children}
