@@ -11,22 +11,15 @@ import Container from '../utilities/Container'
 class Map extends React.Component {
 	constructor(){
 		super()
-		this.toggleVisibility = this.toggleVisibility.bind(this)
-		this.state = {
-			visible: true,
-			id2: Math.random() * 10
-		}
 	}
 
 	componentWillMount() {
-	    this.props.loadRestaurants();
-	}
-
-	toggleVisibility(){
-		this.setState({ visible: !this.state.visible })
+		console.log('Will Mount in Map.js')
+	  this.props.loadRestaurants();
 	}
 
 	render(){
+		console.log('Render in Map.js')
 		let AppRestaurantScroll = ScrollingList.create(RestaurantItem)
 		return (
 				<div style={{width: '100%', overflow:'auto'}}>

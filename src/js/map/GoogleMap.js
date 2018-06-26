@@ -10,10 +10,18 @@ export class GoogleMap extends React.Component {
     }
   }
 
+  // componentWillReceiveProps(nextProps){
+  //   console.log('Will receive props in GoogleMap.js', this.props)
+  //   this.setupMarkers(nextProps.restaurantsList)
+  // }
 
-  componentWillReceiveProps(nextProps){
-    console.log('MOUNT', this.props)
-    let restaurantsList = nextProps.restaurantsList
+
+  componentDidMount(){
+    this.setupMarkers(this.props.restaurantsList)
+  }
+
+
+  setupMarkers(restaurantsList){
     if(restaurantsList.length > 0){
       let restaurantMarkers = restaurantsList.map( (restaurant) => {
           let marker = <RestaurantMarker
@@ -38,6 +46,7 @@ export class GoogleMap extends React.Component {
 
 
   render() {
+    console.log('Render in GoogleMap.js')
     let activeMarker = this.props.activeMarker
     let selectedRestaurant;
     if(this.props.selectedRestaurant){

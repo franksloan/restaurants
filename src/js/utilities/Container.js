@@ -6,7 +6,6 @@ class Container extends React.Component {
 	}
 
 	render(){
-		console.log(this.props)
 		var styles = {
 			float: this.props.float || 'left',
 			paddingTop: this.props.paddingTop || '50px',

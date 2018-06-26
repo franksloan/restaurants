@@ -1,42 +1,42 @@
 import React from 'react'
-import { Button, ListGroupItem, Panel, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
+import { Button, ListGroupItem, Panel, Form, FormGroup, FormControl, ControlLabel, Glyphicon } from 'react-bootstrap'
 import AddSearchResultForm from './AddSearchResultForm'
 
 class RestaurantItem extends React.Component {
 	constructor(){
 		super()
-		this.onItemClick = this.onItemClick.bind(this)
-		this.getMarker = this.getMarker.bind(this)
-	}
-
-	onItemClick(){
-		let restaurantMarker = this.getMarker(this.props.restaurant.name)
-		if(restaurantMarker){
-			this.props.onRestaurantClick(this.props.restaurant.name, restaurantMarker)
-		} else {
-			console.error("The marker for " + this.props.restaurant.name + " is not correctly displayed on map")
+		this.toggleReview = this.toggleReview.bind(this)
+		this.openLinkInMap = this.openLinkInMap.bind(this)
+		this.state = {
+			showReview: false
 		}
 	}
 
-
-	getMarker(restaurantName) {
-	  let match_list = this.props.googleRestaurantMarkers.filter(item => {
-	    return item.title === restaurantName
-	  })
-	  if (match_list) {
-	    return match_list[0]
-	  }
-	  else {
-	    return null;
-	  }
+	toggleReview(e){
+		this.setState({
+			showReview: !this.state.showReview
+		})
 	}
 
+	openLinkInMap(e){
+		console.log(navigator.platform)
+		if /* if we're on iOS, open in Apple Maps */
+    ((navigator.platform.indexOf("iPhone") != -1) ||
+     (navigator.platform.indexOf("iPad") != -1) ||
+     (navigator.platform.indexOf("iPod") != -1)){
+
+    	window.open("maps://maps.google.com/maps/place/?q=place_id:"+this.props.restaurant.googleId);
+		}	else {/* else use Google */
+    	window.open("https://www.google.com/maps/place/?q=place_id:"+this.props.restaurant.googleId);
+		}
+	}
 
 	render(){
 		let restaurant = this.props.restaurant
+		let showReview = this.state.showReview
 		return (
         <div>
-	      <ListGroupItem onClick={this.onItemClick} style={{padding: '2%'}}>
+	      <ListGroupItem onClick={this.props.onItemClick} style={{padding: '2%'}}>
 					<Panel bsStyle="primary" style={{margin: '0%'}}>
 				    <Panel.Heading>
 				      <Panel.Title componentClass="h3">
@@ -44,11 +44,19 @@ class RestaurantItem extends React.Component {
 									{restaurant.name}
 								</a>
 							</Panel.Title>
+							<Button className="pull-right" onClick={this.toggleReview}>
+								{!showReview &&
+									<Glyphicon glyph="pencil" />
+								}
+								{showReview &&
+									<Glyphicon glyph="remove" />
+								}
+							</Button>
 				    </Panel.Heading>
 				    <Panel.Body>
 							<p><b>Rating on google: </b>{restaurant.googleRating}</p>
-              <p><b>Address: </b>{restaurant.address}</p>
-							{this.props.selectedRestaurant == restaurant.name &&
+              <p onClick={this.openLinkInMap}><b>Address: </b><a>{restaurant.address}</a></p>
+							{showReview &&
 	              <AddSearchResultForm
 	                infoFromGoogle={restaurant}
 	                clearResults={this.props.clearResults}

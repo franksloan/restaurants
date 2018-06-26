@@ -3,13 +3,14 @@ function convertGoogleResult(jsonResults){
 }
 
 function buildRestaurant(result){
+  console.log(result)
   return {
     id: result.id,
     name: result.name,
     address: result.formatted_address,
     position: {lat: result.geometry.location.lat, lng: result.geometry.location.lng},
     googleRating: result.rating,
-    averageRating: 8.6
+    googleId: result.place_id
   }
 }
 

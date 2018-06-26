@@ -44,7 +44,7 @@ class AddRestaurant extends React.Component {
 		return (
 				<div style={{width: '100%', overflow:'auto'}}>
 					<Container paddingSide='1.5%' paddingTop='60px'>
-						<Container paddingSide='1.5%' paddingTop='0px' width='100%'>
+						<Container paddingTop='0px' width='100%'>
 							<Form>
 							  <InputGroup onKeyPress={this.handleKeyPress}>
 									<FormControl
@@ -57,19 +57,21 @@ class AddRestaurant extends React.Component {
 							  </InputGroup>
 							</Form>
 						</Container>
-						<GoogleRestaurantScroll
-							restaurantsList={this.props.searchResults}
-							googleRestaurantMarkers={this.props.googleSearchMarkers}
-							onRestaurantClick={this.props.onSearchResultClick}
-							showInfoWindow={this.props.showSearchResultWindow}
-							activeMarker={this.props.activeSearchMarker}
-							selectedRestaurant={this.props.selectedSearchResult}
-							clearResults={this.props.clearResults}
-							save={this.props.saveNewRestaurant}
-							categories={this.props.categories}
-							errorMessage={this.props.saveRestaurantErrorMessage} />
+						<Container paddingTop='0px' width='100%'>
+							<GoogleRestaurantScroll
+								restaurantsList={this.props.searchResults}
+								googleRestaurantMarkers={this.props.googleSearchMarkers}
+								onRestaurantClick={this.props.onSearchResultClick}
+								showInfoWindow={this.props.showSearchResultWindow}
+								activeMarker={this.props.activeSearchMarker}
+								selectedRestaurant={this.props.selectedSearchResult}
+								clearResults={this.props.clearResults}
+								save={this.props.saveNewRestaurant}
+								categories={this.props.categories}
+								errorMessage={this.props.saveRestaurantErrorMessage} />
+						</Container>
 					</Container>
-					<Container float='right'>
+					<Container>
 							<GoogleMap
 	          		addMarker={this.props.addSearchMarker}
 	          		restaurantsList={this.props.searchResults}
