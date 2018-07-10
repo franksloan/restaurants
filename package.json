@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "testme": "set NODE_ENV=test&&npm run test",
     "test": "mocha -w test_helpers/browser.js src/js/**/*.spec.js server/**/*.spec.js"
   },
