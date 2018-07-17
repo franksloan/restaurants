@@ -45,17 +45,19 @@ class AddRestaurant extends React.Component {
 				<div style={{width: '100%', overflow:'auto'}}>
 					<Container paddingSide='1.5%' paddingTop='60px'>
 						<Container paddingTop='0px' width='100%'>
-							<Form>
+							<FormGroup>
 							  <InputGroup onKeyPress={this.handleKeyPress}>
 									<FormControl
 										type="text"
 										inputRef={ref => { this.searchTerm = ref } }
 										placeholder="Padella"/>
-									<InputGroup.Addon>
-						        	<Glyphicon glyph="search" onClick={this.searchForRestaurant} />
-						      </InputGroup.Addon>
+									<InputGroup.Button>
+										<Button onClick={this.searchForRestaurant}>
+						        	Search
+										</Button>
+						      </InputGroup.Button>
 							  </InputGroup>
-							</Form>
+							</FormGroup>
 						</Container>
 						<Container paddingTop='0px' width='100%'>
 							<GoogleRestaurantScroll
