@@ -11,9 +11,14 @@ export class GoogleMap extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    console.log('MAPS received props: ', this.props.restaurantsList)
     this.setupMarkers(nextProps.restaurantsList)
   }
+
+  // Want to add the markers when first loaded (as well as on re render)
+  componentDidMount(){
+    this.setupMarkers(this.props.restaurantsList)
+  }
+
 
   setupMarkers(restaurantsList){
     if(restaurantsList.length > 0){

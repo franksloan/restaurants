@@ -35,7 +35,7 @@ class RestaurantMarker extends React.Component {
 
 	renderMarker(){
 		let google = this.props.google
-    console.log(this.props.restaurant)
+
 		if(!google){
 			return
 		}
