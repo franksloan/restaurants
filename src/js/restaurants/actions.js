@@ -45,7 +45,7 @@ export function loadRestaurants() {
 
   return dispatch => {
 
-    return fetchFromEndpoint('http://localhost:5050/get_restaurants',
+    return fetchFromEndpoint('/get_restaurants',
                   config, ()=> {console.error('Could not retrieve restaurants')},
                   addRestaurants, [], '/', dispatch)
 
@@ -71,7 +71,7 @@ export function saveReview(item) {
 
   return dispatch => {
 
-    return fetchFromEndpoint('http://localhost:5050/add_review',
+    return fetchFromEndpoint('/add_review',
                   config, saveReviewError , loadRestaurants, history, null, dispatch)
   }
 }

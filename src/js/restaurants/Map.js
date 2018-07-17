@@ -14,12 +14,10 @@ class Map extends React.Component {
 	}
 
 	componentWillMount() {
-		console.log('Will Mount in Map.js')
 	  this.props.loadRestaurants();
 	}
 
 	render(){
-		console.log('Render in Map.js')
 		let AppRestaurantScroll = ScrollingList.create(RestaurantItem)
 		return (
 				<div style={{width: '100%', overflow:'auto'}}>

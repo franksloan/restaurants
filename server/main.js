@@ -12,9 +12,6 @@ var express = require('express'),
 	session = require('express-session'),
 	MongoStore = require('connect-mongo')(session);
 
-
-var funct = (a) => { console.log(a + 1) }
-
 var main = function(){
 
 	var port = process.env.PORT || 5050;
@@ -54,8 +51,7 @@ var main = function(){
 
 	server.listen(server.get('port'), function(){
 
-		console.log('startd ' + server.get('port'))
-		funct(1)
+		console.log('started ' + server.get('port'))
 	});
 
 }

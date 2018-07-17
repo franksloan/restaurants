@@ -45,7 +45,7 @@ export function getCategories() {
 
   return dispatch => {
 
-    return fetch('http://localhost:5050/get_categories', config)
+    return fetch('/get_categories', config)
       .then(response => response.json()
           .then(body => ({ body, response }))
       )
@@ -79,7 +79,7 @@ export function searchForRestaurant(searchTerm) {
 
   return dispatch => {
 
-    return fetch('http://localhost:5050/find_restaurant?searchTerm='+searchTerm, config)
+    return fetch('/find_restaurant?searchTerm='+searchTerm, config)
       .then(response =>
         response.json()
           .then(body => ({ body, response })
@@ -116,11 +116,10 @@ export function saveNewRestaurant(item) {
 
   return dispatch => {
 
-    return fetchFromEndpoint('http://localhost:5050/add_restaurant',
+    return fetchFromEndpoint('/add_restaurant',
                   config, saveRestaurantError , getCategories, history, null, dispatch)
   }
 }
 
 function onSave(){
-
 }

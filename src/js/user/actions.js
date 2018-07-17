@@ -48,7 +48,7 @@ export function loginUser(creds, history) {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
 
-    return fetchFromEndpoint('http://localhost:5050/api/user/login',
+    return fetchFromEndpoint('/api/user/login',
                   config, loginError, receiveLogin, history, '/', dispatch)
   }
 }
@@ -135,7 +135,7 @@ export function signupUser(creds, history) {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestSignup(creds))
 
-    return fetchFromEndpoint('http://localhost:5050/api/user/create',
+    return fetchFromEndpoint('/api/user/create',
                   config, signupError, receiveSignup, history, '/email', dispatch)
   }
 }
@@ -185,7 +185,7 @@ export function resetPassword(creds, history) {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestResetPassword(creds))
 
-    return fetchFromEndpoint('http://localhost:5050/api/user/reset_password',
+    return fetchFromEndpoint('/api/user/reset_password',
                   config, resetPasswordError, resetPasswordSuccess, history, '/email', dispatch)
   }
 }
@@ -205,7 +205,7 @@ export function submitNewPassword(creds, history) {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestResetPassword(creds))
 
-    return fetchFromEndpoint('http://localhost:5050/api/user/new_password',
+    return fetchFromEndpoint('/api/user/new_password',
                   config, submitNewPasswordError, resetPasswordSuccess, history, '/thanks', dispatch)
   }
 }
