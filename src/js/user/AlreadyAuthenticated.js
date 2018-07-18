@@ -10,7 +10,7 @@ class AlreadyAuthenticated extends React.Component {
 
 	render(){
 		return (
-			<Container>
+			<Container maxWidth='600px' width='95%' display='block' margin='auto'>
       	<h3>This user is already authenticated!</h3>
 			</Container>
     )

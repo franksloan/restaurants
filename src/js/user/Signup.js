@@ -3,12 +3,29 @@ import PropTypes from 'prop-types'
 import { Button, Form, FormGroup, FormControl, ControlLabel, Col, Panel, Alert } from 'react-bootstrap'
 import { signupUser } from './actions'
 import Container from '../utilities/Container'
+import validator from 'email-validator'
 
 class Signup extends React.Component {
 	constructor(){
 		super()
     this.handleClick = this.handleClick.bind(this)
+		this.handleEmail = this.handleEmail.bind(this)
+		this.getEmailValidationState = this.getEmailValidationState.bind(this)
+		this.state = {}
 	}
+
+	getEmailValidationState(){
+		if (!this.state.email || this.state.email.length == 0){
+			return null
+		} else if(validator.validate(this.state.email)){
+			return 'success'
+		}
+		return 'error'
+  }
+
+	handleEmail(){
+    this.setState({email: this.email.value})
+  }
 
   handleClick(e, history){
 		e.preventDefault()
@@ -22,7 +39,7 @@ class Signup extends React.Component {
 	render(){
     const { history, signupErrorMessage } = this.props
 		return (
-			<Container>
+			<Container maxWidth='600px' width='95%' display='block' margin='auto'>
 				<Panel>
 					<Panel.Heading>
 						Sign up
@@ -42,7 +59,7 @@ class Signup extends React.Component {
 									</Col>
 								</FormGroup>
 
-								<FormGroup controlId="email">
+								<FormGroup controlId="email" validationState={this.getEmailValidationState()}>
 									<Col componentClass={ControlLabel} sm={2}>
 										Email
 									</Col>
@@ -50,7 +67,9 @@ class Signup extends React.Component {
 										<FormControl
 										  inputRef={ref => { this.email = ref } }
 											type="email"
-											placeholder="Email" />
+											placeholder="Email"
+											onChange={this.handleEmail}/>
+										<FormControl.Feedback />
 									</Col>
 								</FormGroup>
 

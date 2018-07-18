@@ -10,7 +10,7 @@ class Thanks extends React.Component {
 
 	render(){
 		return (
-			<Container>
+			<Container maxWidth='600px' width='95%' display='block' margin='auto'>
       	<h3>Thanks for signing up! Please login.</h3>
 			</Container>
     )

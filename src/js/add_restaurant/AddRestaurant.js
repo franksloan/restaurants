@@ -43,14 +43,14 @@ class AddRestaurant extends React.Component {
 		let GoogleRestaurantScroll = ScrollingList.create(SearchResult)
 		return (
 				<div style={{width: '100%', overflow:'auto'}}>
-					<Container paddingSide='1.5%' paddingTop='60px'>
+					<Container paddingSide='1.5%' width='50%' float='left'>
 						<Container paddingTop='0px' width='100%'>
 							<FormGroup>
 							  <InputGroup onKeyPress={this.handleKeyPress}>
 									<FormControl
 										type="text"
 										inputRef={ref => { this.searchTerm = ref } }
-										placeholder="Padella"/>
+										placeholder="Type a restaurant to search..."/>
 									<InputGroup.Button>
 										<Button onClick={this.searchForRestaurant}>
 						        	Search
@@ -73,7 +73,7 @@ class AddRestaurant extends React.Component {
 								errorMessage={this.props.saveRestaurantErrorMessage} />
 						</Container>
 					</Container>
-					<Container>
+					<Container paddingTop='50px' float='right' width='50%'>
 							<GoogleMap
 	          		addMarker={this.props.addSearchMarker}
 	          		restaurantsList={this.props.searchResults}

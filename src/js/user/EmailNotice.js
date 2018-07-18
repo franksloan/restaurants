@@ -10,7 +10,7 @@ class EmailNotice extends React.Component {
 
 	render(){
 		return (
-			<Container>
+			<Container maxWidth='600px' width='95%' display='block' margin='auto'>
       	<h3>Email sent.</h3>
 			</Container>
     )

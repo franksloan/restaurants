@@ -21,7 +21,7 @@ class Map extends React.Component {
 		let AppRestaurantScroll = ScrollingList.create(RestaurantItem)
 		return (
 				<div style={{width: '100%', overflow:'auto'}}>
-					<Container paddingSide='1.5%' paddingTop='60px'>
+					<Container paddingSide='1.5%' width='50%' float='left'>
 						<AppRestaurantScroll
 							restaurantsList={this.props.restaurantsList}
 							googleRestaurantMarkers={this.props.googleRestaurantMarkers}
@@ -32,7 +32,7 @@ class Map extends React.Component {
 							save={this.props.saveReview}
 							errorMessage={this.props.saveReviewErrorMessage} />
 					</Container>
-					<Container float='right'>
+					<Container float='right' width='50%' paddingTop='50px'>
 	          	<GoogleMap
 	          		addMarker={this.props.addMarker}
 	          		restaurantsList={this.props.restaurantsList}

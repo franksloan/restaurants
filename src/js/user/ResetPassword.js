@@ -30,7 +30,7 @@ class ResetPassword extends React.Component {
 	render(){
     const { history, submitNewPasswordErrorMessage } = this.props
 		return (
-      <Container>
+      <Container maxWidth='600px' width='95%' display='block' margin='auto'>
 				<Panel>
 					<Panel.Heading>
 						New password

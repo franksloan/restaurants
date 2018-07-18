@@ -31,7 +31,7 @@ class Login extends React.Component {
 	render(){
     const { history, loginErrorMessage } = this.props
 		return (
-      <Container>
+      <Container maxWidth='600px' width='95%' display='block' margin='auto'>
 				<Panel>
 					<Panel.Heading>
 						Login
