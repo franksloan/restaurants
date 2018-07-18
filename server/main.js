@@ -25,10 +25,17 @@ var main = function(){
 	server.use(webpackMiddleware(compiler));
 	mongoose.Promise = global.Promise;
 
-	var promise = mongoose.connect('mongodb://localhost/testForAuth',
-									{ useMongoClient: true });
+	var mongoPromise;
+	console.log(process.env.NODE_ENV)
+	if(process.env.NODE_ENV == 'production'){
+		mongoPromise = mongoose.connect('mongodb://dishymain:club123@ds243041.mlab.com:43041/dishy',
+										{ useMongoClient: true });
+	} else {
+		mongoPromise = mongoose.connect('mongodb://localhost/testForAuth',
+										{ useMongoClient: true });
+	}
 
-	promise.then((db) => {
+	mongoPromise.then((db) => {
 		db.on('error', console.error.bind(console, 'connection error:'));
 		server.use(session({
 			secret: 'work',
