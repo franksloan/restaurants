@@ -3,7 +3,7 @@ var jwt = require('jsonwebtoken');
 var url = process.env.NODE_ENV == 'production' ? 'https://dishyclub.herokuapp.com/' : 'http://localhost:5050/'
 
 function initialise(){
-  sendgrid.setApiKey(null);
+  sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 }
 
 function sendAuthenticationMessage(emailAddress, token){
