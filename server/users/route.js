@@ -20,24 +20,27 @@ app.post('/api/user/create', function(req, res, next) {
       password: req.body.password
     }
 
-    // use schema.create to insert data into the db
-    User.create(userData)
-      .then(function(user){
-        console.log('user: ' + user)
-        // Get authentication token and send an email to user
-        return emailService.sendAuthenticationMessage(userData.email,
-          authenticationService.createToken(userData.email))
-      }).then(function(){
-
-        res.status(201).send({
-          id_token: user._id,
-          username: userData.username
-        });
+    // Get authentication token and send an email to user
+    emailService.sendAuthenticationMessage(userData.email,
+      authenticationService.createToken(userData.email))
+      .then(function(){
+        return User.create(userData)
+                .then(function(user){
+                    console.log('user: ' + user)
+                    res.status(201).send({
+                      id_token: user._id,
+                      username: userData.username
+                    });
+                  })
       }).catch((err)=> {
+        console.log('Request to create new user failed')
         res.status(401).send({
-        	message: err.message
+          message: err.message
         });
       })
+
+    // use schema.create to insert data into the db
+
     } else {
       res.status(401).send({
         message: "Please supply username, email and password"
