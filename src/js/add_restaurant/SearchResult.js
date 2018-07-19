@@ -19,16 +19,10 @@ class RestaurantItem extends React.Component {
 	}
 
 	openLinkInMap(e){
-		console.log(navigator.platform)
-		if /* if we're on iOS, open in Apple Maps */
-    ((navigator.platform.indexOf("iPhone") != -1) ||
-     (navigator.platform.indexOf("iPad") != -1) ||
-     (navigator.platform.indexOf("iPod") != -1)){
-
-    	window.open("maps://maps.google.com/maps/place/?q=place_id:"+this.props.restaurant.googleId);
-		}	else {/* else use Google */
-    	window.open("https://www.google.com/maps/place/?q=place_id:"+this.props.restaurant.googleId);
-		}
+  	window.open("https://www.google.com/maps/search/?api=1&query="+
+										this.props.restaurant.position.lat+","+
+										this.props.restaurant.position.lng+"&query_place_id="+
+										this.props.restaurant.googleId);
 	}
 
 	render(){
