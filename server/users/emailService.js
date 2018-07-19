@@ -19,9 +19,8 @@ function sendAuthenticationMessage(emailAddress, token){
         link: 'http://localhost:5050/api/user/verify_email?token='+token
       }
   }
-  sendgrid.send(email);
   console.log('email sent to: ' + emailAddress, email)
-  return token;
+  return sendgrid.send(email);
 }
 
 

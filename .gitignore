@@ -1,7 +1,4 @@
 node_modules
 dist/index.js
-start.txt
 .DS_Storesendgrid.env
-sendgrid.env
-sendgrid2.env
 sendgrid.env
