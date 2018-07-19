@@ -159,6 +159,7 @@ function resetPasswordSuccess( ) {
 }
 
 function resetPasswordError(message) {
+  console.log(message)
   return {
     type: RESET_PASSWORD_FAILURE,
     message

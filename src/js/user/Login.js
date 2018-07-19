@@ -69,7 +69,7 @@ class Login extends React.Component {
 								    </Checkbox>
 									</Col>
 								</FormGroup>
-								{loginErrorMessage && !this.state.resetPassword &&
+								{loginErrorMessage &&
 									<Col smOffset={2} sm={8}>
 			            	<Alert bsStyle="danger">{loginErrorMessage}</Alert>
 									</Col>

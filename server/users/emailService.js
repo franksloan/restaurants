@@ -1,8 +1,9 @@
 var sendgrid = require('@sendgrid/mail');
 var jwt = require('jsonwebtoken');
+var url = process.env.NODE_ENV == 'production' ? 'https://dishyclub.herokuapp.com/' : 'http://localhost:5050/'
 
 function initialise(){
-  sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
+  sendgrid.setApiKey(null);
 }
 
 function sendAuthenticationMessage(emailAddress, token){
@@ -16,10 +17,10 @@ function sendAuthenticationMessage(emailAddress, token){
       template_id: '4bd9221a-f41b-4984-8cad-95d9443cc3e2',
       substitutionWrappers: [':', ''],
       substitutions: {
-        link: 'http://localhost:5050/api/user/verify_email?token='+token
+        link: url + 'api/user/verify_email?token='+token
       }
   }
-  console.log('email sent to: ' + emailAddress, email)
+  console.log('Attempted to send email to: ' + emailAddress, email)
   return sendgrid.send(email);
 }
 
@@ -35,12 +36,10 @@ function sendPasswordResetMessage(emailAddress, token){
       template_id: '4bd9221a-f41b-4984-8cad-95d9443cc3e2',
       substitutionWrappers: [':', ''],
       substitutions: {
-        link: 'http://localhost:5050/reset_password/'+token
+        link: url + 'reset_password/'+token
       }
   }
-  sendgrid.send(email);
-  // console.log('email sent to: ' + emailAddress, email)
-  return token;
+  return sendgrid.send(email);
 }
 
 var emailService = {

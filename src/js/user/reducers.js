@@ -66,7 +66,7 @@ export default function user(state = {
     case RESET_PASSWORD_FAILURE:
       return Object.assign({}, state, {
         isFetching: false,
-        resetPasswordErrorMessage: action.message
+        loginErrorMessage: action.message
       })
     case SUBMIT_NEW_PASSWORD_FAILURE:
       return Object.assign({}, state, {

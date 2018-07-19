@@ -25,8 +25,9 @@ app.post('/api/user/create', function(req, res, next) {
       .then(function(user){
         console.log('user: ' + user)
         // Get authentication token and send an email to user
-        emailService.sendAuthenticationMessage(userData.email,
+        return emailService.sendAuthenticationMessage(userData.email,
           authenticationService.createToken(userData.email))
+      }).then(function(){
 
         res.status(201).send({
           id_token: user._id,
@@ -71,7 +72,6 @@ function updateUserByEmail(email, update, next, callback){
     if(err){
       next(err)
     }
-    console.log('Sucess')
     callback()
   })
 }
@@ -115,10 +115,16 @@ app.post('/api/user/reset_password', function(req, res, next) {
 
       updateUserByEmail(req.body.email, { passwordResetPending: true }, next, function(){
         // Get authentication token and send an email to user
-        emailService.sendPasswordResetMessage(req.body.email,
+        return emailService.sendPasswordResetMessage(req.body.email,
           authenticationService.createToken(req.body.email))
-
-        res.status(201).send({});
+        .then(function(){
+          res.status(201).send({});
+        })
+        .catch((err)=> {
+          res.status(401).send({
+            message: err.message
+          });
+        })
       })
   }).catch(next)
 
