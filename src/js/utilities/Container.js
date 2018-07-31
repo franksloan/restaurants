@@ -15,6 +15,9 @@ class Container extends React.Component {
 			maxWidth: this.props.maxWidth || undefined,
 			display: this.props.display || undefined,
     	margin:  this.props.margin || undefined,
+			position: this.props.position || undefined,
+			zIndex: this.props.zIndex || undefined,
+			backgroundColor: 'white'
 		}
 		return (
         <div style={styles}>

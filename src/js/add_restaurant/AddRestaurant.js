@@ -8,6 +8,8 @@ import SearchResult from './SearchResult'
 import { searchForRestaurant, addSearchMarker, getCategories,
 				 onSearchResultClick, clearResults, saveNewRestaurant } from './actions'
 import Container from '../utilities/Container'
+import ScrollingListContainer from '../utilities/ScrollingListContainer'
+import MapContainer from '../utilities/MapContainer'
 
 class AddRestaurant extends React.Component {
 	constructor(){
@@ -42,9 +44,8 @@ class AddRestaurant extends React.Component {
 	render(){
 		let GoogleRestaurantScroll = ScrollingList.create(SearchResult)
 		return (
-				<div style={{width: '100%', overflow:'auto'}}>
-					<Container paddingSide='1.5%' width='50%' float='left'>
-						<Container paddingTop='0px' width='100%'>
+				<div style={{width: '100%', overflow:'auto', paddingTop: '50px'}}>
+					<Container paddingTop='10px' width='100%' paddingSide='1.5%' position='fixed' zIndex='999'>
 							<FormGroup>
 							  <InputGroup onKeyPress={this.handleKeyPress}>
 									<FormControl
@@ -58,7 +59,8 @@ class AddRestaurant extends React.Component {
 						      </InputGroup.Button>
 							  </InputGroup>
 							</FormGroup>
-						</Container>
+					</Container>
+					<ScrollingListContainer>
 						<Container paddingTop='0px' width='100%'>
 							<GoogleRestaurantScroll
 								restaurantsList={this.props.searchResults}
@@ -72,8 +74,8 @@ class AddRestaurant extends React.Component {
 								categories={this.props.categories}
 								errorMessage={this.props.saveRestaurantErrorMessage} />
 						</Container>
-					</Container>
-					<Container paddingTop='50px' float='right' width='50%'>
+					</ScrollingListContainer>
+					<MapContainer>
 							<GoogleMap
 	          		addMarker={this.props.addSearchMarker}
 	          		restaurantsList={this.props.searchResults}
@@ -83,7 +85,7 @@ class AddRestaurant extends React.Component {
 	          		activeMarker={this.props.activeSearchMarker}
 	          		selectedRestaurant={this.props.selectedSearchResult}
 								clearMarkers={this.props.clearResults} />
-        	</Container>
+        	</MapContainer>
 	      </div>
 		)
 	}

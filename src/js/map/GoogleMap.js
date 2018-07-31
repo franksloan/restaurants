@@ -51,13 +51,18 @@ export class GoogleMap extends React.Component {
       selectedRestaurant = this.props.selectedRestaurant
     }
     let height = window.innerHeight - 50
+    let width =  window.innerWidth / 2
+    if(window.innerWidth < 768){
+      width = window.innerWidth
+    }
     height = height + 'px'
+    width = width + 'px'
     return (
       <Map
         google={this.props.google}
         zoom={13}
-        containerStyle={{position: 'fixed'}}
-        style={{width: '50%', height: height}}
+        containerStyle={{position: window.innerWidth < 768 ? 'relative' : 'fixed'}}
+        style={{height: height, width: width}}
         initialCenter={{
             lat: 51.507781,
             lng: -0.109348
