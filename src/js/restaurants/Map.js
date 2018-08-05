@@ -7,6 +7,8 @@ import RestaurantItem from './RestaurantItem'
 import { Button } from 'react-bootstrap'
 import { addMarker, loadRestaurants, onRestaurantClick, clearMarkers, saveReview } from './actions'
 import Container from '../utilities/Container'
+import ScrollingListContainer from '../utilities/ScrollingListContainer'
+import MapContainer from '../utilities/MapContainer'
 
 class Map extends React.Component {
 	constructor(){
@@ -21,7 +23,7 @@ class Map extends React.Component {
 		let AppRestaurantScroll = ScrollingList.create(RestaurantItem)
 		return (
 				<div style={{width: '100%', overflow:'auto'}}>
-					<Container paddingSide='1.5%' width='50%' float='left'>
+					<ScrollingListContainer>
 						<AppRestaurantScroll
 							restaurantsList={this.props.restaurantsList}
 							googleRestaurantMarkers={this.props.googleRestaurantMarkers}
@@ -31,8 +33,8 @@ class Map extends React.Component {
 							selectedRestaurant={this.props.selectedRestaurant}
 							save={this.props.saveReview}
 							errorMessage={this.props.saveReviewErrorMessage} />
-					</Container>
-					<Container float='right' width='50%' paddingTop='50px'>
+					</ScrollingListContainer>
+					<MapContainer>
 	          	<GoogleMap
 	          		addMarker={this.props.addMarker}
 	          		restaurantsList={this.props.restaurantsList}
@@ -42,7 +44,7 @@ class Map extends React.Component {
 	          		activeMarker={this.props.activeMarker}
 	          		selectedRestaurant={this.props.selectedRestaurant}
 								clearMarkers={this.props.clearMarkers} />
-	        </Container>
+	        </MapContainer>
 	      </div>
     	)
 	}

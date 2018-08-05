@@ -54,6 +54,7 @@ export class GoogleMap extends React.Component {
     let width =  window.innerWidth / 2
     if(window.innerWidth < 768){
       width = window.innerWidth
+      height = height * 0.75  
     }
     height = height + 'px'
     width = width + 'px'

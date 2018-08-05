@@ -13,6 +13,8 @@ class Container extends React.Component {
 			paddingLeft: '0px',
 			paddingRight: '0px',
 			width: mobile ? '100%' : '50%',
+			position: mobile ? 'absolute' : undefined,
+			height: mobile ? '50%' : undefined
 		}
 		return (
         <div style={styles}>
